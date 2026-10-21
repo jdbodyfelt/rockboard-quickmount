@@ -108,7 +108,7 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 - [x] Manufacturer confirmed: Kea Modelling (FDM, PETG and PLA).
 - [x] Equipment inventory recorded: Quad board, Type E plates ×2, Type M plate, Type J1 plate ([inventory.md](../docs/inventory.md)).
 - [ ] Confirm the Quad model by width and each plate's moulded product number.
-- [ ] Minimum additions purchased: feeler gauges and silicone mould putty (caliper with inside/outside jaws, micrometer, and tape measure already owned). No OEM plates needed — the inventory covers them.
+- [x] Metrology kit on hand: caliper (inside/outside jaws), micrometer, tape, feeler gauges, silicone putty, spring/luggage scale, 0.1 g scale. No purchases required.
 - [ ] Vendor questions sent; answers logged in [manufacturing.md §7.1](../docs/manufacturing.md#71-response-log).
 - [ ] Calibration coupon specification ready; ordering deferred until the vendor answers.
 - [ ] Decide whether an in-house printer is available for fast iteration (Kea dispatch is 3–4 days).

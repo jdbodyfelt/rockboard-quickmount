@@ -66,7 +66,7 @@ The two BOSS compact pedals give a useful repeatability check: if the same plate
 
 ## 5. First measurement session
 
-Order of work, using only what is on hand. Budget roughly half a day.
+Order of work, using only what is on hand. Budget roughly half a day. The metrology kit is complete: caliper (inside/outside jaws), micrometer, tape, feeler gauges, silicone putty, spring/luggage scale, and 0.1 g scale.
 
 1. **Identify the board model** by width; photograph the label and a slot close-up.
 2. **Measure the board** with the `B-01` to `B-10` record in [geometry-capture.md](geometry-capture.md#31-board-measurement-record): slot width, length, end radius, rib width, pitch, sheet thickness, powder coat, plane angle, under-sheet clearance.

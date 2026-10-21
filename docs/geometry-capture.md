@@ -7,23 +7,23 @@ Purpose: turn the Open parameters in [rockboard-system.md](rockboard-system.md) 
 | Tool | Use | Qty | Priority |
 | --- | --- | --- | --- |
 | Digital caliper, 0.01 mm resolution, 150 mm, inside and outside jaws | Slot width, rib width, hole spacing, plate thickness; measure at three points per feature | 1 | **Owned** |
-| Feeler gauge set (0.02–1.0 mm) | Slot opening under powder coat, gaps the caliper jaws cannot reach squarely | 1 | Required |
+| Feeler gauge set (0.02–1.0 mm) | Slot opening under powder coat, gaps the caliper jaws cannot reach squarely | 1 | **Owned** |
 | Digital micrometer, 0–25 mm | Sheet thickness, plate thickness, tab thickness (accurate on accessible edges) | 1 | **Owned** |
 | Millimetre tape measure | Overall board and pedal dimensions, model identification | 1 | **Owned** |
-| Radius gauge set (1–7 mm) | Slot ends, fillets, keeper radius | 1 | Required |
-| Thread pitch gauge + known screws | Pedal and plate screw threads | 1 | Required |
-| Digital scale, 0.1 g | Pedal weight, plate mass, load assumptions | 1 | Required |
-| Luggage/spring scale, 0–50 kg | Insertion, release, and pull-off force | 1 | Required |
-| Macro camera + steel ruler | Contact geometry, keeper cavity; a scale in every photo | 1 | Required |
-| Two-part silicone mould putty | Non-destructive impression of the keeper cavity and tab profile; cast in rigid resin to measure | 1 kit | Required |
+| Radius gauge set (1–7 mm) | Slot ends, fillets, keeper radius | 1 | Nice to have |
+| Thread pitch gauge + known screws | Pedal and plate screw threads | 1 | Nice to have |
+| Digital scale, 0.1 g | Pedal weight, plate mass, load assumptions | 1 | **Owned** |
+| Luggage/spring scale, 0–50 kg | Insertion, release, and pull-off force | 1 | **Owned** |
+| Macro camera + scale reference | Contact geometry, keeper cavity; a phone camera and the tape measure are sufficient | 1 | **Owned** |
+| Two-part silicone mould putty | Non-destructive impression of the keeper cavity and tab profile; cast in rigid resin to measure | 1 kit | **Owned** |
 | Flatbed scanner, 1200 dpi | Silhouettes and printed measurements | 1 | Nice to have |
 | Thread checker / tap set (M2.5–M4) | Confirming screw threads by test fit | 1 | Nice to have |
 | CT or structured-light scan | Internal geometry without disassembly | — | Optional (outsourced) |
 | Digital height gauge | Mounting-plane angle and standoff | 1 | Nice to have |
 
-**Owned already:** digital caliper with inside and outside jaws, digital micrometer (0–25 mm), and a millimetre tape measure.
+**Owned already:** digital caliper with inside and outside jaws, digital micrometer (0–25 mm), millimetre tape, feeler gauges, two-part silicone mould putty, spring/luggage scale, and a 0.1 g scale. The metrology kit is complete for Phase 1.
 
-What each tool is for: the caliper's **inside jaws** measure slot width and rib width; its outside jaws measure plate and tab thickness and hole spacing. The micrometer is for the highest-accuracy thickness readings. The tape identifies the board model and measures overall footprints. The remaining gaps are the slot opening right at the powder coat (feeler gauges), fillet radii (radius gauge), and the keeper cavity (silicone putty).
+What each tool is for: the caliper's **inside jaws** measure slot width and rib width; its outside jaws measure plate and tab thickness and hole spacing. The micrometer is for the highest-accuracy thickness readings. The tape identifies the board model and measures overall footprints. Feeler gauges measure the slot opening right at the powder coat. Silicone putty captures the keeper cavity without cutting anything. The luggage scale provides the OEM baseline forces.
 
 ## 2. Procedure
 
