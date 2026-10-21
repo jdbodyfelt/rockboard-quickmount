@@ -1,0 +1,164 @@
+# Geometry capture and metrology
+
+Purpose: turn the Open parameters in [rockboard-system.md](rockboard-system.md) and [quickmount-system.md](quickmount-system.md) into Measured values, with a tolerance budget that the generator can consume.
+
+## 1. Tool list
+
+| Tool | Use | Notes |
+| --- | --- | --- |
+| Digital caliper, 0.01 mm resolution | Slot width, rib width, sheet thickness, plate thickness | Measure at three points per feature; record min/max |
+| Feeler gauges | Slot opening under powder coat, gaps | Good for narrow openings the caliper jaws cannot enter squarely |
+| Radius gauge set | Slot ends, fillets, keeper radius | |
+| Thread pitch gauge + known screws | Pedal and plate screw threads | Confirm with a thread-checker or by test-fitting |
+| Digital scale, 0.1 g | Pedal weight, plate mass | Needed for load assumptions |
+| Luggage/spring scale, 0–50 kg | Insertion, release, and pull-off force | |
+| Macro camera + scale ruler | Contact geometry, keeper cavity | Include a ruler in every photo |
+| Two-part silicone mould putty | Impression of the keeper cavity and tab profile | Cast with rigid resin to measure |
+| Bandsaw / fine saw | Cross-section of a sacrificial OEM plate | Destructive; buy spares |
+| 1200 dpi flatbed scanner | Dimensioned cross-sections and silhouettes | Scan with a ruler for scale |
+| Optional: CT or structured-light scan | Full internal geometry | Use only if available |
+
+## 2. Procedure
+
+### 2.1 Board
+
+1. Photograph the whole top surface with a ruler, plus one close-up of a slot end and one of the sheet edge.
+2. Measure the sheet thickness at four corners and the centre (avoid powder coat build-up on edges).
+3. Measure slot opening width at three positions along ten different slots, across at least two board families if available.
+4. Measure rib width between adjacent slots and the centre-to-centre pitch in both axes from the same reference edge.
+5. Measure slot length and end radius.
+6. Measure the powder-coat thickness by comparing a coated edge with a masked/uncoated area, or by micrometer on a cut edge.
+7. Verify the mounting plane: place the board on a flat table, measure the height at the four corners of the slot field, and compute the incline.
+8. Measure clearance between the sheet underside and the U-braces at several points.
+9. Record MOD slot dimensions separately.
+
+### 2.2 OEM QuickMount plate
+
+1. Weigh and measure the plate: overall length, width, thickness at the pedal face, thickness at the tabs.
+2. Photograph both faces on a grid background; trace the outline in CAD at 1:1 scale and compare measured features.
+3. Measure the tab: width, thickness, protrusion, lead-in chamfer, and position relative to the screw holes.
+4. Make a silicone impression of the keeper area, cast it, and section it if needed.
+5. Cut one sacrificial plate along the keeper axis, scan the cross-section, and measure wall thicknesses and clearances.
+6. Test the kinematics with the QuickRelease Tool: record the tool's motion and the keeper's resulting displacement.
+7. Measure the screws supplied with the plate: thread, length, head type.
+
+### 2.3 Pedal
+
+1. Measure W × D × H with calipers; compare with the manufacturer's published values.
+2. Record the screw holes: position relative to a defined datum (use the pedal's bottom centre), thread size, usable depth, and whether the hole is recessed.
+3. Photograph the bottom face with a ruler, orthogonally, so the hole coordinates can be digitised.
+4. Note rubber feet, battery door, and any overhanging enclosure features.
+
+## 3. Record templates
+
+### 3.1 Board measurement record
+
+| ID | Parameter | Nominal | Measured min | Measured max | Tool | Date | Operator | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| B-01 | Slot opening width | | | | Caliper | | | Open |
+| B-02 | Slot length | | | | Caliper | | | Open |
+| B-03 | Slot end radius | | | | Radius gauge | | | Open |
+| B-04 | Rib width | | | | Caliper | | | Open |
+| B-05 | Pitch X | | | | Caliper | | | Open |
+| B-06 | Pitch Y | | | | Caliper | | | Open |
+| B-07 | Sheet thickness | | | | Micrometer | | | Open |
+| B-08 | Powder coat thickness | | | | Micrometer | | | Open |
+| B-09 | Mounting plane angle | | | | Height gauge | | | Open |
+| B-10 | Under-sheet clearance | | | | Depth gauge | | | Open |
+
+### 3.2 OEM plate record
+
+| ID | Parameter | Measured | Tool | Date | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Q-01 | Mass | | Scale | | |
+| Q-02 | Plate thickness at pedal face | | Caliper | | |
+| Q-03 | Tab width | | Caliper | | |
+| Q-04 | Tab thickness | | Caliper | | |
+| Q-05 | Tab protrusion | | Depth gauge | | |
+| Q-06 | Keeper travel | | Video + scale | | |
+| Q-07 | Insertion force | | Spring scale | | |
+| Q-08 | Release force | | Spring scale | | |
+| Q-09 | Pull-off force | | Luggage scale | | |
+| Q-10 | Cycles to visible wear | | Cycle rig | | |
+
+Keep the filled records in `docs/measurements/` as CSV or Markdown so they can be diffed and reviewed.
+
+## 4. Photographic protocol
+
+Every photograph used for measurement must contain:
+
+1. a rigid scale (steel ruler or calibration card) in the same plane as the feature,
+2. the part flat and orthogonal to the camera axis,
+3. uniform lighting without specular blow-out on the powder coat,
+4. a label with the measurement ID.
+
+Digitise coordinates from a calibrated image only after checking the scale at both ends (lens distortion makes edges unreliable).
+
+## 5. Tolerance budget
+
+The generator will expose a tolerance profile rather than baking in clearances. Starting values for FDM, to be replaced by measured results:
+
+| Contribution | Typical value | How to handle |
+| --- | --- | --- |
+| Printer XY dimensional error | ±0.10–0.20 mm | Calibrate with a test artefact per printer |
+| Elephant-foot flare | 0.10–0.20 mm on first 0.3 mm | Chamfer the bottom edge |
+| Material shrinkage | 0.2–0.8 % depending on polymer | Shrinkage coupon per material |
+| Slot width variation (powder coat) | Open | Measure; use worst case |
+| Caliper measurement uncertainty | ±0.02 mm | Take three readings |
+| Thermal expansion in service | Small relative to creep | Ignore for fit, include for creep test |
+
+Design clearances:
+
+| Interface | Initial value | Coupon range |
+| --- | --- | --- |
+| Tab to slot side | 0.30 mm per side | 0.15 / 0.25 / 0.35 / 0.45 |
+| Tab to slot end | 0.40 mm | 0.25 / 0.40 / 0.55 |
+| Keeper interference | 0.20 mm | 0.10 / 0.20 / 0.30 / 0.40 |
+| Screw clearance hole (M3) | 3.4 mm | 3.3 / 3.4 / 3.5 |
+
+These are starting points. Nothing ships until the coupon test confirms the value for the target printer and material.
+
+## 6. Fit coupons
+
+Print a single coupon plate that contains a **clearance ladder**:
+
+- five tab widths: `nominal - 0.30`, `- 0.15`, `nominal`, `+0.15`, `+0.30`
+- three keeper interference variants
+- labels embossed at 3 mm depth so they survive printing
+- one hole per screw size to check clearance
+
+Test each variant by hand-inserting into a real board and recording:
+
+| Variant | Insert | Wobble | Slide along slot | Release | Verdict |
+| --- | --- | --- | --- | --- | --- |
+| T1 | | | | | |
+| T2 | | | | | |
+| T3 | | | | | |
+| T4 | | | | | |
+| T5 | | | | | |
+
+Choose the tightest variant that inserts by hand and does not wobble. Re-run the coupon for every new printer/material combination.
+
+## 7. OEM baseline test protocol
+
+The OEM plate is the reference standard. Measure it before optimising a printed design.
+
+1. **Static retention:** mount the plate in a board clamped to a table. Attach a luggage scale and pull vertically, then horizontally, recording peak force before release.
+2. **Insertion/release force:** five cycles each with a spring scale; note the direction of the QuickRelease Tool motion.
+3. **Cycle life:** 100 insert/release cycles, photographing the keeper every 25 cycles.
+4. **Creep:** hang 5 kg from a mounted plate at room temperature for 24 h; repeat at 50 °C. Measure permanent set.
+5. **Marking:** inspect the powder coat under the tab for scuffs.
+
+Acceptance for a printed plate: at least 80 % of OEM static retention, no permanent set greater than 1 mm, and no board marking.
+
+## 8. Data handling
+
+- Store measurements as CSV with one row per feature and a `status` column (`open`, `measured`, `verified`).
+- Record the board model, serial/batch if visible, and purchase date.
+- Keep the raw photos in `docs/measurements/<date>/` with the record file alongside.
+- Never overwrite a measurement; add a new row with a new date and mark the old one superseded.
+
+## Sources
+
+- RockBoard catalogue: <https://www.rockboard.de/downloads/RockBoard_Catalog.pdf>
+- RockBoard QuickMount overview: <https://www.rockboard.de/en/quickmounts/>
