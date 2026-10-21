@@ -6,21 +6,28 @@ Purpose: turn the Open parameters in [rockboard-system.md](rockboard-system.md) 
 
 | Tool | Use | Qty | Priority |
 | --- | --- | --- | --- |
-| Digital caliper, 0.01 mm resolution, 150 mm | Slot width, rib width, sheet thickness, plate thickness; measure at three points per feature | 1 | Required |
+| Digital caliper, 0.01 mm resolution, 150 mm | Slot width, rib width, hole spacing, plate thickness; measure at three points per feature | 1 | Required |
 | Feeler gauge set (0.02–1.0 mm) | Slot opening under powder coat, gaps the caliper jaws cannot reach squarely | 1 | Required |
+| Digital micrometer, 0–25 mm | Sheet thickness, plate thickness, tab thickness (accurate on accessible edges) | 1 | **Owned** |
+| Millimetre tape measure | Overall board and pedal dimensions, model identification | 1 | **Owned** |
 | Radius gauge set (1–7 mm) | Slot ends, fillets, keeper radius | 1 | Required |
 | Thread pitch gauge + known screws | Pedal and plate screw threads | 1 | Required |
 | Digital scale, 0.1 g | Pedal weight, plate mass, load assumptions | 1 | Required |
 | Luggage/spring scale, 0–50 kg | Insertion, release, and pull-off force | 1 | Required |
 | Macro camera + steel ruler | Contact geometry, keeper cavity; a scale in every photo | 1 | Required |
-| Two-part silicone mould putty | Impression of the keeper cavity and tab profile; cast with rigid resin to measure | 1 kit | Required |
-| Bandsaw or fine saw | Cross-section of a sacrificial OEM plate (destructive) | 1 | Required |
-| Flatbed scanner, 1200 dpi | Dimensioned cross-sections and silhouettes | 1 | Nice to have |
+| Two-part silicone mould putty | Non-destructive impression of the keeper cavity and tab profile; cast in rigid resin to measure | 1 kit | Required |
+| Flatbed scanner, 1200 dpi | Silhouettes and printed measurements | 1 | Nice to have |
 | Thread checker / tap set (M2.5–M4) | Confirming screw threads by test fit | 1 | Nice to have |
-| CT or structured-light scan | Full internal geometry | — | Optional |
+| CT or structured-light scan | Internal geometry without disassembly | — | Optional (outsourced) |
 | Digital height gauge | Mounting-plane angle and standoff | 1 | Nice to have |
 
+**Owned already:** digital micrometer (0–25 mm) and a millimetre tape measure.
+
+What the tape can and cannot do: it is accurate enough to identify the board model, measure overall pedal footprints, and locate features to the nearest millimetre. It is **not** accurate enough for slot width, rib width, pitch, or hole centres — those need callipers or feeler gauges. The highest-value additions are therefore a 150 mm digital caliper and a feeler gauge set; silicone putty is the only non-destructive way to capture the keeper cavity.
+
 ## 2. Procedure
+
+**No destructive measurement.** Every OEM plate must remain usable. Do not cut, saw, heat, or pry any plate; capture internal geometry with silicone impressions, photography, or an outsourced scan.
 
 ### 2.1 Board
 
@@ -29,7 +36,7 @@ Purpose: turn the Open parameters in [rockboard-system.md](rockboard-system.md) 
 3. Measure slot opening width at three positions along ten different slots, across at least two board families if available.
 4. Measure rib width between adjacent slots and the centre-to-centre pitch in both axes from the same reference edge.
 5. Measure slot length and end radius.
-6. Measure the powder-coat thickness by comparing a coated edge with a masked/uncoated area, or by micrometer on a cut edge.
+6. Estimate powder-coat thickness by comparing a coated area with an uncoated reference (for example the sheet's masked underside) using the micrometer; never cut into the board. If no reference exists, record it as Open and treat the slot opening as the governing dimension.
 7. Verify the mounting plane: place the board on a flat table, measure the height at the four corners of the slot field, and compute the incline.
 8. Measure clearance between the sheet underside and the U-braces at several points.
 9. Record MOD slot dimensions separately.
@@ -39,14 +46,16 @@ Purpose: turn the Open parameters in [rockboard-system.md](rockboard-system.md) 
 1. Weigh and measure the plate: overall length, width, thickness at the pedal face, thickness at the tabs.
 2. Photograph both faces on a grid background; trace the outline in CAD at 1:1 scale and compare measured features.
 3. Measure the tab: width, thickness, protrusion, lead-in chamfer, and position relative to the screw holes.
-4. Make a silicone impression of the keeper area, cast it, and section it if needed.
-5. Cut one sacrificial plate along the keeper axis, scan the cross-section, and measure wall thicknesses and clearances.
+4. Press silicone mould putty onto the keeper area to capture the cavity; cast it in rigid resin and measure the cast. Repeat on a second plate of the same type to check repeatability.
+5. Measure external wall thicknesses and clearances with the micrometer and callipers. Where an internal dimension cannot be reached, record it as Open rather than estimating.
 6. Test the kinematics with the QuickRelease Tool: record the tool's motion and the keeper's resulting displacement.
 7. Measure the screws supplied with the plate: thread, length, head type.
 
+If the impressions and external measurements cannot resolve the latch kinematics, options are an outsourced CT/X-ray scan, a request to RockBoard for a drawing, or buying a spare plate later — never modifying the existing set.
+
 ### 2.3 Pedal
 
-1. Measure W × D × H with calipers; compare with the manufacturer's published values.
+1. Measure W × D × H with callipers, micrometer, or tape; compare with the manufacturer's published values.
 2. Record the screw holes: position relative to a defined datum (use the pedal's bottom centre), thread size, usable depth, and whether the hole is recessed.
 3. Photograph the bottom face with a ruler, orthogonally, so the hole coordinates can be digitised.
 4. Note rubber feet, battery door, and any overhanging enclosure features.
@@ -106,7 +115,7 @@ The generator will expose a tolerance profile rather than baking in clearances. 
 | Elephant-foot flare | 0.10–0.20 mm on first 0.3 mm | Chamfer the bottom edge |
 | Material shrinkage | 0.2–0.8 % depending on polymer | Shrinkage coupon per material |
 | Slot width variation (powder coat) | Open | Measure; use worst case |
-| Caliper measurement uncertainty | ±0.02 mm | Take three readings |
+| Micrometer / caliper / tape uncertainty | ±0.005 / ±0.02 / ±1 mm | Use the right tool per feature; record which was used |
 | Thermal expansion in service | Small relative to creep | Ignore for fit, include for creep test |
 
 Design clearances:
@@ -145,7 +154,7 @@ Order the coupon in two separate orders to measure repeatability, and include th
 
 ## 7. OEM baseline test protocol
 
-The OEM plate is the reference standard. Measure it before optimising a printed design.
+The OEM plate is the reference standard. Measure it before optimising a printed design. All steps are non-destructive; the plate remains serviceable.
 
 1. **Static retention:** mount the plate in a board clamped to a table. Attach a luggage scale and pull vertically, then horizontally, recording peak force before release.
 2. **Insertion/release force:** five cycles each with a spring scale; note the direction of the QuickRelease Tool motion.

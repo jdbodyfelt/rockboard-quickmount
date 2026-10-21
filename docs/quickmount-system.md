@@ -82,7 +82,7 @@ What is **not** published and must be captured:
 - plate thickness at the pedal interface (this is added to the screw stack)
 - any ribs or bosses that set the pedal's supported area
 
-> Add dimensioned photographs and a measured drawing to this section once captured. Until then, treat every number as Open.
+> Add dimensioned photographs and a measured drawing to this section once captured. Capture must be non-destructive: silicone impressions and photography only, never sectioning. Until then, treat every number as Open.
 
 ## 4. Hypotheses to test
 

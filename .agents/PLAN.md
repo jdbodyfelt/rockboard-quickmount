@@ -108,7 +108,7 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 - [x] Manufacturer confirmed: Kea Modelling (FDM, PETG and PLA).
 - [x] Equipment inventory recorded: Quad board, Type E plates ×2, Type M plate, Type J1 plate ([inventory.md](../docs/inventory.md)).
 - [ ] Confirm the Quad model by width and each plate's moulded product number.
-- [ ] Measurement kit purchased: calipers, feeler gauges, radius gauge, thread gauge, luggage scale, silicone putty. No OEM plates needed — the inventory covers them.
+- [ ] Minimum additions purchased: digital calipers, feeler gauges, silicone mould putty (micrometer and tape measure already owned). No OEM plates needed — the inventory covers them.
 - [ ] Vendor questions sent; answers logged in [manufacturing.md §7.1](../docs/manufacturing.md#71-response-log).
 - [ ] Calibration coupon specification ready; ordering deferred until the vendor answers.
 - [ ] Decide whether an in-house printer is available for fast iteration (Kea dispatch is 3–4 days).
@@ -124,7 +124,7 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 **Work**
 
 1. Measure the Quad board (confirm 4.x) using [geometry-capture.md](../docs/geometry-capture.md); add a second board family in Phase 3 or earlier if one can be borrowed.
-2. Use the Type E pair on hand: fully characterise one and section the other. Measure the Type M and Type J1 plates non-destructively (callipers, photography, silicone impressions). See [inventory.md](../docs/inventory.md).
+2. Use the Type E pair on hand: characterise both externally and compare them for repeatability; capture the keeper cavity with silicone impressions. Measure the Type M and Type J1 plates the same way. **No plate may be sectioned** — see [inventory.md](../docs/inventory.md).
 3. Measure OEM baseline: insertion, release, pull-off, 100 cycles, creep at 50 °C and 70 °C.
 4. Build the parametric slot profile with three load-bearing features: tab, keeper, release.
 5. Build the coupon generator (clearance ladder + interference variants).
@@ -264,6 +264,7 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 | R14 | Single vendor with 3–4 day dispatch slows iteration | Medium | Medium | Batch experiments per order; optional in-house printer; standard STL output keeps vendors interchangeable |
 | R15 | Instant-order limits (500 g per part, 10 files per order) | Low | Low | Batch splitter; expected plates are tens of grams |
 | R16 | Vendor terms grant an image-marketing licence by default | Low | Low | Request an opt-out before sharing confidential designs |
+| R17 | Internal keeper geometry cannot be resolved without cutting a plate | Medium | High | Silicone impressions, macro photography, outsourced CT/X-ray, OEM drawing request; buy a spare later only if needed |
 
 ---
 
@@ -317,9 +318,9 @@ examples/                 example pedals and manifests
 
 ## 12. Immediate next actions
 
-1. Buy the metrology kit and two Type E QuickMount plates; two spare plates for destructive sectioning.
-2. Measure Duo 2.0 and Quad 4.2; fill the board record tables.
-3. Capture and section one OEM plate; complete the OEM plate record.
+1. Buy the metrology additions (digital calipers, feeler gauges, silicone mould putty); no plates needed — the owned set covers Types E, M, and J1.
+2. Confirm the Quad model by width, measure the board, and fill the board record tables.
+3. Capture all four OEM plates non-destructively (callipers, photography, silicone impressions); complete the plate records. Do not section any plate.
 4. Run the OEM baseline protocol and write the numbers into [docs/quickmount-system.md](../docs/quickmount-system.md).
 5. Implement the slot profile and the coupon generator; print the clearance ladder.
 6. Review the Phase 1 gate before writing any product code.
