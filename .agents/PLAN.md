@@ -107,8 +107,8 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 - [x] This plan.
 - [x] Manufacturer confirmed: Kea Modelling (FDM, PETG and PLA).
 - [ ] Measurement kit purchased: calipers, feeler gauges, radius gauge, thread gauge, luggage scale, silicone putty, sacrificial OEM plates.
-- [ ] Vendor consultation booked; the question list in [manufacturing.md](../docs/manufacturing.md#7-questions-for-the-free-consultation) answered or scheduled.
-- [ ] Calibration coupon designed and budgeted for the first Kea order.
+- [ ] Vendor questions sent; answers logged in [manufacturing.md §7.1](../docs/manufacturing.md#71-response-log).
+- [ ] Calibration coupon specification ready; ordering deferred until the vendor answers.
 - [ ] Decide whether an in-house printer is available for fast iteration (Kea dispatch is 3–4 days).
 
 **Exit criteria:** documents reviewed; every Open parameter has an owner and a method; vendor capability questions answered or scheduled; budget for OEM plates and vendor coupons approved.
@@ -126,7 +126,7 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 3. Measure OEM baseline: insertion, release, pull-off, 100 cycles, creep at 50 °C and 70 °C.
 4. Build the parametric slot profile with three load-bearing features: tab, keeper, release.
 5. Build the coupon generator (clearance ladder + interference variants).
-6. Order the vendor calibration coupon from Kea in two separate orders; measure shrink, holes, walls, and snap beams ([manufacturing.md §4](../docs/manufacturing.md#4-process-calibration-vendor-coupon)).
+6. Once the vendor has answered, order the vendor calibration coupon from Kea in two separate orders; measure shrink, holes, walls, and snap beams ([manufacturing.md §4](../docs/manufacturing.md#4-process-calibration-vendor-coupon)).
 7. A/B test print orientations for retention, submitting both orientations to Kea.
 8. Decide the retention mechanism: integral compliant keeper vs screw clamp vs captured spring.
 

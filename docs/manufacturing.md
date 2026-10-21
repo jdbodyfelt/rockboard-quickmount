@@ -4,6 +4,8 @@ Selected manufacturer: **Kea Modelling**, Mt Eden, Auckland, New Zealand — <ht
 
 This document records what the vendor can and cannot do, the resulting material decision, design rules for their process, and what we must calibrate before trusting a printed part.
 
+**Engagement status (2026-10-21):** enquiry stage. No order has been placed. The calibration coupon and any printed parts are deferred until the vendor answers the questions in [§7](#7-questions-for-the-free-consultation).
+
 All vendor facts below are **Official** (vendor website), retrieved 2026-10-21.
 
 ## 1. Vendor capability
@@ -142,6 +144,14 @@ Everything the vendor needs must survive the upload: if the STL is non-manifold 
 11. Can you accept STEP or 3MF, or only STL?
 12. What lead time applies to a 10–20 plate batch?
 13. Can my parts be excluded from marketing images? (The terms grant an image licence by default.)
+
+### 7.1 Response log
+
+Record the vendor's answers here with the date, and feed any that change a design assumption back into the relevant section.
+
+| Date | Question | Answer | Design impact |
+| --- | --- | --- | --- |
+| | | | |
 
 ## 8. Risk notes specific to this vendor
 
