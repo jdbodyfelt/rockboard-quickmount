@@ -36,11 +36,12 @@ Plate types are inferred from RockBoard's compatibility lists and must be confir
 
 Capture techniques, in order of preference:
 
-1. Callipers and micrometer on every accessible external feature.
-2. Macro photography with a steel rule in the same plane; digitise outlines and contact points.
-3. Two-part silicone mould putty pressed onto the keeper cavity (peels off cleanly, no residue) and cast in rigid resin.
-4. Borrowed or commercial CT/X-ray scanning if internal geometry remains ambiguous.
-5. OEM drawings or replacement-part dimensions, if RockBoard will share them.
+1. Callipers (inside and outside jaws) and micrometer on every accessible external feature.
+2. Paper rub with a known reference for flat outlines, hole centres, and pitch.
+3. Macro photography with a steel rule in the same plane; digitise outlines and contact points.
+4. Two-part silicone mould putty pressed onto the keeper cavity (peels off cleanly, no residue) and cast in rigid resin.
+5. Borrowed or commercial CT/X-ray scanning if internal geometry remains ambiguous.
+6. OEM drawings or replacement-part dimensions, if RockBoard will share them.
 
 Confirm each type by looking for the moulded product number (format `RBO B QM T <type>`) on the plate's underside.
 

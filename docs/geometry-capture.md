@@ -6,7 +6,7 @@ Purpose: turn the Open parameters in [rockboard-system.md](rockboard-system.md) 
 
 | Tool | Use | Qty | Priority |
 | --- | --- | --- | --- |
-| Digital caliper, 0.01 mm resolution, 150 mm | Slot width, rib width, hole spacing, plate thickness; measure at three points per feature | 1 | Required |
+| Digital caliper, 0.01 mm resolution, 150 mm, inside and outside jaws | Slot width, rib width, hole spacing, plate thickness; measure at three points per feature | 1 | **Owned** |
 | Feeler gauge set (0.02–1.0 mm) | Slot opening under powder coat, gaps the caliper jaws cannot reach squarely | 1 | Required |
 | Digital micrometer, 0–25 mm | Sheet thickness, plate thickness, tab thickness (accurate on accessible edges) | 1 | **Owned** |
 | Millimetre tape measure | Overall board and pedal dimensions, model identification | 1 | **Owned** |
@@ -21,9 +21,9 @@ Purpose: turn the Open parameters in [rockboard-system.md](rockboard-system.md) 
 | CT or structured-light scan | Internal geometry without disassembly | — | Optional (outsourced) |
 | Digital height gauge | Mounting-plane angle and standoff | 1 | Nice to have |
 
-**Owned already:** digital micrometer (0–25 mm) and a millimetre tape measure.
+**Owned already:** digital caliper with inside and outside jaws, digital micrometer (0–25 mm), and a millimetre tape measure.
 
-What the tape can and cannot do: it is accurate enough to identify the board model, measure overall pedal footprints, and locate features to the nearest millimetre. It is **not** accurate enough for slot width, rib width, pitch, or hole centres — those need callipers or feeler gauges. The highest-value additions are therefore a 150 mm digital caliper and a feeler gauge set; silicone putty is the only non-destructive way to capture the keeper cavity.
+What each tool is for: the caliper's **inside jaws** measure slot width and rib width; its outside jaws measure plate and tab thickness and hole spacing. The micrometer is for the highest-accuracy thickness readings. The tape identifies the board model and measures overall footprints. The remaining gaps are the slot opening right at the powder coat (feeler gauges), fillet radii (radius gauge), and the keeper cavity (silicone putty).
 
 ## 2. Procedure
 
@@ -59,6 +59,18 @@ If the impressions and external measurements cannot resolve the latch kinematics
 2. Record the screw holes: position relative to a defined datum (use the pedal's bottom centre), thread size, usable depth, and whether the hole is recessed.
 3. Photograph the bottom face with a ruler, orthogonally, so the hole coordinates can be digitised.
 4. Note rubber feet, battery door, and any overhanging enclosure features.
+
+### 2.4 Paper rub (non-destructive)
+
+A paper rub (brass rubbing) captures flat features quickly and accurately when the part is too large or awkward for the caliper jaws.
+
+1. Use thin paper (70–90 gsm). Tape it down so it cannot shift.
+2. Rub with a soft pencil or wax crayon until the edges of the feature appear.
+3. Measure the imprint with the caliper.
+4. Include a known reference on the same sheet — the plate's overall width or a taped steel rule — and compute a scale correction, because paper can stretch.
+5. Photograph the rub with a rule in frame and file it with the record.
+
+Good for: plate outlines, hole centres, slot pitch and length, pedal footprints, keeper footprint. Not for: thickness, depth, or any feature that wraps around an edge.
 
 ## 3. Record templates
 
