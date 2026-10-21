@@ -102,13 +102,15 @@ A board profile with any `null` slot or sheet value is **incomplete** and cannot
 
 ```yaml
 schema_version: 1
-id: petg_04_plate_face_down
+id: kea_petg
+vendor: kea_modelling
 material: PETG
 nozzle_mm: 0.4
 layer_mm: 0.20
 walls: 4
 infill_percent: 40
 print_orientation: plate_face_down
+validated: false
 clearance:
   tab_side_mm: 0.30
   tab_end_mm: 0.40
@@ -152,11 +154,10 @@ This library is the bridge between the OEM compatibility lists and our generator
 schema_version: 1
 defaults:
   board: cinque_5_2
-  printer: petg_04_plate_face_down
+  printer: kea_petg
 items:
   - pedal: boss_ds_1
   - pedal: wampler_tumnus_deluxe
-    printer: asa_04_plate_face_down
   - pedal: example_1590b
     board: quad_4_2
 ```
@@ -182,10 +183,10 @@ Rules:
 ## 8. CLI sketch
 
 ```text
-qm generate --pedal boss_ds_1 --board cinque_5_2 --printer petg --out build/
+qm generate --pedal boss_ds_1 --board cinque_5_2 --printer kea_petg --out build/
 qm batch pedals.yaml --out build/
 qm validate --board cinque_5_2
-qm coupon --board cinque_5_2 --printer petg --out build/coupons/
+qm coupon --board cinque_5_2 --printer kea_petg --out build/coupons/
 qm lookup "Wampler Tumnus Deluxe"          # resolve or prompt for missing data
 qm lookup "Wampler Tumnus Deluxe" --photo pedal.jpg
 ```

@@ -113,18 +113,22 @@ Two candidate orientations must be tested in Phase 1:
 
 Decision rule: print the same coupon in each orientation, then run the pull-off and creep tests. Adopt the orientation that meets retention with the least support and post-processing. Record the result as the default `print_orientation` in the printer profile.
 
-## 6. Material and printer profiles
+Kea Modelling's instant-quote flow may choose the orientation itself. Confirm this in the vendor consultation; if the orientation cannot be controlled, encode it in the STL (submit a pre-rotated model) and record the intended orientation in the manifest and order note.
 
-Starting profiles, to be validated by test:
+## 6. Material and vendor profiles
 
-| Profile | Material | Nozzle | Layer | Walls | Infill | Notes |
-| --- | --- | --- | --- | --- | --- | --- |
-| `proto` | PLA | 0.4 | 0.24 | 2 | 15 % | Fit checks only; never for service |
-| `petg` | PETG | 0.4 | 0.20 | 4 | 40 % (gyroid) | Default consumer option; moderate creep |
-| `asa` | ASA | 0.4 | 0.20 | 4 | 40 % | Heat/UV resistance for vehicle use |
-| `pa-cf` | PA-CF | 0.6 | 0.20 | 4 | 40 % | Stiffest; abrasive; requires hardened nozzle |
+Kea Modelling offers **PLA and PETG only** ([manufacturing.md](manufacturing.md)). The profile set reflects that constraint.
 
-Each profile contains: shrinkage compensation (X/Y and Z), first-layer expansion compensation, clearance offsets, and the validated print orientation. Shrinkage is calibrated with a coupon per material spool; do not copy values between brands.
+| Profile | Material | Status | Use |
+| --- | --- | --- | --- |
+| `kea_petg` | PETG | **Default, pending coupon validation** | All functional plates and coupons |
+| `kea_pla` | PLA | Prototype only | Fit checks that never see service or heat |
+| `inhouse_asa` | ASA | Not available from Kea; optional future in-house | Fallback if PETG creep fails at 70 °C |
+| `inhouse_pa_cf` | PA-CF | Not available from Kea; optional future in-house | Stiffest fallback; abrasive, needs hardened nozzle |
+
+The vendor's layer height, wall count, and infill defaults are unpublished; the `kea_petg` profile starts with the assumptions in [manufacturing.md §3](manufacturing.md#3-design-rules-for-fdm-in-petg) and is corrected after the calibration coupon.
+
+Each profile contains: vendor name, shrinkage compensation (X/Y and Z), first-layer expansion compensation, clearance offsets, and the validated print orientation. Calibrate per vendor and material; do not copy values between printers or spools. A profile with `validated: false` raises a warning on every export.
 
 ## 7. Reproducibility
 
@@ -138,7 +142,7 @@ Each profile contains: shrinkage compensation (X/Y and Z), first-layer expansion
 Input: a manifest listing pedal IDs and the profiles to apply.
 
 ```
-qm batch pedals.yaml --board cinque-5.2 --printer petg --out build/
+qm batch pedals.yaml --board cinque-5.2 --printer kea_petg --out build/
 ```
 
 Behaviour:
@@ -147,6 +151,7 @@ Behaviour:
 - Produce a summary table: pedal, status, output file, warnings, confidence minimum.
 - Reuse resolved OEM type patterns across pedals to keep runs fast.
 - Emit a machine-readable `build/report.json` for CI and a human-readable `build/report.md`.
+- Split the output into vendor orders: at most 10 STL files and 500 g per part for Kea's instant quote. Emit an `orders/` folder with one subfolder per order and a packing list.
 
 ## 9. CI checks
 
@@ -191,9 +196,11 @@ The slot profile module is deliberately small and heavily tested. It is the part
 ## 12. Open questions
 
 1. Does build123d's OCCT boolean remain stable enough for a CI golden test, or do we need to pin OCCT separately?
-2. Is a single-piece printed keeper sufficient, or does the design need a captured spring?
+2. Is a single-piece printed PETG keeper sufficient, or does the design need a captured spring or screw clamp?
 3. Which print orientation wins the pull-off and creep tests?
-4. Do we need multi-material (rigid plate + soft pad) support, and does the target printer offer it?
+4. Can Kea Modelling accept a specified orientation, or must we submit pre-rotated STLs?
+5. What layer height, wall count, and infill does Kea use, and can they be changed? (Blocks a truly validated profile.)
+6. Multi-material is not available from Kea; is a soft-pad variant worth supporting in-house?
 
 ## Sources
 
@@ -202,3 +209,4 @@ The slot profile module is deliberately small and heavily tested. It is the part
 - OpenSCAD: <https://openscad.org/>
 - trimesh: <https://github.com/mikedh/trimesh>
 - manifold: <https://github.com/elalish/manifold>
+- Kea Modelling: [manufacturing.md](manufacturing.md)

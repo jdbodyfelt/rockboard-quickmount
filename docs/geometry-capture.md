@@ -4,19 +4,21 @@ Purpose: turn the Open parameters in [rockboard-system.md](rockboard-system.md) 
 
 ## 1. Tool list
 
-| Tool | Use | Notes |
-| --- | --- | --- |
-| Digital caliper, 0.01 mm resolution | Slot width, rib width, sheet thickness, plate thickness | Measure at three points per feature; record min/max |
-| Feeler gauges | Slot opening under powder coat, gaps | Good for narrow openings the caliper jaws cannot enter squarely |
-| Radius gauge set | Slot ends, fillets, keeper radius | |
-| Thread pitch gauge + known screws | Pedal and plate screw threads | Confirm with a thread-checker or by test-fitting |
-| Digital scale, 0.1 g | Pedal weight, plate mass | Needed for load assumptions |
-| Luggage/spring scale, 0–50 kg | Insertion, release, and pull-off force | |
-| Macro camera + scale ruler | Contact geometry, keeper cavity | Include a ruler in every photo |
-| Two-part silicone mould putty | Impression of the keeper cavity and tab profile | Cast with rigid resin to measure |
-| Bandsaw / fine saw | Cross-section of a sacrificial OEM plate | Destructive; buy spares |
-| 1200 dpi flatbed scanner | Dimensioned cross-sections and silhouettes | Scan with a ruler for scale |
-| Optional: CT or structured-light scan | Full internal geometry | Use only if available |
+| Tool | Use | Qty | Priority |
+| --- | --- | --- | --- |
+| Digital caliper, 0.01 mm resolution, 150 mm | Slot width, rib width, sheet thickness, plate thickness; measure at three points per feature | 1 | Required |
+| Feeler gauge set (0.02–1.0 mm) | Slot opening under powder coat, gaps the caliper jaws cannot reach squarely | 1 | Required |
+| Radius gauge set (1–7 mm) | Slot ends, fillets, keeper radius | 1 | Required |
+| Thread pitch gauge + known screws | Pedal and plate screw threads | 1 | Required |
+| Digital scale, 0.1 g | Pedal weight, plate mass, load assumptions | 1 | Required |
+| Luggage/spring scale, 0–50 kg | Insertion, release, and pull-off force | 1 | Required |
+| Macro camera + steel ruler | Contact geometry, keeper cavity; a scale in every photo | 1 | Required |
+| Two-part silicone mould putty | Impression of the keeper cavity and tab profile; cast with rigid resin to measure | 1 kit | Required |
+| Bandsaw or fine saw | Cross-section of a sacrificial OEM plate (destructive) | 1 | Required |
+| Flatbed scanner, 1200 dpi | Dimensioned cross-sections and silhouettes | 1 | Nice to have |
+| Thread checker / tap set (M2.5–M4) | Confirming screw threads by test fit | 1 | Nice to have |
+| CT or structured-light scan | Full internal geometry | — | Optional |
+| Digital height gauge | Mounting-plane angle and standoff | 1 | Nice to have |
 
 ## 2. Procedure
 
@@ -100,7 +102,7 @@ The generator will expose a tolerance profile rather than baking in clearances. 
 
 | Contribution | Typical value | How to handle |
 | --- | --- | --- |
-| Printer XY dimensional error | ±0.10–0.20 mm | Calibrate with a test artefact per printer |
+| Printer XY dimensional error | ±0.10–0.20 mm | Calibrate with a test artefact per vendor profile |
 | Elephant-foot flare | 0.10–0.20 mm on first 0.3 mm | Chamfer the bottom edge |
 | Material shrinkage | 0.2–0.8 % depending on polymer | Shrinkage coupon per material |
 | Slot width variation (powder coat) | Open | Measure; use worst case |
@@ -137,7 +139,9 @@ Test each variant by hand-inserting into a real board and recording:
 | T4 | | | | | |
 | T5 | | | | | |
 
-Choose the tightest variant that inserts by hand and does not wobble. Re-run the coupon for every new printer/material combination.
+Choose the tightest variant that inserts by hand and does not wobble. Re-run the coupon for every vendor/material combination, and order it through the actual manufacturing route (Kea Modelling) rather than an in-house printer — the vendor's slicer profile is part of the fit.
+
+Order the coupon in two separate orders to measure repeatability, and include the printed calibration features listed in [manufacturing.md §4](manufacturing.md#4-process-calibration-vendor-coupon).
 
 ## 7. OEM baseline test protocol
 
@@ -146,7 +150,7 @@ The OEM plate is the reference standard. Measure it before optimising a printed 
 1. **Static retention:** mount the plate in a board clamped to a table. Attach a luggage scale and pull vertically, then horizontally, recording peak force before release.
 2. **Insertion/release force:** five cycles each with a spring scale; note the direction of the QuickRelease Tool motion.
 3. **Cycle life:** 100 insert/release cycles, photographing the keeper every 25 cycles.
-4. **Creep:** hang 5 kg from a mounted plate at room temperature for 24 h; repeat at 50 °C. Measure permanent set.
+4. **Creep:** hang 5 kg from a mounted plate at room temperature for 24 h; repeat at 50 °C and at 70 °C. PETG is the only functional material available from Kea and a closed vehicle can exceed 70 °C, so the 70 °C result is the design-driving case.
 5. **Marking:** inspect the powder coat under the tab for scuffs.
 
 Acceptance for a printed plate: at least 80 % of OEM static retention, no permanent set greater than 1 mm, and no board marking.
@@ -162,3 +166,4 @@ Acceptance for a printed plate: at least 80 % of OEM static retention, no perman
 
 - RockBoard catalogue: <https://www.rockboard.de/downloads/RockBoard_Catalog.pdf>
 - RockBoard QuickMount overview: <https://www.rockboard.de/en/quickmounts/>
+- Kea Modelling manufacturing profile: [manufacturing.md](manufacturing.md)

@@ -100,7 +100,7 @@ Record the outcome in this document and convert the losing hypotheses into "do n
 A printed plate cannot assume the OEM's material or process. Constraints:
 
 - **No metal spring by default.** If the design needs spring force, use an integral compliant beam, a captured O-ring, or a screw-actuated clamp. Sourcing a spring is allowed but should be optional.
-- **Creep.** A permanently loaded polymer tab will relax, especially at pedalboard-in-a-van temperatures. PLA is unsuitable; PETG is acceptable; ASA and PA-CF are better candidates. Test at 50 °C with a hanging load.
+- **Creep.** A permanently loaded polymer tab will relax, especially at pedalboard-in-a-van temperatures. PLA is unsuitable (and is rejected for functional parts). **PETG is the selected material** because it is the only functional option Kea Modelling offers; ASA and PA-CF are not available from the vendor and exist only as a future in-house fallback. Test at 50 °C and 70 °C, not just room temperature.
 - **Layer orientation.** Tabs loaded in bending must not be built from layers that delaminate. Choose print orientation so the load runs along the extrusion direction, and document it in the print profile.
 - **Fatigue.** Design for at least the OEM cycle count we measure in Phase 1, with a target of 500 insert/remove cycles for a consumer part.
 - **Surface protection.** No sharp edges against the powder coat. Add a lead-in chamfer and radius every contact edge.
@@ -140,7 +140,7 @@ A printed plate is only accepted when all of the following pass:
 | Retention | Pull-off force ≥ 80 % of the measured OEM plate on the same board |
 | Release | QuickRelease Tool (or the designed release) unlocks without marking the board |
 | Cycles | 100 insert/remove cycles with no visible wear-through of the keeper |
-| Creep | 5 kg hanging load for 24 h at 50 °C with < 1 mm permanent set |
+| Creep | 5 kg hanging load for 24 h at 50 °C and at 70 °C with < 1 mm permanent set |
 | Board protection | No scratches or powder-coat damage after the cycle test |
 
 ## 9. Open questions
@@ -156,4 +156,5 @@ A printed plate is only accepted when all of the following pass:
 - QuickMount overview: <https://www.rockboard.de/en/quickmounts/>
 - QuickMount Finder: <https://www.rockboard.de/en/quickMountFinder/>
 - Catalogue, QuickMount section (pages 19–22): <https://www.rockboard.de/downloads/RockBoard_Catalog.pdf>
+- Manufacturing constraints: [manufacturing.md](manufacturing.md)
 - Project brief: [TODO.md](../.agents/TODO.md)

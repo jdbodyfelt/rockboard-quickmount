@@ -14,7 +14,7 @@ Preparation evidence lives in [docs/](../docs/README.md). Open dimensions are tr
 
 1. `qm generate --pedal <id>` produces a watertight STL, a STEP for review, and a manifest with full provenance.
 2. The part installs by hand into a real board, locks, and releases with the intended mechanism.
-3. It passes every check in [quickmount-system.md §8](../docs/quickmount-system.md#8-verification-protocol-per-design), including ≥ 80 % of the measured OEM pull-off force and 100 insert/remove cycles.
+3. It passes every check in [quickmount-system.md §8](../docs/quickmount-system.md#8-verification-protocol-per-design) when printed by Kea Modelling in PETG, including ≥ 80 % of the measured OEM pull-off force and 100 insert/remove cycles.
 4. `qm batch` processes at least ten pedals in one command with a per-item report and no manual edits.
 5. For a pedal with an official QuickMount type, no per-pedal screw measurement is needed.
 6. Every number used in a generated design is traceable to a source at the required confidence level.
@@ -32,7 +32,7 @@ Preparation evidence lives in [docs/](../docs/README.md). Open dimensions are tr
 4. **OEM plates are the reference standard.** Retention, thickness, and cycle life are benchmarked against a real QuickMount.
 5. **Deterministic output.** Same inputs, pinned tools, same result; manifests make a print reproducible.
 6. **Fail loudly.** A missing measurement, an unprintable wall, or a questionable record aborts the build with a clear message.
-7. **Printable by normal humans.** Design for a 0.4 mm nozzle, commodity filament, and no supports where possible.
+7. **Printable by the chosen vendor.** Design for Kea Modelling's FDM process in PETG, with no supports on mating faces.
 
 ---
 
@@ -103,12 +103,15 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 
 **Deliverables**
 
-- [x] `docs/` set: board, QuickMount, metrology, pedal data, pipeline, schema, sources.
+- [x] `docs/` set: board, QuickMount, metrology, pedal data, manufacturing, pipeline, schema, sources.
 - [x] This plan.
+- [x] Manufacturer confirmed: Kea Modelling (FDM, PETG and PLA).
 - [ ] Measurement kit purchased: calipers, feeler gauges, radius gauge, thread gauge, luggage scale, silicone putty, sacrificial OEM plates.
-- [ ] Confirm the target printer(s) and materials for Phase 1.
+- [ ] Vendor consultation booked; the question list in [manufacturing.md](../docs/manufacturing.md#7-questions-for-the-free-consultation) answered or scheduled.
+- [ ] Calibration coupon designed and budgeted for the first Kea order.
+- [ ] Decide whether an in-house printer is available for fast iteration (Kea dispatch is 3–4 days).
 
-**Exit criteria:** documents reviewed; every Open parameter has an owner and a method; budget for OEM plates approved.
+**Exit criteria:** documents reviewed; every Open parameter has an owner and a method; vendor capability questions answered or scheduled; budget for OEM plates and vendor coupons approved.
 
 **Immediate risks:** the keeper geometry may not be printable at all with commodity filament. Phase 1 exists to find out early and cheaply.
 
@@ -120,15 +123,16 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 
 1. Measure one board from two families (recommended: Duo 2.0 and Quad 4.2) using [geometry-capture.md](../docs/geometry-capture.md).
 2. Acquire two OEM plates of one type (recommended: Type E for BOSS compact) and fully characterise one, section the other.
-3. Measure OEM baseline: insertion, release, pull-off, 100 cycles, creep at 50 °C.
+3. Measure OEM baseline: insertion, release, pull-off, 100 cycles, creep at 50 °C and 70 °C.
 4. Build the parametric slot profile with three load-bearing features: tab, keeper, release.
 5. Build the coupon generator (clearance ladder + interference variants).
-6. A/B test print orientations for retention.
-7. Decide the retention mechanism: integral compliant keeper vs screw clamp vs captured spring.
+6. Order the vendor calibration coupon from Kea in two separate orders; measure shrink, holes, walls, and snap beams ([manufacturing.md §4](../docs/manufacturing.md#4-process-calibration-vendor-coupon)).
+7. A/B test print orientations for retention, submitting both orientations to Kea.
+8. Decide the retention mechanism: integral compliant keeper vs screw clamp vs captured spring.
 
-**Deliverables:** completed measurement records; board profile for two families; `cad/slot_profile.py`; coupon sets; a written decision record for the keeper mechanism and print orientation.
+**Deliverables:** completed measurement records; board profile for two families; `cad/slot_profile.py`; coupon sets; a validated `kea_petg` printer profile; a written decision record for the keeper mechanism and print orientation.
 
-**Exit criteria:** a printed coupon inserts by hand, locks, resists at least 80 % of the OEM pull-off force, releases cleanly, and survives 100 cycles without visible wear-through.
+**Exit criteria:** a Kea-printed PETG coupon inserts by hand, locks, resists at least 80 % of the OEM pull-off force, releases cleanly, and survives 100 cycles without visible wear-through.
 
 **Kill/pivot criteria:** if no printed keeper variant reaches 50 % of OEM retention after two design iterations, pivot to a hybrid design (printed plate + purchased spring or a screw-actuated clamp) and re-baseline the plan.
 
@@ -143,7 +147,7 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 3. Implement the validation gates from [rendering-pipeline.md §4](../docs/rendering-pipeline.md#4-validation-gates).
 4. Export STL + STEP + manifest; deterministic naming.
 5. Build a small example set with three pedals of different sizes and mounting styles.
-6. Print, test, and record results; feed findings back into the default printer profile.
+6. Print via Kea in PETG, test, and record results; feed findings back into the `kea_petg` vendor profile and log the quote and lead time.
 
 **Exit criteria:** three pedals pass the physical acceptance checks; `qm validate` catches intentionally broken inputs; manifests reproduce the same geometry.
 
@@ -224,7 +228,7 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 
 1. **Unit tests** for parameter resolution, schema rules, and geometry helpers.
 2. **Geometric gates** in the generator (manifold, wall thickness, hole positions, slot interference).
-3. **Coupon tests** per printer/material, before any production part.
+3. **Coupon tests** per vendor/material, including a Kea-printed calibration coupon, before any production part.
 4. **Physical acceptance** per design: screws, seating, insertion, retention, release, cycles, creep, marking.
 5. **Field feedback** from real users after release, feeding the printer profiles and the catalog.
 
@@ -246,14 +250,18 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 | R2 | Slot dimensions vary between production batches or models | Medium | High | Measure at least two families and two boards; parameterise by board profile; publish the measured range |
 | R3 | Pedal screw data is unavailable at scale | High | Medium | OEM type library plus housing families; photo measurement; explicit prompts |
 | R4 | Original screws are too short after adding plate thickness | High | Medium | Screw BOM per design; replacement lengths; depth checks |
-| R5 | Polymer creep at vehicle temperatures causes the pedal to loosen | Medium | High | ASA/PA-CF profiles; 50 °C creep test; design keeper preload with margin |
-| R6 | Layer orientation makes tabs brittle | Medium | High | Orientation A/B test; documented default orientation |
+| R5 | PETG creep at vehicle temperatures causes the pedal to loosen | Medium | High | PETG is the only functional material at Kea; creep tests at 50 °C and 70 °C; keeper preload margin; in-house ASA/PA-CF fallback |
+| R6 | Layer orientation makes tabs brittle | Medium | High | Orientation A/B test; request orientation in the order note; documented default |
 | R7 | Plate damages the powder coat | Medium | Medium | Radii and lead-ins; marking check in acceptance |
 | R8 | Board families have incompatible slot geometry | Low | High | Board profiles are per family; test matrix covers each family |
 | R9 | Lookup invents or misattributes data | Medium | High | Evidence-required extraction; confidence gate; human confirmation |
 | R10 | Terms-of-service or licence violation when sourcing data | Low | High | Respect robots/terms; no unlicensed datasets; cite and cache only |
-| R11 | Printer-to-printer variation breaks fits | High | Medium | Coupon per printer; clearance profile per printer |
+| R11 | Vendor-to-vendor or batch-to-batch variation breaks fits | High | Medium | Coupon per vendor profile; clearance profile per vendor; two calibration orders |
 | R12 | Licensing/patent concerns for a commercial clone | Low | High | Non-commercial intent; interoperability framing; legal review before selling |
+| R13 | Kea's DFM and tolerance are unpublished | High | High | Vendor coupon before production; conservative clearances; validation gates; ask the consultation questions |
+| R14 | Single vendor with 3–4 day dispatch slows iteration | Medium | Medium | Batch experiments per order; optional in-house printer; standard STL output keeps vendors interchangeable |
+| R15 | Instant-order limits (500 g per part, 10 files per order) | Low | Low | Batch splitter; expected plates are tens of grams |
+| R16 | Vendor terms grant an image-marketing licence by default | Low | Low | Request an opt-out before sharing confidential designs |
 
 ---
 
@@ -261,9 +269,10 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 
 | Decision | Options | Recommendation | Needed by |
 | --- | --- | --- | --- |
+| Manufacturer | Kea Modelling / in-house / other | **Kea Modelling** (FDM, Mt Eden, Auckland; 330 × 320 × 325 mm) | Decided |
 | CAD kernel | build123d / CadQuery / OpenSCAD | **build123d** (Apache-2.0, Python-native, STEP export) | Phase 2 |
 | Retention mechanism | Compliant printed keeper / screw clamp / captured spring | Decide from Phase 1 A/B results; start with compliant keeper | Phase 1 |
-| Default material | PETG / ASA / PA-CF | **PETG** for default, ASA for hot environments | Phase 1 |
+| Default material | PETG / PLA / other | **PETG** — PLA rejected for heat and creep; ASA/PA-CF are not offered by Kea | Decided |
 | Screw strategy | Reuse original / supply replacements / user choice | Supply a BOM and let the user choose; validate depth | Phase 2 |
 | Rubber feet | Pocket / through-hole / remove | **Pocket when possible**, user choice otherwise | Phase 2 |
 | Release mechanism | Tool-operated (OEM parity) / tool-free | OEM parity first; tool-free as an option | Phase 1 |
@@ -321,6 +330,7 @@ examples/                 example pedals and manifests
 - [docs/rockboard-system.md](../docs/rockboard-system.md) — board geometry and parameters
 - [docs/quickmount-system.md](../docs/quickmount-system.md) — OEM system and design constraints
 - [docs/geometry-capture.md](../docs/geometry-capture.md) — measurement procedure and tests
+- [docs/manufacturing.md](../docs/manufacturing.md) — Kea Modelling profile, PETG decision, design rules and vendor calibration
 - [docs/pedal-data.md](../docs/pedal-data.md) — data sources and lookup
 - [docs/rendering-pipeline.md](../docs/rendering-pipeline.md) — CAD/STL pipeline
 - [docs/input-schema.md](../docs/input-schema.md) — YAML formats

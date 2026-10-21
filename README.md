@@ -16,6 +16,8 @@ Preparation and planning. No generator code yet — the interface dimensions mus
 
 Measure a real board and a real QuickMount plate, parameterise the slot/keeper interface, prove it with printed fit coupons, then generate plates from pedal data. Where RockBoard already publishes a QuickMount type for a pedal, reuse that type's verified screw pattern instead of measuring the pedal. Every dimension carries a source and confidence level, and the generator refuses to run on unverified data.
 
+Manufacturing target: **Kea Modelling** (FDM, Mt Eden, Auckland) in **PETG** — see [docs/manufacturing.md](docs/manufacturing.md).
+
 ## Licence
 
 GPL-3.0 — see [LICENSE](LICENSE).

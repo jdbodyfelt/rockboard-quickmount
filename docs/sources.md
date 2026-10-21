@@ -14,6 +14,16 @@ All sources retrieved 2026-10-21 unless noted. Keep this list current: every doc
 | QuickMount Finder | <https://www.rockboard.de/en/quickMountFinder/> | Pedal-to-type compatibility tool | JavaScript application; automation not attempted |
 | PedalPedia | <https://www.rockboard.de/en/pedalPedia/> | Vendor pedal catalogue | JavaScript application; backing API at `api.rockboard.de` only exposed client-environment endpoints in a limited probe. Terms not yet reviewed |
 
+## Manufacturing vendor
+
+| Source | URL | Used for |
+| --- | --- | --- |
+| Kea Modelling — 3D printing | <https://keamodelling.com/3d-printing> | FDM process, 330 × 320 × 325 mm build volume, PLA/PETG, order limits, pricing, lead time |
+| Kea Modelling — materials | <https://keamodelling.com/materials> | PLA vs PETG properties, heat tolerance, snap-fit suitability |
+| Kea Modelling — CAD design | <https://keamodelling.com/cad-design> | Consultation, quoting, revision terms |
+| Kea Modelling — terms | <https://keamodelling.com/terms> | File ownership, manifold-rejection clause, image licence |
+| Kea Modelling — returns | <https://keamodelling.com/returns> | Fault handling, delivery |
+
 ## Community and third-party sources
 
 | Source | URL | Used for | Licence / caveat |
