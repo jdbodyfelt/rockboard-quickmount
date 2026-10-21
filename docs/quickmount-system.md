@@ -156,4 +156,4 @@ A printed plate is only accepted when all of the following pass:
 - QuickMount overview: <https://www.rockboard.de/en/quickmounts/>
 - QuickMount Finder: <https://www.rockboard.de/en/quickMountFinder/>
 - Catalogue, QuickMount section (pages 19–22): <https://www.rockboard.de/downloads/RockBoard_Catalog.pdf>
-- Project brief: [TODO.md](../TODO.md)
+- Project brief: [TODO.md](../.agents/TODO.md)

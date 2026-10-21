@@ -2,7 +2,7 @@
 
 From a pedal name (or a YAML/photo input) to a printable STL that clicks into a RockBoard slot grid and holds a pedal securely.
 
-Preparation evidence lives in [docs/](docs/README.md). Open dimensions are tracked there and are not repeated here except where they gate a phase.
+Preparation evidence lives in [docs/](../docs/README.md). Open dimensions are tracked there and are not repeated here except where they gate a phase.
 
 ---
 
@@ -14,7 +14,7 @@ Preparation evidence lives in [docs/](docs/README.md). Open dimensions are track
 
 1. `qm generate --pedal <id>` produces a watertight STL, a STEP for review, and a manifest with full provenance.
 2. The part installs by hand into a real board, locks, and releases with the intended mechanism.
-3. It passes every check in [quickmount-system.md §8](docs/quickmount-system.md#8-verification-protocol-per-design), including ≥ 80 % of the measured OEM pull-off force and 100 insert/remove cycles.
+3. It passes every check in [quickmount-system.md §8](../docs/quickmount-system.md#8-verification-protocol-per-design), including ≥ 80 % of the measured OEM pull-off force and 100 insert/remove cycles.
 4. `qm batch` processes at least ten pedals in one command with a per-item report and no manual edits.
 5. For a pedal with an official QuickMount type, no per-pedal screw measurement is needed.
 6. Every number used in a generated design is traceable to a source at the required confidence level.
@@ -118,7 +118,7 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 
 **Work**
 
-1. Measure one board from two families (recommended: Duo 2.0 and Quad 4.2) using [geometry-capture.md](docs/geometry-capture.md).
+1. Measure one board from two families (recommended: Duo 2.0 and Quad 4.2) using [geometry-capture.md](../docs/geometry-capture.md).
 2. Acquire two OEM plates of one type (recommended: Type E for BOSS compact) and fully characterise one, section the other.
 3. Measure OEM baseline: insertion, release, pull-off, 100 cycles, creep at 50 °C.
 4. Build the parametric slot profile with three load-bearing features: tab, keeper, release.
@@ -138,9 +138,9 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 
 **Work**
 
-1. Implement schemas and the parameter resolver ([input-schema.md](docs/input-schema.md)).
+1. Implement schemas and the parameter resolver ([input-schema.md](../docs/input-schema.md)).
 2. Implement plate outline, screw bosses, foot pockets, and battery cut-outs on top of the slot profile.
-3. Implement the validation gates from [rendering-pipeline.md §4](docs/rendering-pipeline.md#4-validation-gates).
+3. Implement the validation gates from [rendering-pipeline.md §4](../docs/rendering-pipeline.md#4-validation-gates).
 4. Export STL + STEP + manifest; deterministic naming.
 5. Build a small example set with three pedals of different sizes and mounting styles.
 6. Print, test, and record results; feed findings back into the default printer profile.
@@ -208,7 +208,7 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 
 | Milestone | Evidence | Phase |
 | --- | --- | --- |
-| **M0 — Documented** | `docs/` and `PLAN.md` merged | 0 |
+| **M0 — Documented** | `docs/` and `.agents/PLAN.md` merged | 0 |
 | **M1 — Interface proven** | Printed coupon locks into a real board and passes retention | 1 |
 | **M2 — Pedal to STL** | Three accepted printed plates | 2 |
 | **M3 — Type coverage** | Ten types measured; 50 pedals catalogued | 3 |
@@ -287,6 +287,9 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 ## 11. Repository layout
 
 ```
+.agents/                  planning and backlog
+  PLAN.md                 this document
+  TODO.md                 project brief and backlog
 docs/                     preparation documentation and measurements
   measurements/           dated CSV records and photos (created when measuring)
 quickmount/               Python package (Phase 2)
@@ -297,8 +300,6 @@ quickmount/               Python package (Phase 2)
   validate/
 tests/                    unit tests and golden geometry
 examples/                 example pedals and manifests
-PLAN.md                   this document
-TODO.md                   project brief and backlog
 ```
 
 ---
@@ -308,7 +309,7 @@ TODO.md                   project brief and backlog
 1. Buy the metrology kit and two Type E QuickMount plates; two spare plates for destructive sectioning.
 2. Measure Duo 2.0 and Quad 4.2; fill the board record tables.
 3. Capture and section one OEM plate; complete the OEM plate record.
-4. Run the OEM baseline protocol and write the numbers into [docs/quickmount-system.md](docs/quickmount-system.md).
+4. Run the OEM baseline protocol and write the numbers into [docs/quickmount-system.md](../docs/quickmount-system.md).
 5. Implement the slot profile and the coupon generator; print the clearance ladder.
 6. Review the Phase 1 gate before writing any product code.
 
@@ -316,12 +317,12 @@ TODO.md                   project brief and backlog
 
 ## 13. Related documents
 
-- [docs/README.md](docs/README.md) — index and open questions
-- [docs/rockboard-system.md](docs/rockboard-system.md) — board geometry and parameters
-- [docs/quickmount-system.md](docs/quickmount-system.md) — OEM system and design constraints
-- [docs/geometry-capture.md](docs/geometry-capture.md) — measurement procedure and tests
-- [docs/pedal-data.md](docs/pedal-data.md) — data sources and lookup
-- [docs/rendering-pipeline.md](docs/rendering-pipeline.md) — CAD/STL pipeline
-- [docs/input-schema.md](docs/input-schema.md) — YAML formats
-- [docs/sources.md](docs/sources.md) — citations
+- [docs/README.md](../docs/README.md) — index and open questions
+- [docs/rockboard-system.md](../docs/rockboard-system.md) — board geometry and parameters
+- [docs/quickmount-system.md](../docs/quickmount-system.md) — OEM system and design constraints
+- [docs/geometry-capture.md](../docs/geometry-capture.md) — measurement procedure and tests
+- [docs/pedal-data.md](../docs/pedal-data.md) — data sources and lookup
+- [docs/rendering-pipeline.md](../docs/rendering-pipeline.md) — CAD/STL pipeline
+- [docs/input-schema.md](../docs/input-schema.md) — YAML formats
+- [docs/sources.md](../docs/sources.md) — citations
 - [TODO.md](TODO.md) — original project brief

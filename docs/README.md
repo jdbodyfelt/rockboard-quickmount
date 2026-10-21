@@ -2,7 +2,7 @@
 
 This folder captures what we know about the RockBoard platform and the QuickMount system **before** we design anything. It exists so that the generator's parameters are traceable to evidence instead of guesswork.
 
-See [PLAN.md](../PLAN.md) for the staged plan that uses these documents.
+See [PLAN.md](../.agents/PLAN.md) for the staged plan that uses these documents.
 
 ## Status legend
 
@@ -48,7 +48,7 @@ These are ordered by how much they block the plan:
 
 - Slot geometry parameter table: [rockboard-system.md](rockboard-system.md#5-parameters-we-must-measure)
 - Tolerance and coupon design: [geometry-capture.md](geometry-capture.md#5-tolerance-budget)
-- Definition of done: [PLAN.md](../PLAN.md#1-objective-and-definition-of-done)
+- Definition of done: [PLAN.md](../.agents/PLAN.md#1-objective-and-definition-of-done)
 
 ## Licensing note
 

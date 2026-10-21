@@ -8,9 +8,9 @@ The goal is to extend the QuickMount system to pedals it does not cover: from a 
 
 Preparation and planning. No generator code yet — the interface dimensions must be measured first.
 
-- [PLAN.md](PLAN.md) — staged plan from user input to finished STLs, with gates, risks, and decisions.
+- [PLAN.md](.agents/PLAN.md) — staged plan from user input to finished STLs, with gates, risks, and decisions.
 - [docs/](docs/README.md) — preparation documentation: board geometry, QuickMount mechanics, metrology, pedal data, and the rendering pipeline.
-- [TODO.md](TODO.md) — original project brief.
+- [TODO.md](.agents/TODO.md) — original project brief.
 
 ## Approach in one paragraph
 
