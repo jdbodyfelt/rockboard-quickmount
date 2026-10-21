@@ -40,6 +40,8 @@ Overall board dimensions (W × D) and weight, from the catalogue size-comparison
 
 Height including rubber feet for Duo 2.0: **35–58 mm** (Official, <https://www.rockboard.de/en/pedalboards/duo-20/>). Confirm per model before relying on under-board clearance.
 
+**Measurement status:** the project owns a Quad board. Its model (4.1–4.4) is confirmed by width; see [inventory.md](inventory.md#1-board).
+
 ## 3. Slot grid
 
 The top sheet is a **slot-based grid**: long slots that serve both cable routing and pedal mounting. QuickMount plates engage the same grid, which is why the system is board-model independent in principle.

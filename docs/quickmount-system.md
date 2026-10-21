@@ -59,6 +59,8 @@ Representative types (catalogue pages 20–22):
 
 Accessories in the same family: QuickMount Cable Fix clips, Pick Box, QuickRelease Tool, Second Tier riser, and PedalSafe protection covers (including a PedalSafe variant supplied with a QuickMount plate).
 
+**Plates on hand:** Type E ×2 (BOSS OC-2, OD-3), Type M (wah), Type J1 (Strymon Timeline). See [inventory.md](inventory.md#2-oem-quickmount-plates).
+
 The **UH type publishes a mounting-hole distance**, which is a useful precedent: RockBoard itself treats the screw-hole geometry as the defining dimension of a plate. Our generator should do the same.
 
 ## 3. Anatomy we must reverse engineer

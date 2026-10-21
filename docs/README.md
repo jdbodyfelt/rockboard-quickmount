@@ -29,6 +29,7 @@ Rules:
 | [rockboard-system.md](rockboard-system.md) | Board construction, model matrix, slot grid, mounting plane, and the measurements we still need. |
 | [quickmount-system.md](quickmount-system.md) | How the OEM QuickMount works, the full type catalogue, the keeper lock, and the constraints for a printed equivalent. |
 | [geometry-capture.md](geometry-capture.md) | Metrology procedure, tool list, record templates, tolerance budget, fit coupons, and the OEM baseline test protocol. |
+| [inventory.md](inventory.md) | Owned board, OEM plates, and pedals; what may be sectioned; first measurement session plan. |
 | [manufacturing.md](manufacturing.md) | Manufacturer profile (Kea Modelling), PETG decision, FDM design rules, vendor calibration coupon, ordering workflow, and vendor questions. |
 | [pedal-data.md](pedal-data.md) | Pedal dimensions and screw-hole data: sources, confidence model, and the lookup pipeline. |
 | [rendering-pipeline.md](rendering-pipeline.md) | Parametric CAD/STL generation: tool choice, pipeline stages, QA gates, print orientation, material profiles. |

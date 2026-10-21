@@ -106,7 +106,9 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 - [x] `docs/` set: board, QuickMount, metrology, pedal data, manufacturing, pipeline, schema, sources.
 - [x] This plan.
 - [x] Manufacturer confirmed: Kea Modelling (FDM, PETG and PLA).
-- [ ] Measurement kit purchased: calipers, feeler gauges, radius gauge, thread gauge, luggage scale, silicone putty, sacrificial OEM plates.
+- [x] Equipment inventory recorded: Quad board, Type E plates ×2, Type M plate, Type J1 plate ([inventory.md](../docs/inventory.md)).
+- [ ] Confirm the Quad model by width and each plate's moulded product number.
+- [ ] Measurement kit purchased: calipers, feeler gauges, radius gauge, thread gauge, luggage scale, silicone putty. No OEM plates needed — the inventory covers them.
 - [ ] Vendor questions sent; answers logged in [manufacturing.md §7.1](../docs/manufacturing.md#71-response-log).
 - [ ] Calibration coupon specification ready; ordering deferred until the vendor answers.
 - [ ] Decide whether an in-house printer is available for fast iteration (Kea dispatch is 3–4 days).
@@ -121,8 +123,8 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 
 **Work**
 
-1. Measure one board from two families (recommended: Duo 2.0 and Quad 4.2) using [geometry-capture.md](../docs/geometry-capture.md).
-2. Acquire two OEM plates of one type (recommended: Type E for BOSS compact) and fully characterise one, section the other.
+1. Measure the Quad board (confirm 4.x) using [geometry-capture.md](../docs/geometry-capture.md); add a second board family in Phase 3 or earlier if one can be borrowed.
+2. Use the Type E pair on hand: fully characterise one and section the other. Measure the Type M and Type J1 plates non-destructively (callipers, photography, silicone impressions). See [inventory.md](../docs/inventory.md).
 3. Measure OEM baseline: insertion, release, pull-off, 100 cycles, creep at 50 °C and 70 °C.
 4. Build the parametric slot profile with three load-bearing features: tab, keeper, release.
 5. Build the coupon generator (clearance ladder + interference variants).
@@ -130,7 +132,7 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 7. A/B test print orientations for retention, submitting both orientations to Kea.
 8. Decide the retention mechanism: integral compliant keeper vs screw clamp vs captured spring.
 
-**Deliverables:** completed measurement records; board profile for two families; `cad/slot_profile.py`; coupon sets; a validated `kea_petg` printer profile; a written decision record for the keeper mechanism and print orientation.
+**Deliverables:** completed measurement records; a completed Quad board profile; `cad/slot_profile.py`; coupon sets; a validated `kea_petg` printer profile; a written decision record for the keeper mechanism and print orientation.
 
 **Exit criteria:** a Kea-printed PETG coupon inserts by hand, locks, resists at least 80 % of the OEM pull-off force, releases cleanly, and survives 100 cycles without visible wear-through.
 
@@ -247,7 +249,7 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 | # | Risk | Likelihood | Impact | Mitigation |
 | --- | --- | --- | --- | --- |
 | R1 | Printed keeper cannot match OEM retention or cycle life | Medium | High | Phase 1 gate; hybrid fallback (purchased spring or screw clamp) |
-| R2 | Slot dimensions vary between production batches or models | Medium | High | Measure at least two families and two boards; parameterise by board profile; publish the measured range |
+| R2 | Slot dimensions vary between production batches or models | Medium | High | Phase 1 measures the Quad; confirm cross-family consistency in Phase 3 with borrowed or purchased boards; publish the measured range |
 | R3 | Pedal screw data is unavailable at scale | High | Medium | OEM type library plus housing families; photo measurement; explicit prompts |
 | R4 | Original screws are too short after adding plate thickness | High | Medium | Screw BOM per design; replacement lengths; depth checks |
 | R5 | PETG creep at vehicle temperatures causes the pedal to loosen | Medium | High | PETG is the only functional material at Kea; creep tests at 50 °C and 70 °C; keeper preload margin; in-house ASA/PA-CF fallback |
