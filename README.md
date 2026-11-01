@@ -32,7 +32,7 @@ Outputs: `keeper_ring`, `keeper_arrangement_2ring` (matches the reference clip),
 Keeper geometry in [catalog/clips/](catalog/clips), board geometry in
 [catalog/boards/](catalog/boards), housing families in [catalog/housings/](catalog/housings). The slot dimensions there are **provisional**
 until measured with callipers — see
-[docs/quickmount-mechanism.md](docs/quickmount-mechanism.md#6-provisional-board-dimensions).
+[docs/quickmount-mechanism.md](docs/quickmount-mechanism.md#6-board-dimensions).
 Screws: [docs/screws.md](docs/screws.md).
 
 Scope is currently the **mechanism only**: the C-shaped keeper ring and bar
