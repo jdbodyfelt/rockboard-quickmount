@@ -1,5 +1,9 @@
 # Input schema
 
+> **Partly deferred.** The pedal and batch sections describe the intended shape for
+baseplates, which are out of scope until the keeper ring is proven on the board.
+The board, printer and clip sections are in use.
+
 Proposed YAML formats for pedals, board profiles, printer profiles, and batch manifests. Files live in `quickmount/catalog/` and user projects, and are validated against a JSON Schema generated from the same dataclasses.
 
 Status: **design proposal**. Nothing here is implemented yet; the schema will be finalised during Phase 2.

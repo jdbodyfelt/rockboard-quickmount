@@ -129,30 +129,52 @@ slot opening, which is why the keeper is a C rather than a straight finger.
 
 ## 5. What this project builds
 
-Two parts are generated:
+Only the mechanism, deliberately. Pedal-specific baseplates are out of scope until
+the geometry is proven on a real board.
 
-1. **The clip, reproduced.** `out/clip_reference_2space.stl` is the measured
-   section extruded 16 mm, i.e. the reference clip itself, 69.0 x 16.0 x 19.64 mm,
-   within 0.6 % of the original volume. Print this first and test it on the board:
-   it answers the orientation question in §3.2 without any CAD risk.
+Three outputs, all from the measured cross-section:
 
-2. **A baseplate per pedal, carrying that same hook section.**
-   `out/<pedal>__cinque_5_2__petg__*.stl` is the pedal footprint, 3 mm thick, with
-   four countersunk pedal screws and the reference hook section under it at two
-   stations. The bar is absorbed by the plate because both are 3.00 mm thick, so
-   only the hook geometry protrudes.
+| Part | Size | Purpose |
+| --- | --- | --- |
+| `out/keeper_ring.stl` | 18.3 x 16.0 x 19.64 mm | one C-shaped keeper ring: the unit |
+| `out/keeper_arrangement_2ring.stl` | **69.1** x 16.0 x 19.64 mm | two rings on a bar, one pitch apart - matches the reference clip (69.0 mm) within 0.1 mm |
+| `out/keeper_arrangement_3ring.stl` | 102.1 x 16.0 x 19.64 mm | three rings, two pitches - for a wider bar |
 
-Differences from the reference part, and why:
+Each ring is a closed loop of the measured profile: a 2.50 mm post, a 2.50 mm
+arch springing outward and over, and a 1.20 mm skirt returning down. The arch's
+depth below the bar underside is 19.64 mm, and the ring's outward reach from the
+bar end is 16.8 mm.
 
-| Change | Reason |
-| --- | --- |
-| Hook section scaled 1.003x in X | Puts the hook centres exactly one slot pitch apart for the target board instead of the reference's 32.90 mm |
-| Two hook lines instead of one | The reference clip is a single line; a 120 mm pedal needs support at both ends |
-| Bar replaced by the pedal plate | Same thing the author does in `Rockboard_Boss_Base_+_Clip` |
-| Countersunk pedal screws added | The pedal's original baseplate screws hold the plate on |
+### 5.1 Arrangements
 
-Everything else - post thickness, arch wall, skirt thickness, arch depth, overall
-width - is taken unchanged from the measurement.
+`build_arrangement(spec, rings=n, pitch=p)` lays `n` rings on a bar so that ring
+centres are exactly `pitch` apart and the bar ends land on the post faces:
+
+```
+bar_len = pitch * (n - 1) + post_t
+```
+
+With the measured 32.90 mm reference spacing and a 2.50 mm post, n = 2 gives a
+35.40 mm bar and the 69.0 mm overall width that the reference part has. Scaling
+`pitch` to the board's slot pitch is the only coupling to the board, and it is a
+single number.
+
+The pitch is currently 33.0 mm from the board profile, so the two-ring arrangement
+is 69.1 mm rather than the reference's 69.0 mm - a 0.1 mm difference, well inside
+print tolerance.
+
+### 5.2 Why no baseplate yet
+
+A baseplate is just a bar with pedal screws in it, so it is a small extension once
+the ring is proven. It is deliberately deferred because one question about the ring
+is still open (section 3.2): which face grips the sheet. Printing the ring and
+trying it on the Cinque answers that in a minute, and any baseplate built before
+then risks being wrong again.
+
+The housing data is already recorded for when it is needed: both target pedals are
+vertical 125B and both take the OEM Type B1 plate
+(`catalog/housings/125b_vertical.yaml`), so one measured screw pattern will serve
+any pedal in that family.
 
 ## 6. Provisional board dimensions
 

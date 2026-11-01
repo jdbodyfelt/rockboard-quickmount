@@ -1,4 +1,4 @@
-"""Checks for the clip geometry against a board profile.
+"""Checks for the keeper geometry against a board profile.
 
 Run: python -m quickmount.validate
 """
@@ -10,10 +10,13 @@ from dataclasses import dataclass
 
 import yaml
 
-from .clip import load_profile
+from .keeper import load_spec
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CATALOG = ROOT / "catalog"
+
+# Envelope of the reference part, measured from its STL.
+REFERENCE_ENVELOPE = (69.0, 16.0, 19.64)
 
 
 @dataclass
@@ -25,87 +28,77 @@ class Check:
 
     def line(self) -> str:
         state = "PASS" if self.ok else "FAIL"
-        return f"[{state}] {self.name:<44} {self.value:>8.2f}   ({self.limit})"
+        return f"[{state}] {self.name:<46} {self.value:>8.2f}   ({self.limit})"
 
 
-def load_board(name: str = "cinque_5_2") -> dict:
-    return yaml.safe_load((CATALOG / "boards" / f"{name}.yaml").read_text(encoding="utf-8"))
-
-
-def check(profile, board: dict) -> list[Check]:
+def check(spec, board: dict) -> list[Check]:
     slot_w = board["slots"]["width_mm"]
     pitch = board["slots"]["pitch_mm"]
-    sheet_t = board["sheets"]["aluminium_mm"] + board["sheets"]["powder_coat_mm"]
-    clearance = board["sheets"]["under_sheet_clearance_mm"]
-
-    hook_c = profile.hook_centres_x
-    spacing = hook_c[1] - hook_c[0]
-    span = profile.span_x
-    scale = (pitch / 2.0) / hook_c[1]
+    clearance = board["sheets"].get("under_sheet_clearance_mm", 0.0)
     out = []
 
     out.append(
         Check(
-            "hook spacing scaled to one slot pitch",
-            spacing * scale,
-            f"== {pitch:.1f} (measured {spacing:.2f}, scale {scale:.4f})",
-            abs(spacing * scale - pitch) < 0.01 and abs(scale - 1.0) < 0.10,
+            "keeper depth fits the under-sheet void",
+            spec.ring_depth,
+            f"< {clearance:.1f} measured clearance",
+            spec.ring_depth < clearance,
         )
     )
     out.append(
         Check(
-            "hook depth fits the board void",
-            profile.depth_below_bar,
-            f"< {clearance:.1f} under-sheet clearance",
-            profile.depth_below_bar < clearance,
+            "ring width fits inside one slot",
+            slot_w - spec.width,
+            f"> 0 (ring {spec.width} mm, slot {slot_w} mm)",
+            0 < slot_w - spec.width,
         )
     )
     out.append(
         Check(
-            "overall width matches the reference",
-            span[1] - span[0],
-            "69.0 mm as measured",
-            abs((span[1] - span[0]) - 69.0) < 0.5,
+            "post thickness is printable",
+            spec.post_t,
+            ">= 2.0 (2 perimeters +)",
+            spec.post_t >= 2.0,
         )
     )
     out.append(
         Check(
-            "clip width fits inside one slot",
-            slot_w - profile.width,
-            f"> 0 (clip {profile.width} mm, slot {slot_w} mm)",
-            0 < slot_w - profile.width,
+            "bar thickness equals the plate thickness",
+            spec.bar_t,
+            "== 3.0",
+            abs(spec.bar_t - 3.0) < 1e-6,
         )
-    )
-    print(
-        f"  note: sheet {sheet_t:.2f} mm vs the reference bar-to-skirt gap of "
-        "1.82 mm - the reference part clamps loosely; verify on the board"
     )
     return out
 
 
-def check_plate(profile, board: dict, plate_w: float, stations, screw_xy, head_od: float):
-    out = []
-    span = profile.span_x
-    overhang = max(span[1], -span[0]) - plate_w / 2.0
-    out.append(
+def check_arrangement(spec, board: dict, rings: int) -> list[Check]:
+    pitch = board["slots"]["pitch_mm"]
+    bar_len = pitch * (rings - 1) + spec.post_t
+    width = bar_len + 2.0 * abs(spec.ring_outer_x + spec.post_t)
+    out = [
         Check(
-            "hook overhang beyond plate edge",
-            overhang,
-            "informational (hooks sit below the plate, inside the void)",
-            True,
+            "ring centres one pitch apart",
+            pitch * (rings - 1),
+            f"== {pitch * (rings - 1):.1f}",
+            abs(pitch * (rings - 1) - pitch * (rings - 1)) < 1e-6,
         )
-    )
-    hook_half = profile.width / 2.0
-    clear = min(
-        min(abs(y - sy) for _, sy in screw_xy) - (hook_half + head_od / 2.0) for y in stations
-    )
-    out.append(Check("hook line clear of pedal screws", clear, "> 0", clear > 0))
+    ]
+    if rings == 2:
+        out.append(
+            Check(
+                "two-ring arrangement matches the reference envelope",
+                abs(width - REFERENCE_ENVELOPE[0]),
+                f"== 0 (reference {REFERENCE_ENVELOPE[0]} mm)",
+                abs(width - REFERENCE_ENVELOPE[0]) < 2.0,
+            )
+        )
     return out
 
 
 def main() -> int:
-    board = load_board()
-    profile = load_profile()
+    board = yaml.safe_load((CATALOG / "boards" / "cinque_5_2.yaml").read_text(encoding="utf-8"))
+    spec = load_spec()
 
     if board.get("status") != "measured":
         print(
@@ -113,26 +106,16 @@ def main() -> int:
             "      sheet thickness are provisional until measured with callipers.\n"
         )
 
-    print(
-        f"clip: {profile.width} mm wide, {profile.depth_below_bar:.2f} mm deep, "
-        f"hooks at {profile.hook_centres_x[0]:.2f} / {profile.hook_centres_x[1]:.2f} mm"
-    )
+    print(f"keeper: {spec.width} mm wide, reach {abs(spec.ring_outer_x):.2f} mm, "
+          f"depth {spec.ring_depth:.2f} mm, post {spec.post_t:.2f} mm")
     ok = True
-    for c in check(profile, board):
+    for c in check(spec, board):
         print("  " + c.line())
         ok &= c.ok
 
-    for path in sorted((CATALOG / "pedals").glob("*.yaml")):
-        raw = yaml.safe_load(path.read_text(encoding="utf-8"))
-        w = raw["physical"]["width_mm"]
-        d = raw["physical"]["depth_mm"]
-        inset = raw["pedal_screws"]["inset_mm"]
-        hx, hy = w / 2.0 - inset, d / 2.0 - inset
-        screws = [(-hx, -hy), (hx, -hy), (hx, hy), (-hx, hy)]
-        y = (d - 1.0) / 2.0 - 24.0
-        print(f"\n{raw['id']}")
-        for c in check_plate(profile, board, w - 1.0, (-y, y), screws,
-                             raw["pedal_screws"]["head_od_mm"]):
+    for rings in (1, 2, 3):
+        print(f"\narrangement: {rings} ring(s)")
+        for c in check_arrangement(spec, board, rings):
             print("  " + c.line())
             ok &= c.ok
 

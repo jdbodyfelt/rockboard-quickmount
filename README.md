@@ -22,20 +22,23 @@ Manufacturing target: **Kea Modelling** (FDM, Mt Eden, Auckland) in **PETG** —
 
 ```bash
 pip install build123d trimesh shapely rtree pyyaml matplotlib
-python -m quickmount.validate          # engagement checks against the board profile
-python -m quickmount.build --step      # STL + STEP + manifest into out/
+python -m quickmount.build --step      # keeper ring + arrangements into out/
+python -m quickmount.validate          # geometry checks against the board profile
 ```
 
-Pedals live in [catalog/pedals/](catalog/pedals), board geometry in
-[catalog/boards/](catalog/boards). The slot dimensions there are **provisional**
+Outputs: `keeper_ring`, `keeper_arrangement_2ring` (matches the reference clip),
+`keeper_arrangement_3ring`.
+
+Keeper geometry in [catalog/clips/](catalog/clips), board geometry in
+[catalog/boards/](catalog/boards), housing families in [catalog/housings/](catalog/housings). The slot dimensions there are **provisional**
 until measured with callipers — see
 [docs/quickmount-mechanism.md](docs/quickmount-mechanism.md#6-provisional-board-dimensions).
 Screws: [docs/screws.md](docs/screws.md).
 
-Plates reproduce the hook geometry measured from a published RockBoard-compatible
-clip: a 3 mm bar (absorbed into the plate) and a loop per slot that drops through,
-springs over the neighbouring rib and presses the sheet. Mechanism, measurements
-and the one open question: [docs/quickmount-mechanism.md](docs/quickmount-mechanism.md).
+Scope is currently the **mechanism only**: the C-shaped keeper ring and bar
+arrangements of it, reproduced from a measured RockBoard-compatible clip. Pedal
+baseplates are deferred until the ring is proven on a real board. Mechanism,
+measurements and the open question: [docs/quickmount-mechanism.md](docs/quickmount-mechanism.md).
 
 ## Licence
 

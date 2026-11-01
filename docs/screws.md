@@ -1,5 +1,9 @@
 # Screw bill of materials
 
+> **Deferred.** Pedal baseplates are out of scope until the keeper ring is proven on
+the board. This document is kept because the analysis (head OD to thread size, and
+the 1.45 mm added length) still applies when baseplates return.
+
 What to order so the printed plates can be fitted to the Tumnus Deluxe and Mira,
 and why.
 

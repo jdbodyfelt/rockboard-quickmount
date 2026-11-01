@@ -1,0 +1,31 @@
+# 125B vertical enclosure - OEM mounting reference
+#
+# Both target pedals are vertical 125B housings and both are covered by the same
+# OEM plate type. Recorded because it means the screw pattern needed for any 125B
+# pedal is already solved by RockBoard.
+
+id: 125b_vertical
+enclosure: 125B
+orientation: vertical
+quickmount_type: B1
+product_no: RBO B QM T B1
+source: "RockBoard catalogue p.20; QuickMount Finder"
+provenance:
+  compatibility: {level: 3, source: "RockBoard catalogue p.20", retrieved: 2026-11-02}
+
+# Pedals the user confirmed on this housing (no build targeted; geometry only)
+examples:
+  - brand: Wampler
+    model: Tumnus Deluxe
+    width_mm: 66.3
+    depth_mm: 121.3
+  - brand: Walrus Audio
+    model: Mira
+    width_mm: 67.0
+    depth_mm: 123.0
+
+notes: |
+  Type B1's published compatibility list includes Keeley, EarthQuaker, JHS,
+  Mooer GL 100, Seymour Duncan, Friedman, several Wampler and Walrus models.
+  It is therefore a housing-family plate, not a pedal-specific one: one measured
+  screw pattern should serve every vertical 125B pedal it covers.
