@@ -23,6 +23,10 @@ licence: "CC BY-NC-SA"
 measured: 2026-11-02
 extrude_y_mm: 16.0
 bar_underside_z: 9.18
+# Span from the post's outer face to the skirt's inner face, i.e. the rib the arch
+# has to clear for the skirt to drop into the neighbouring slot.
+arch_span_mm: 16.8
+skirt_inner_x: -9.90
 profile_xz:
   - [-8.98, 26.55]
   - [-8.00, 27.28]

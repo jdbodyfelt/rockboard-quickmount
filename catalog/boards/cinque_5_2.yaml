@@ -1,14 +1,20 @@
-# RockBoard Cinque 5.2 - PROVISIONAL slot grid
+# RockBoard Cinque 5.2
 #
-# Envelope is Official (RockBoard catalogue p.5-6): 62.2 x 42.4 cm, 3.95 kg.
-# The slot grid is still PROVISIONAL: these numbers come from measuring
-# third-party clip models, not from callipers on the board. See
-# docs/quickmount-mechanism.md §6 and docs/inventory.md for the four readings
-# that replace them.
+# Envelope: Official RockBoard catalogue (5.2 = 622 x 424 mm, 3.95 kg). The
+# Cinque 5.4 technical drawing confirms the family envelope as 1002 mm long for
+# the 5.4, same depth.
+#
+# Slot grid, two independent sources:
+#   slot width 17.7 mm  - callipers on the board
+#   rib width  16 mm    - dimensioned on the official Cinque 5.4 technical drawing
+#                         (vector callout between two adjacent slots)
+#   pitch      33.7 mm  - derived: slot + rib
+#
+# The reference clip's own hook spacing is 32.90 mm, i.e. 0.8 mm under this
+# pitch, which is consistent with a hobby part built from the same board.
 
 id: cinque_5_2
-status: provisional
-source: "envelope from RockBoard catalogue; slot grid derived from reference clips"
+status: partial
 envelope:
   width_mm: 622.0
   depth_mm: 424.0
@@ -16,7 +22,25 @@ sheets:
   aluminium_mm: 2.0
   powder_coat_mm: 0.1
   under_sheet_clearance_mm: 22.0
+
 slots:
-  width_mm: 20.0
-  rib_mm: 13.0
-  pitch_mm: 33.0
+  width_mm: 17.7
+  rib_mm: 16.0
+  pitch_mm: 33.7
+
+field_status:
+  slot_width:
+    status: measured
+    source: "callipers, inside jaws, 2026-11-02"
+  rib_width:
+    status: official
+    source: "RockBoard Cinque 5.4 technical drawing, dimensioned gap between adjacent slots"
+  pitch:
+    status: derived
+    source: "slot width + rib width"
+  sheet_thickness:
+    status: assumed
+    source: "2.0 mm aluminium + 0.1 mm powder coat"
+  under_sheet_clearance:
+    status: assumed
+    source: "estimate; must exceed the 19.64 mm ring depth"

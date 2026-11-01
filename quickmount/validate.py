@@ -25,10 +25,19 @@ class Check:
     value: float
     limit: str
     ok: bool
+    warn_only: bool = False
+
+    @property
+    def state(self) -> str:
+        if self.ok:
+            return "PASS"
+        return "WARN" if self.warn_only else "FAIL"
+
+    def blocks(self) -> bool:
+        return not self.ok and not self.warn_only
 
     def line(self) -> str:
-        state = "PASS" if self.ok else "FAIL"
-        return f"[{state}] {self.name:<46} {self.value:>8.2f}   ({self.limit})"
+        return f"[{self.state}] {self.name:<46} {self.value:>8.2f}   ({self.limit})"
 
 
 def check(spec, board: dict) -> list[Check]:
@@ -53,6 +62,27 @@ def check(spec, board: dict) -> list[Check]:
             0 < slot_w - spec.width,
         )
     )
+    per_side = (slot_w - spec.width) / 2.0
+    out.append(
+        Check(
+            "ring clearance per side",
+            per_side,
+            "0.2-0.6 mm is a locating fit; the reference ring is 16.0 mm for a 17.7 mm slot",
+            per_side < 0.6,
+            warn_only=True,
+        )
+    )
+    rib = board["slots"].get("rib_mm")
+    if rib:
+        margin = spec.arch_span - rib
+        out.append(
+            Check(
+                "arch clears the rib so the skirt enters the next slot",
+                margin,
+                f"> 0 (arch span {spec.arch_span:.1f} vs rib {rib:.1f})",
+                margin > 0,
+            )
+        )
     out.append(
         Check(
             "post thickness is printable",
@@ -101,23 +131,20 @@ def main() -> int:
     spec = load_spec()
 
     if board.get("status") != "measured":
-        print(
-            f"NOTE: '{board['id']}' is '{board.get('status')}'. Slot width, rib, pitch and\n"
-            "      sheet thickness are provisional until measured with callipers.\n"
-        )
+        print(f"NOTE: '{board['id']}' is '{board.get('status')}' - see field_status in the profile.\n")
 
     print(f"keeper: {spec.width} mm wide, reach {abs(spec.ring_outer_x):.2f} mm, "
           f"depth {spec.ring_depth:.2f} mm, post {spec.post_t:.2f} mm")
     ok = True
     for c in check(spec, board):
         print("  " + c.line())
-        ok &= c.ok
+        ok &= not c.blocks()
 
     for rings in (1, 2, 3):
         print(f"\narrangement: {rings} ring(s)")
         for c in check_arrangement(spec, board, rings):
             print("  " + c.line())
-            ok &= c.ok
+            ok &= not c.blocks()
 
     return 0 if ok else 1
 

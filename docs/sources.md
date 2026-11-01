@@ -24,6 +24,12 @@ All sources retrieved 2026-10-21 unless noted. Keep this list current: every doc
 | Kea Modelling — terms | <https://keamodelling.com/terms> | File ownership, manifold-rejection clause, image licence |
 | Kea Modelling — returns | <https://keamodelling.com/returns> | Fault handling, delivery |
 
+## Technical drawings
+
+| Source | URL | Used for |
+| --- | --- | --- |
+| RockBoard Cinque 5.4 technical drawing | <https://cdn.rockboard.de/nos/data/erp/Artikell_PDF/PDF_Drawing/RockBoard/Pedalboards/RBO_5.4_Technical-Drawing.pdf> | 16 mm rib width between adjacent slots; family envelope (1002 x 424 mm). Vector text is outlined, so dimensions were read from a 300 dpi render |
+
 ## Community and third-party sources
 
 | Source | URL | Used for | Licence / caveat |

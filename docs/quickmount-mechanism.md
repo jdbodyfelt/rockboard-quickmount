@@ -176,31 +176,47 @@ vertical 125B and both take the OEM Type B1 plate
 (`catalog/housings/125b_vertical.yaml`), so one measured screw pattern will serve
 any pedal in that family.
 
-## 6. Provisional board dimensions
+## 6. Board dimensions
 
-Target board: **RockBoard Cinque 5.2** (622 x 424 mm, 3.95 kg - envelope from the
-RockBoard catalogue).
+Target board: **RockBoard Cinque 5.2** (622 x 424 mm). The Cinque 5.4 official
+technical drawing confirmed the family depth and gave one grid dimension.
 
-| Parameter | Value used | Basis |
-| --- | --- | --- |
-| Slot width | 20.0 mm | inferred from pitch 33 - rib 13 |
-| Rib width | 13.0 mm | 12.5 and 14.3 measured on two independent reference clips |
-| Pitch | 33.0 mm | reference hook spacing 32.90 mm; other clips imply 31.9 and 38.3 |
-| Sheet thickness | 2.1 mm | 2.0 mm aluminium + 0.1 mm powder coat |
-| Under-sheet clearance | 22.0 mm | estimate; must exceed the 19.64 mm hook depth |
+| Parameter | Value | Source | Status |
+| --- | --- | --- | --- |
+| Slot width | 17.7 mm | Callipers on the board | Measured |
+| Rib width | **16.0 mm** | Official Cinque 5.4 technical drawing - dimensioned gap between two adjacent slots | Official |
+| Pitch | **33.7 mm** | Derived: slot + rib | Derived |
+| Sheet thickness | 2.1 mm | 2.0 mm aluminium + 0.1 mm coat | Assumed |
+| Under-sheet clearance | 22.0 mm | Estimate; must exceed the 19.64 mm ring depth | Assumed |
 
-These are **provisional**. `catalog/boards/cinque_5_2.yaml` carries
-`status: provisional` and the manifest records it. Replace them with four calliper
-readings and delete the flag:
+Two independent sources agree on the pitch to within 0.8 mm: this derivation gives
+33.7 mm, and the reference clip's own hook spacing is 32.90 mm. That cross-check is
+the best evidence that the reference clip was made for this board family.
 
-1. slot width, across the short dimension with the inside jaws;
-2. rib width between two adjacent slots;
-3. pitch, slot centre to slot centre;
-4. sheet thickness at the board edge with the micrometer.
+The geometry also closes consistently:
 
-Then `python -m quickmount.build --step` and `python -m quickmount.validate`. The
-hook spacing rescales to the new pitch automatically; the hook depth is fixed by
-the reference geometry, so check it against the measured under-sheet clearance.
+| Check | Value |
+| --- | --- |
+| Ring width vs slot | 16.0 in 17.7 = **0.85 mm per side** |
+| Arch span (post face to skirt face) | 16.8 mm |
+| Arch span minus rib | **+0.8 mm**, so the skirt drops 0.8 mm into the neighbouring slot |
+
+An 0.85 mm per-side clearance is looser than a locating fit. That is the reference
+part's own proportion, so it is kept as the default, but it is flagged as a warning
+and `ring_width` is a parameter.
+
+### 6.1 What the official drawing does and does not give
+
+`https://cdn.rockboard.de/nos/data/erp/Artikell_PDF/PDF_Drawing/RockBoard/Pedalboards/RBO_5.4_Technical-Drawing.pdf`
+
+The drawing is a vector CAD export with all text converted to outlines, so nothing
+is machine-readable. Measured and read visually, its callouts cover the envelope
+(1002 mm length), frame and hinge details, feet (4x Ø11, 4x Ø7), and the above
+16 mm rib. **It does not dimension the slot width, slot length, or the sheet
+thickness.** Slot width therefore still rests on callipers.
+
+Note: the four `reference/cinque_54_00*.pdf` files are Thomann product pages, not
+drawings - they contain no technical content.
 
 ## 7. Print orientation
 

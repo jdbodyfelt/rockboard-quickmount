@@ -50,6 +50,7 @@ class KeeperSpec:
     ring_outer_x: float   # most outboard point (negative)
     ring_depth: float     # below the bar underside, positive
     bar_t: float          # bar thickness == plate thickness
+    arch_span: float = 16.8   # post outer face to skirt inner face (clears the rib)
 
     @property
     def post_t(self) -> float:
@@ -62,6 +63,7 @@ class KeeperSpec:
             "ring_depth_mm": round(self.ring_depth, 2),
             "post_thickness_mm": round(self.post_t, 2),
             "bar_thickness_mm": round(self.bar_t, 2),
+            "arch_span_mm": round(self.arch_span, 2),
         }
 
 
@@ -92,6 +94,7 @@ def load_spec(path: pathlib.Path = CLIP_YAML) -> KeeperSpec:
         ring_outer_x=min(xs) - post_outer,
         ring_depth=max(z for _, z in pts) - bar_z,
         bar_t=3.0,
+        arch_span=float(raw.get("arch_span_mm", 16.8)),
     )
 
 
