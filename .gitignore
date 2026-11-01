@@ -218,3 +218,18 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Third-party reference downloads (CC BY-NC-SA, analysis only)
+reference/
+
+# Python
+__pycache__/
+*.pyc
+
+
+# Source download of third-party reference models (see docs/quickmount-mechanism.md)
+*.zip
+
+# Build output (regenerate with python -m quickmount.build)
+out/
+

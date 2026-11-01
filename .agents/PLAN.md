@@ -109,6 +109,9 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 - [x] Equipment inventory recorded: Quad board, Type E plates ×2, Type M plate, Type J1 plate ([inventory.md](../docs/inventory.md)).
 - [ ] Confirm the Quad model by width and each plate's moulded product number.
 - [x] Metrology kit on hand: caliper (inside/outside jaws), micrometer, tape, feeler gauges, silicone putty, spring/luggage scale, 0.1 g scale. No purchases required.
+- [x] Mechanism analysed from published clip models; design chosen and documented in [quickmount-mechanism.md](../docs/quickmount-mechanism.md).
+- [x] Generator implemented (`quickmount/`), first-order STLs produced for the Tumnus Deluxe and Mira.
+- [ ] Confirm the Quad's slot width, rib width, pitch, and sheet thickness; drop `status: provisional` from the board profile.
 - [ ] Vendor questions sent; answers logged in [manufacturing.md §7.1](../docs/manufacturing.md#71-response-log).
 - [ ] Calibration coupon specification ready; ordering deferred until the vendor answers.
 - [ ] Decide whether an in-house printer is available for fast iteration (Kea dispatch is 3–4 days).
@@ -334,6 +337,8 @@ examples/                 example pedals and manifests
 - [docs/quickmount-system.md](../docs/quickmount-system.md) — OEM system and design constraints
 - [docs/geometry-capture.md](../docs/geometry-capture.md) — measurement procedure and tests
 - [docs/manufacturing.md](../docs/manufacturing.md) — Kea Modelling profile, PETG decision, design rules and vendor calibration
+- [docs/quickmount-mechanism.md](../docs/quickmount-mechanism.md) — how the slot grid and clips work; chosen design
+- [docs/screws.md](../docs/screws.md) — screw bill of materials
 - [docs/pedal-data.md](../docs/pedal-data.md) — data sources and lookup
 - [docs/rendering-pipeline.md](../docs/rendering-pipeline.md) — CAD/STL pipeline
 - [docs/input-schema.md](../docs/input-schema.md) — YAML formats

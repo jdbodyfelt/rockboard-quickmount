@@ -18,6 +18,20 @@ Measure a real board and a real QuickMount plate, parameterise the slot/keeper i
 
 Manufacturing target: **Kea Modelling** (FDM, Mt Eden, Auckland) in **PETG** — see [docs/manufacturing.md](docs/manufacturing.md).
 
+## Generating plates
+
+```bash
+pip install build123d trimesh shapely rtree pyyaml matplotlib
+python -m quickmount.validate          # engagement checks against the board profile
+python -m quickmount.build --step      # STL + STEP + manifest into out/
+```
+
+Pedals live in [catalog/pedals/](catalog/pedals), board geometry in
+[catalog/boards/](catalog/boards). The slot dimensions there are **provisional**
+until measured with callipers — see
+[docs/quickmount-mechanism.md](docs/quickmount-mechanism.md#6-provisional-board-dimensions).
+Screws: [docs/screws.md](docs/screws.md).
+
 ## Licence
 
 GPL-3.0 — see [LICENSE](LICENSE).

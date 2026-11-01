@@ -1,0 +1,18 @@
+# RockBoard Quad slot grid - PROVISIONAL
+
+# Derivation of these numbers, and the measurement that must replace them, are in
+# docs/quickmount-mechanism.md. Until `status` is `measured`, every generated part
+# is flagged in its manifest.
+
+id: quad_4x
+status: provisional
+source: "derived from reference clip models; not measured"
+sheets:
+  # cold-rolled aluminium sheet plus powder coat
+  aluminium_mm: 2.0
+  powder_coat_mm: 0.1
+slots:
+  # long slots run along the board's X axis; ribs separate adjacent slots
+  width_mm: 20.0
+  rib_mm: 13.0
+  pitch_mm: 33.0

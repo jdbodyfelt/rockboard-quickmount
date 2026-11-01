@@ -30,6 +30,8 @@ Rules:
 | [quickmount-system.md](quickmount-system.md) | How the OEM QuickMount works, the full type catalogue, the keeper lock, and the constraints for a printed equivalent. |
 | [geometry-capture.md](geometry-capture.md) | Metrology procedure, tool list, record templates, tolerance budget, fit coupons, and the OEM baseline test protocol. |
 | [inventory.md](inventory.md) | Owned board, OEM plates, and pedals; what may be sectioned; first measurement session plan. |
+| [quickmount-mechanism.md](quickmount-mechanism.md) | Mechanical analysis of the slot grid and the QuickMount-compatible clips, the design chosen, provisional dimensions, and print orientation. |
+| [screws.md](screws.md) | Screw bill of materials for mounting the printed plates. |
 | [manufacturing.md](manufacturing.md) | Manufacturer profile (Kea Modelling), PETG decision, FDM design rules, vendor calibration coupon, ordering workflow, and vendor questions. |
 | [pedal-data.md](pedal-data.md) | Pedal dimensions and screw-hole data: sources, confidence model, and the lookup pipeline. |
 | [rendering-pipeline.md](rendering-pipeline.md) | Parametric CAD/STL generation: tool choice, pipeline stages, QA gates, print orientation, material profiles. |
