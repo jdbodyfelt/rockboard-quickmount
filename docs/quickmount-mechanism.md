@@ -123,41 +123,68 @@ slot opening, which is why the keeper is a C rather than a straight finger.
 ## 5. Design chosen for this project
 
 Requirements behind the choice: printable in PETG by Kea Modelling, no supports on
-mating faces, no reliance on spring compliance (PETG creeps), tolerance to a
-±1 mm error in the provisional board dimensions, and simple hand operation.
+mating faces, tolerance to a ±1 mm error in the provisional board dimensions, a
+genuine **pressure/snap** engagement (not a slide), and a release a user can
+operate without a special tool.
 
-**Chosen: two rigid hooks with a slide-to-latch motion.**
+**Chosen: C-shaped pressure flexures that snap over the slot edge.**
+
+Each keeper is a pair of mirrored flexures. One flexure in cross-section (looking
+along the slot's long axis) is a C whose opening faces the plate:
 
 ```
-          pedal
-   ┌───────────────────┐        plate, 3 mm PETG
-   │  ○             ○  │        ○ = countersunk pedal screw
-   │                   │
-   │      ▼      ▼     │        hooks at ±33 mm, on a 2-pitch spacing
-   └──────┬──────┬─────┘
-          │      │              3 × 18 mm stems drop through two slots
-        ┌─┴─┐  ┌─┴─┐            barb head, 6.5 mm, 45° underside ramp
-        └───┘  └───┘
-   ══════════════════════════   board: slot | rib | slot | rib
+        plate (z = 0)
+   ████████████████████████████
+        │                │
+        │ neck           │        barb shelf, 1.2 mm under the sheet
+        │             ┌──┘
+        │             │  ← 45° ramp starts here
+        │             │
+         ╲           ╱
+          ╲         ╱             C flexure, 18.5 mm developed length
+           ╲       ╱              1.8 mm wall
+            ╲     ╱
+             ╲___╱               U-bend, 9.3 mm below the plate face
+               ▲
+        pinch here to release
 ```
 
-1. **Drop in.** The stems enter two slots 66 mm apart (2 × 33 mm pitch). The barbs
-   pass through because the barb tip is 8.0 mm from the hook centre and the slot
-   half-width is 10 mm.
-2. **Slide 5 mm** along the pedal's depth. Each barb moves under the adjacent rib
-   (3 mm of engagement), the stems stay inside their slots with 3.5 mm to spare.
-3. **Lock.** The barb's upper face is 0.30 mm above the sheet underside, so the
-   plate can only lift 0.3 mm before the barbs take load.
+Read as a loop: the neck descends from the plate, the U-bend turns it around, and
+the rising branch carries the barb back up to the sheet. The **root is at the
+plate**, the **free end is the barb**, and the compliant length is the whole
+18.5 mm loop.
 
-Why this shape: both barbs are rigid, so nothing depends on polymer spring
-behaviour; the slide is a deliberate second motion, which is what makes it a lock
-rather than a push-fit; and all the critical clearances are single numbers that a
-single calliper reading can correct.
+| Step | What happens |
+| --- | --- |
+| Insert | The barb's 45° ramp meets the slot edge and cams the free end inward by 1.2 mm. Nothing else touches; the flexure opens like a spring. |
+| Snap | Past the sheet, the flexure springs back. The shelf sits **0.3 mm below the sheet underside**, so lifting the plate loads a flat face, not a ramp. |
+| Hold | Each keeper has two barbs (one per side of the slot), and the plate has two keepers: **4 load pads, 1.2 mm × 16 mm each**, bearing directly on the aluminium. |
+| Release | Press the two rising branches toward each other from under the board (3.1 mm access gap). Each barb collapses 1.2 mm and the plate lifts out. A 2 mm hex key works if fingers will not fit. |
 
-Known limitation (v0.1): nothing yet prevents the plate sliding back on its own.
-That is acceptable while the pedal is loaded downwards, and the geometry is
-arranged so the slide is against cable pull. A detent or a keeper screw is the
-next iteration — tracked in `PLAN.md`.
+Why this shape:
+
+- **It is a pressure clip.** Retention comes from spring pressure plus a positive
+  shelf, exactly like the OEM keeper; there is no slide, so nothing can drift
+  loose in a gig bag.
+- **The strain budget works in PETG.** Deflecting 1.2 mm over an 18.5 mm flexure
+  gives **0.95 % peak strain** against a 1.5 % limit for repeated cycles
+  (`python -m quickmount.validate` recomputes this).
+- **The root is far from the barb, deliberately.** A short keeper rooted next to
+  the barb would need ~4 % strain — guaranteed creep and cracking.
+- **The flexure stays inside the slot while posting through.** The neck (≤ 5.0 mm
+  from centre) and the rising branch (≤ 9.9 mm) are both inside the 10 mm slot
+  half-width; only the barb compresses.
+
+Trade-offs accepted in v0.1:
+
+- the keeper hangs 7.2 mm below the sheet, inside the board's void, so a board
+  with less than ~8 mm of under-sheet clearance will not take it (checked against
+  `under_sheet_clearance_mm` in the board profile);
+- release needs access to the underside of the board, which an open RockBoard
+  frame provides;
+- the middle span of the plate, between the two keepers, is unsupported and may
+  flex slightly under a heavy pedal; a third keeper is a one-line change
+  (`keeper_count: 3` would need an even pitch, so it is deferred).
 
 ## 6. Provisional board dimensions
 
@@ -184,22 +211,23 @@ the new whole number of pitches automatically.
 
 ## 7. Print orientation
 
-The part must be printed **on edge** so the barb's locking face, which is
-horizontal in use, becomes vertical on the bed:
+- modelled in use coordinates (`z = 0` is the board-facing face, keepers at
+  `z < 0`);
+- exported rotated 180° about X, so the **pedal face sits on the bed and the
+  keepers point up**.
 
-- modelled in use coordinates (`z = 0` is the board-facing face, hooks at `z < 0`);
-- exported rotated 180° about X, so the pedal face is on the bed and the hooks
-  point up.
+That is the natural orientation for this shape: the C flexures become upright
+arches, and the barb's 45° ramp becomes a 45° slope rising away from the bed. The
+only overhang is the barb's shelf itself: a **1.3 mm horizontal face at the top of
+that 45° ramp**, four of them. In PETG at 0.2 mm layers that is a short,
+well-supported bridge.
 
-In that orientation the barb's locking face is a **downward-facing horizontal
-shelf 5.4 mm above the bed** — a 6.5 × 18 mm overhang per hook, four in total.
-Two options, in order of preference:
-
-1. print on edge (rotate the STL 90° about X in the slicer) — no supports, but a
-   3 mm × 122 mm footprint standing 66 mm tall, so use a brim;
-2. print flat with supports under the two barb shelves only, "from buildplate
-   only", in PETG, then skim the shelf with a sharp blade. The 0.30 mm latch
-   clearance absorbs light marks.
+- No supports. Use a 5 mm brim — the part is 65 × 120 mm and only 12.3 mm tall, so
+  it is stable.
+- Do **not** print it flat on the pedal face with the keepers pointing down; the
+  U-bends and the barbs would then be unsupported bridges.
+- Check the first article for whiskers under the barbs. The shelf sits 0.3 mm
+  below the sheet, so a small sag only makes the fit tighter, not looser.
 
 ## 8. Screw stack
 
@@ -215,7 +243,8 @@ countersink recesses the head 1.55 mm, so the effective added length is
 | Confirm the four board dimensions | Any real fit | Callipers on the Quad, §6 |
 | Confirm pedal screw thread (M3 vs M3.5) | Screw order | Micrometer on a screw's major diameter |
 | Retention vs the OEM plate | Acceptance test | Luggage scale, per [quickmount-system.md](quickmount-system.md#8-verification-protocol-per-design) |
-| Anti-slide lock | Long-term security | Detent finger or keeper screw, next iteration |
+| Snap force and release force in PETG | Usability | First printed article; adjust `barb_overlap` and `t_arm` |
+| Horizontal drift | Long-term security | Flexures fill the slot width; verify on the first article |
 | Whether the Quad's slot field matches Tres/Cinque | Board coverage | Borrow or measure a second board |
 
 ## 10. Sources

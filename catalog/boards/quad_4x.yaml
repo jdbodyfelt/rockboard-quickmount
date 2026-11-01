@@ -11,6 +11,8 @@ sheets:
   # cold-rolled aluminium sheet plus powder coat
   aluminium_mm: 2.0
   powder_coat_mm: 0.1
+  # clear height under the sheet to the U-braces; provisional
+  under_sheet_clearance_mm: 15.0
 slots:
   # long slots run along the board's X axis; ribs separate adjacent slots
   width_mm: 20.0

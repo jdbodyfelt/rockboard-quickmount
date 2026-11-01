@@ -19,7 +19,6 @@ from .plate import (
     PlateOptions,
     build_plate,
     export,
-    layout,
     to_print_orientation,
 )
 
@@ -127,7 +126,7 @@ def main() -> int:
                 rc = 1
             print(f"[{status}] {pedal.pedal_id}")
             print(f"   file     {stl_path.name}")
-            print(f"   layout   {lay.as_dict()}")
+            print(f"   layout   {lay}")
             print(f"   mesh     {report}")
             manifest["items"].append(
                 {
@@ -135,7 +134,7 @@ def main() -> int:
                     "model": pedal_raw["model"],
                     "file": stl_path.name,
                     "step": step_path.name if step_path else None,
-                    "layout": lay.as_dict(),
+                    "layout": lay,
                     "mesh": report,
                     "status": status,
                 }

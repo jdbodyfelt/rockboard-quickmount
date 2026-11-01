@@ -110,7 +110,7 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 - [ ] Confirm the Quad model by width and each plate's moulded product number.
 - [x] Metrology kit on hand: caliper (inside/outside jaws), micrometer, tape, feeler gauges, silicone putty, spring/luggage scale, 0.1 g scale. No purchases required.
 - [x] Mechanism analysed from published clip models; design chosen and documented in [quickmount-mechanism.md](../docs/quickmount-mechanism.md).
-- [x] Generator implemented (`quickmount/`), first-order STLs produced for the Tumnus Deluxe and Mira.
+- [x] Generator implemented (`quickmount/`); STLs for the Tumnus Deluxe and Mira use C-shaped snap keepers (see [quickmount-mechanism.md](../docs/quickmount-mechanism.md#5-design-chosen-for-this-project)).
 - [ ] Confirm the Quad's slot width, rib width, pitch, and sheet thickness; drop `status: provisional` from the board profile.
 - [ ] Vendor questions sent; answers logged in [manufacturing.md §7.1](../docs/manufacturing.md#71-response-log).
 - [ ] Calibration coupon specification ready; ordering deferred until the vendor answers.

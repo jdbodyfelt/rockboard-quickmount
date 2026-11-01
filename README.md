@@ -32,6 +32,11 @@ until measured with callipers — see
 [docs/quickmount-mechanism.md](docs/quickmount-mechanism.md#6-provisional-board-dimensions).
 Screws: [docs/screws.md](docs/screws.md).
 
+Plates use **C-shaped snap keepers**: each keeper is a pair of mirrored C flexures
+that deflect 1.2 mm to snap over the slot edge and then bear on the sheet underside.
+Release is by pinching the flexures from under the board. Mechanism and strain
+budget: [docs/quickmount-mechanism.md](docs/quickmount-mechanism.md#5-design-chosen-for-this-project).
+
 ## Licence
 
 GPL-3.0 — see [LICENSE](LICENSE).
