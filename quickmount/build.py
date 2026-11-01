@@ -1,6 +1,10 @@
-"""Build all catalog pedals into printable STLs.
+"""Build printable parts from the catalog.
 
-Usage: python -m quickmount.build [--out out] [--step]
+Emits:
+  * the reference clip, reproduced from its measured cross-section
+  * a baseplate per catalog pedal, carrying that same hook section
+
+Usage: python -m quickmount.build [--out out] [--step] [--board cinque_5_2]
 """
 
 from __future__ import annotations
@@ -13,18 +17,16 @@ import pathlib
 import trimesh
 import yaml
 
-from .plate import (
-    BoardProfile,
-    PedalProfile,
-    PlateOptions,
-    build_plate,
+from .clip import (
+    build_plate_with_clip,
+    build_reference_clip,
     export,
-    to_print_orientation,
+    load_profile,
 )
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CATALOG = ROOT / "catalog"
-CODE_VERSION = "0.1.0"
+CODE_VERSION = "0.2.0"
 
 
 def load_yaml(path: pathlib.Path) -> dict:
@@ -32,31 +34,15 @@ def load_yaml(path: pathlib.Path) -> dict:
         return yaml.safe_load(fh)
 
 
-def load_board(name: str = "quad_4x") -> tuple[BoardProfile, dict]:
-    raw = load_yaml(CATALOG / "boards" / f"{name}.yaml")
-    board = BoardProfile(
-        slot_w=raw["slots"]["width_mm"],
-        rib_w=raw["slots"]["rib_mm"],
-        pitch=raw["slots"]["pitch_mm"],
-        sheet_t=raw["sheets"]["aluminium_mm"] + raw["sheets"]["powder_coat_mm"],
-    )
-    return board, raw
+def load_board(name: str) -> dict:
+    return load_yaml(CATALOG / "boards" / f"{name}.yaml")
 
 
-def load_pedal(path: pathlib.Path) -> tuple[PedalProfile, dict]:
-    raw = load_yaml(path)
-    pedal = PedalProfile(
-        pedal_id=raw["id"],
-        width=raw["physical"]["width_mm"],
-        depth=raw["physical"]["depth_mm"],
-        screw_inset=raw["pedal_screws"]["inset_mm"],
-        screw_head_od=raw["pedal_screws"]["head_od_mm"],
-        screw_count=raw["pedal_screws"].get("count", 4),
-    )
-    return pedal, raw
+def load_pedal(path: pathlib.Path) -> dict:
+    return load_yaml(path)
 
 
-def geometry_report(mesh: trimesh.Trimesh) -> dict:
+def report(mesh: trimesh.Trimesh) -> dict:
     return {
         "triangles": int(len(mesh.faces)),
         "watertight": bool(mesh.is_watertight),
@@ -65,84 +51,132 @@ def geometry_report(mesh: trimesh.Trimesh) -> dict:
     }
 
 
+def hook_stations(plate_d: float, screw_y: float, half_len: float = 16.0) -> tuple[float, ...]:
+    """Two hook lines, clear of the pedal screws and of the plate ends."""
+    y = plate_d / 2.0 - half_len - 8.0
+    return (-y, y)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=str(ROOT / "out"))
-    ap.add_argument("--board", default="quad_4x")
+    ap.add_argument("--board", default="cinque_5_2")
     ap.add_argument("--step", action="store_true")
-    ap.add_argument("--pedal", action="append", default=None, help="pedal id or yaml stem")
+    ap.add_argument("--pedal", action="append", default=None)
     args = ap.parse_args()
 
     out = pathlib.Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
 
-    board, board_raw = load_board(args.board)
-    opt = PlateOptions()
-
-    pedal_paths = sorted((CATALOG / "pedals").glob("*.yaml"))
-    if args.pedal:
-        wanted = set(args.pedal)
-        pedal_paths = [p for p in pedal_paths if p.stem in wanted or p.stem in wanted]
+    board = load_board(args.board)
+    clip = load_profile()
 
     manifest = {
         "code_version": CODE_VERSION,
         "board": {
-            "id": board_raw["id"],
-            "status": board_raw["status"],
-            "slot_w_mm": board.slot_w,
-            "rib_w_mm": board.rib_w,
-            "pitch_mm": board.pitch,
-            "sheet_t_mm": round(board.sheet_t, 3),
+            "id": board["id"],
+            "status": board.get("status"),
+            "slot_w_mm": board["slots"]["width_mm"],
+            "rib_w_mm": board["slots"]["rib_mm"],
+            "pitch_mm": board["slots"]["pitch_mm"],
+            "sheet_t_mm": round(
+                board["sheets"]["aluminium_mm"] + board["sheets"]["powder_coat_mm"], 3
+            ),
         },
-        "plate_options": opt.__dict__,
+        "clip": {
+            "id": "reference_2space_clip",
+            "width_mm": clip.width,
+            "span_x_mm": [round(v, 2) for v in clip.span_x],
+            "depth_below_bar_mm": round(clip.depth_below_bar, 2),
+            "hook_centres_x_mm": list(clip.hook_centres_x),
+        },
         "items": [],
     }
 
     rc = 0
-    for path in pedal_paths:
-        pedal, pedal_raw = load_pedal(path)
+
+    replica = build_reference_clip(clip)
+    stl = out / "clip_reference_2space.stl"
+    step = out / "clip_reference_2space.step" if args.step else None
+    export(replica, str(stl), str(step) if step else None)
+    mesh = trimesh.load(str(stl), force="mesh")
+    rep = report(mesh)
+    print(f"[{'ok' if rep['watertight'] else 'LEAK'}] clip_reference_2space")
+    print(f"   mesh     {rep}")
+    manifest["items"].append(
+        {
+            "part": "clip_reference_2space",
+            "file": stl.name,
+            "step": step.name if step else None,
+            "mesh": rep,
+        }
+    )
+    if not rep["watertight"]:
+        rc = 1
+
+    paths = sorted((CATALOG / "pedals").glob("*.yaml"))
+    if args.pedal:
+        wanted = set(args.pedal)
+        paths = [p for p in paths if p.stem in wanted]
+
+    for path in paths:
+        raw = load_pedal(path)
+        pid = raw["id"]
         try:
-            part, lay = build_plate(pedal, board, opt)
-            printable = to_print_orientation(part, opt)
-            revision = hashlib.sha256(
+            width = raw["physical"]["width_mm"]
+            depth = raw["physical"]["depth_mm"]
+            plate_w = width - 1.0
+            plate_d = depth - 1.0
+            inset = raw["pedal_screws"]["inset_mm"]
+            hx = width / 2.0 - inset
+            hy = depth / 2.0 - inset
+            screws = [(-hx, -hy), (hx, -hy), (hx, hy), (-hx, hy)]
+            stations = hook_stations(plate_d, hy)
+
+            part = build_plate_with_clip(
+                plate_w=plate_w,
+                plate_d=plate_d,
+                t_plate=3.0,
+                screw_xy=screws,
+                screw_head_od=raw["pedal_screws"]["head_od_mm"],
+                hook_stations_y=stations,
+                mount_mode="bar_on_sheet",
+                clip=clip,
+                pitch_mm=board["slots"]["pitch_mm"],
+            )
+            rev = hashlib.sha256(
                 json.dumps(
-                    {
-                        "code": CODE_VERSION,
-                        "pedal": pedal.pedal_id,
-                        "board": board_raw["id"],
-                        "opt": opt.__dict__,
-                    },
+                    {"code": CODE_VERSION, "pedal": pid, "board": board["id"]},
                     sort_keys=True,
                 ).encode()
             ).hexdigest()[:8]
-            stem = f"{pedal.pedal_id}__{board_raw['id']}__petg__r{revision}"
-            stl_path = out / f"{stem}.stl"
-            step_path = out / f"{stem}.step" if args.step else None
-            export(printable, str(stl_path), str(step_path) if step_path else None)
-            mesh = trimesh.load(str(stl_path), force="mesh")
-            report = geometry_report(mesh)
-            status = "ok" if report["watertight"] else "NOT WATERTIGHT"
-            if not report["watertight"]:
-                rc = 1
-            print(f"[{status}] {pedal.pedal_id}")
-            print(f"   file     {stl_path.name}")
-            print(f"   layout   {lay}")
-            print(f"   mesh     {report}")
+            stem = f"{pid}__{board['id']}__petg__r{rev}"
+            stl = out / f"{stem}.stl"
+            step = out / f"{stem}.step" if args.step else None
+            export(part, str(stl), str(step) if step else None)
+            mesh = trimesh.load(str(stl), force="mesh")
+            rep = report(mesh)
+            ok = rep["watertight"]
+            print(f"[{'ok' if ok else 'LEAK'}] {pid}")
+            print(f"   file     {stl.name}")
+            print(f"   hooks    y={[round(v, 2) for v in stations]}  x=+/-16.45 (1 pitch)")
+            print(f"   mesh     {rep}")
             manifest["items"].append(
                 {
-                    "pedal": pedal.pedal_id,
-                    "model": pedal_raw["model"],
-                    "file": stl_path.name,
-                    "step": step_path.name if step_path else None,
-                    "layout": lay,
-                    "mesh": report,
-                    "status": status,
+                    "part": pid,
+                    "file": stl.name,
+                    "step": step.name if step else None,
+                    "hook_stations_y_mm": [round(v, 2) for v in stations],
+                    "screw_xy_mm": [[round(x, 2), round(y, 2)] for x, y in screws],
+                    "mesh": rep,
                 }
             )
-        except Exception as exc:  # keep the batch alive
+            if not ok:
+                rc = 1
+        except Exception as exc:
             rc = 1
-            print(f"[FAILED] {pedal.pedal_id}: {exc}")
-            manifest["items"].append({"pedal": pedal.pedal_id, "status": f"failed: {exc}"})
+            print(f"[FAILED] {pid}: {exc}")
+            manifest["items"].append({"part": pid, "status": f"failed: {exc}"})
 
     (out / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     print(f"\nmanifest -> {out / 'manifest.json'}")

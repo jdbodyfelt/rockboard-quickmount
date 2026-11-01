@@ -8,9 +8,9 @@ Last updated: 2026-10-21.
 
 | Item | Detail | Status |
 | --- | --- | --- |
-| RockBoard Quad | Model not yet confirmed (4.1, 4.2, 4.3, or 4.4) | Available |
+| RockBoard **Cinque 5.2** | 622 x 424 mm, 3.95 kg (Official envelope) | Available |
 
-**Confirm the model** by measuring the overall width and matching it to the catalogue:
+Model is confirmed as **Cinque 5.2**. The table below is retained for reference if a second board is ever added:
 
 | Model | Width | Depth |
 | --- | --- | --- |
@@ -73,7 +73,7 @@ Order of work, using only what is on hand. Budget roughly half a day. The metrol
 3. **Measure both Type E plates** (`Q-01` to `Q-10`) and compare them for repeatability. Capture the keeper cavity with a silicone impression if putty is available.
 4. **Photograph and measure the BOSS compact pedals** (OC-2, OD-3): footprint, height, weight, screw positions, thread, depth.
 5. **Measure Type M and J1** with callipers, photography, and silicone impressions. All plates remain intact.
-6. **Record the OEM baseline** (insertion, release, pull-off, 100 cycles, creep at 50 °C and 70 °C) using the Type E plate on the Quad.
+6. **Record the OEM baseline** (insertion, release, pull-off, 100 cycles, creep at 50 °C and 70 °C) using the Type E plate in the Cinque 5.2.
 7. File the records and photos under `docs/measurements/<date>/`.
 
 ## 6. Handling notes

@@ -1,0 +1,22 @@
+# RockBoard Cinque 5.2 - PROVISIONAL slot grid
+#
+# Envelope is Official (RockBoard catalogue p.5-6): 62.2 x 42.4 cm, 3.95 kg.
+# The slot grid is still PROVISIONAL: these numbers come from measuring
+# third-party clip models, not from callipers on the board. See
+# docs/quickmount-mechanism.md §6 and docs/inventory.md for the four readings
+# that replace them.
+
+id: cinque_5_2
+status: provisional
+source: "envelope from RockBoard catalogue; slot grid derived from reference clips"
+envelope:
+  width_mm: 622.0
+  depth_mm: 424.0
+sheets:
+  aluminium_mm: 2.0
+  powder_coat_mm: 0.1
+  under_sheet_clearance_mm: 22.0
+slots:
+  width_mm: 20.0
+  rib_mm: 13.0
+  pitch_mm: 33.0

@@ -106,12 +106,12 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 - [x] `docs/` set: board, QuickMount, metrology, pedal data, manufacturing, pipeline, schema, sources.
 - [x] This plan.
 - [x] Manufacturer confirmed: Kea Modelling (FDM, PETG and PLA).
-- [x] Equipment inventory recorded: Quad board, Type E plates ×2, Type M plate, Type J1 plate ([inventory.md](../docs/inventory.md)).
-- [ ] Confirm the Quad model by width and each plate's moulded product number.
+- [x] Equipment inventory recorded: **Cinque 5.2** board, Type E plates ×2 (plus one spare), Type M plate, Type J1 plate ([inventory.md](../docs/inventory.md)).
+- [ ] Confirm each plate's moulded product number.
 - [x] Metrology kit on hand: caliper (inside/outside jaws), micrometer, tape, feeler gauges, silicone putty, spring/luggage scale, 0.1 g scale. No purchases required.
 - [x] Mechanism analysed from published clip models; design chosen and documented in [quickmount-mechanism.md](../docs/quickmount-mechanism.md).
-- [x] Generator implemented (`quickmount/`); STLs for the Tumnus Deluxe and Mira use C-shaped snap keepers (see [quickmount-mechanism.md](../docs/quickmount-mechanism.md#5-design-chosen-for-this-project)).
-- [ ] Confirm the Quad's slot width, rib width, pitch, and sheet thickness; drop `status: provisional` from the board profile.
+- [x] Generator implemented (`quickmount/`); the clip is reproduced from its measured cross-section and carried under each pedal baseplate (see [quickmount-mechanism.md](../docs/quickmount-mechanism.md#3-what-the-reference-clip-actually-is-measured)).
+- [ ] Confirm the Cinque 5.2's slot width, rib width, pitch, sheet thickness and under-sheet clearance; drop `status: provisional`.
 - [ ] Vendor questions sent; answers logged in [manufacturing.md §7.1](../docs/manufacturing.md#71-response-log).
 - [ ] Calibration coupon specification ready; ordering deferred until the vendor answers.
 - [ ] Decide whether an in-house printer is available for fast iteration (Kea dispatch is 3–4 days).
@@ -126,7 +126,7 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 
 **Work**
 
-1. Measure the Quad board (confirm 4.x) using [geometry-capture.md](../docs/geometry-capture.md); add a second board family in Phase 3 or earlier if one can be borrowed.
+1. Measure the Cinque 5.2 using [geometry-capture.md](../docs/geometry-capture.md); add a second board family in Phase 3 or earlier if one can be borrowed.
 2. Use the Type E pair on hand: characterise both externally and compare them for repeatability; capture the keeper cavity with silicone impressions. Measure the Type M and Type J1 plates the same way. **No plate may be sectioned** — see [inventory.md](../docs/inventory.md).
 3. Measure OEM baseline: insertion, release, pull-off, 100 cycles, creep at 50 °C and 70 °C.
 4. Build the parametric slot profile with three load-bearing features: tab, keeper, release.
@@ -135,7 +135,7 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 7. A/B test print orientations for retention, submitting both orientations to Kea.
 8. Decide the retention mechanism: integral compliant keeper vs screw clamp vs captured spring.
 
-**Deliverables:** completed measurement records; a completed Quad board profile; `cad/slot_profile.py`; coupon sets; a validated `kea_petg` printer profile; a written decision record for the keeper mechanism and print orientation.
+**Deliverables:** completed measurement records; a completed Cinque 5.2 board profile; `cad/slot_profile.py`; coupon sets; a validated `kea_petg` printer profile; a written decision record for the keeper mechanism and print orientation.
 
 **Exit criteria:** a Kea-printed PETG coupon inserts by hand, locks, resists at least 80 % of the OEM pull-off force, releases cleanly, and survives 100 cycles without visible wear-through.
 
@@ -252,7 +252,7 @@ Total: roughly 26–38 person-days, excluding printing time and hardware purchas
 | # | Risk | Likelihood | Impact | Mitigation |
 | --- | --- | --- | --- | --- |
 | R1 | Printed keeper cannot match OEM retention or cycle life | Medium | High | Phase 1 gate; hybrid fallback (purchased spring or screw clamp) |
-| R2 | Slot dimensions vary between production batches or models | Medium | High | Phase 1 measures the Quad; confirm cross-family consistency in Phase 3 with borrowed or purchased boards; publish the measured range |
+| R2 | Slot dimensions vary between production batches or models | Medium | High | Phase 1 measures the Cinque 5.2; confirm cross-family consistency in Phase 3 with borrowed or purchased boards; publish the measured range |
 | R3 | Pedal screw data is unavailable at scale | High | Medium | OEM type library plus housing families; photo measurement; explicit prompts |
 | R4 | Original screws are too short after adding plate thickness | High | Medium | Screw BOM per design; replacement lengths; depth checks |
 | R5 | PETG creep at vehicle temperatures causes the pedal to loosen | Medium | High | PETG is the only functional material at Kea; creep tests at 50 °C and 70 °C; keeper preload margin; in-house ASA/PA-CF fallback |
@@ -322,7 +322,7 @@ examples/                 example pedals and manifests
 ## 12. Immediate next actions
 
 1. Buy the metrology additions (digital calipers, feeler gauges, silicone mould putty); no plates needed — the owned set covers Types E, M, and J1.
-2. Confirm the Quad model by width, measure the board, and fill the board record tables.
+2. Measure the board and fill the board record tables.
 3. Capture all four OEM plates non-destructively (callipers, photography, silicone impressions); complete the plate records. Do not section any plate.
 4. Run the OEM baseline protocol and write the numbers into [docs/quickmount-system.md](../docs/quickmount-system.md).
 5. Implement the slot profile and the coupon generator; print the clearance ladder.

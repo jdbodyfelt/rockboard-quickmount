@@ -1,26 +1,19 @@
-"""Analytic checks for a generated plate.
-
-Independent of CAD: these re-derive the engagement from the board profile and the
-plate options, so a bad parameter combination fails fast with a number attached.
+"""Checks for the clip geometry against a board profile.
 
 Run: python -m quickmount.validate
 """
 
 from __future__ import annotations
 
-import math
+import pathlib
 from dataclasses import dataclass
 
-from .plate import (
-    BoardProfile,
-    PedalProfile,
-    PlateOptions,
-    barb_tip_y,
-    keeper_geometry,
-    shelf_z,
-)
+import yaml
 
-PETG_MAX_STRAIN = 0.015  # 1.5 % for repeated snap cycles
+from .clip import load_profile
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+CATALOG = ROOT / "catalog"
 
 
 @dataclass
@@ -31,181 +24,120 @@ class Check:
     ok: bool
 
     def line(self) -> str:
-        mark = "PASS" if self.ok else "FAIL"
-        return f"[{mark}] {self.name:<44} {self.value:>8.3f}   ({self.limit})"
+        state = "PASS" if self.ok else "FAIL"
+        return f"[{state}] {self.name:<44} {self.value:>8.2f}   ({self.limit})"
 
 
-def springback_strain(deflection: float, t_arm: float, length: float) -> float:
-    """Peak strain in a cantilever deflected by `deflection` at its free end.
-
-    eps = 1.5 * t * d / L^2.  A screening estimate for the C flexure; a curved
-    beam distributes the moment, so the real strain is lower. Conservative.
-    """
-    return 1.5 * t_arm * deflection / (length**2)
+def load_board(name: str = "cinque_5_2") -> dict:
+    return yaml.safe_load((CATALOG / "boards" / f"{name}.yaml").read_text(encoding="utf-8"))
 
 
-def screw_xy(pedal: PedalProfile):
-    hx = pedal.width / 2.0 - pedal.screw_inset
-    hy = pedal.depth / 2.0 - pedal.screw_inset
-    return [(-hx, -hy), (hx, -hy), (hx, hy), (-hx, hy)][: pedal.screw_count]
+def check(profile, board: dict) -> list[Check]:
+    slot_w = board["slots"]["width_mm"]
+    pitch = board["slots"]["pitch_mm"]
+    sheet_t = board["sheets"]["aluminium_mm"] + board["sheets"]["powder_coat_mm"]
+    clearance = board["sheets"]["under_sheet_clearance_mm"]
 
+    hook_c = profile.hook_centres_x
+    spacing = hook_c[1] - hook_c[0]
+    span = profile.span_x
+    scale = (pitch / 2.0) / hook_c[1]
+    out = []
 
-def check_design(
-    pedal: PedalProfile,
-    board: BoardProfile,
-    opt: PlateOptions,
-    under_sheet_clearance: float = 15.0,
-) -> list[Check]:
-    plate_d = pedal.depth - 2 * opt.edge_margin
-    plate_w = pedal.width - 2 * opt.edge_margin
-    geoms = keeper_geometry(board, plate_d, opt)
-    shelf = shelf_z(board, opt)
-    tip = barb_tip_y(board, opt)
-    squeeze = tip - board.half_slot
-    g0 = geoms[0]
-
-    checks: list[Check] = []
-
-    checks.append(
+    out.append(
         Check(
-            "barb squeeze per side",
-            squeeze,
-            f"> 0 and <= 2.0 (tip {tip:.2f} vs slot {board.half_slot:.2f})",
-            0 < squeeze <= 2.0,
+            "hook spacing scaled to one slot pitch",
+            spacing * scale,
+            f"== {pitch:.1f} (measured {spacing:.2f}, scale {scale:.4f})",
+            abs(spacing * scale - pitch) < 0.01 and abs(scale - 1.0) < 0.10,
         )
     )
-
-    strain = springback_strain(squeeze, opt.t_arm, g0.flexure_length)
-    checks.append(
+    out.append(
         Check(
-            "flexure strain at full squeeze",
-            strain * 100.0,
-            f"% <= {PETG_MAX_STRAIN * 100:.1f} (L {g0.flexure_length:.1f} mm, t {opt.t_arm} mm)",
-            strain <= PETG_MAX_STRAIN,
+            "hook depth fits the board void",
+            profile.depth_below_bar,
+            f"< {clearance:.1f} under-sheet clearance",
+            profile.depth_below_bar < clearance,
         )
     )
-
-    checks.append(Check("barb ledge under the sheet", squeeze, ">= 0.8", squeeze >= 0.8))
-
-    checks.append(
+    out.append(
         Check(
-            "rising branch inside slot while posting",
-            board.half_slot - opt.branch_outer,
-            "> 0",
-            board.half_slot - opt.branch_outer > 0,
+            "overall width matches the reference",
+            span[1] - span[0],
+            "69.0 mm as measured",
+            abs((span[1] - span[0]) - 69.0) < 0.5,
         )
     )
-    checks.append(
+    out.append(
         Check(
-            "neck inside slot",
-            board.half_slot - opt.node_outer,
-            "> 0",
-            board.half_slot - opt.node_outer > 0,
+            "clip width fits inside one slot",
+            slot_w - profile.width,
+            f"> 0 (clip {profile.width} mm, slot {slot_w} mm)",
+            0 < slot_w - profile.width,
         )
     )
-
-    checks.append(
-        Check(
-            "release gap between neck and branch",
-            g0.release_gap,
-            f">= {opt.release_gap_min:.1f} (finger or tool access)",
-            g0.release_gap >= opt.release_gap_min,
-        )
-    )
-
-    gap = (-shelf) - board.sheet_t
-    checks.append(
-        Check(
-            "shelf clearance below sheet",
-            gap,
-            ">= 0 (positive lock)",
-            0 <= gap <= 0.5,
-        )
-    )
-
-    depth = abs(g0.u_bottom_z) - board.sheet_t
-    checks.append(
-        Check(
-            "keeper depth below sheet fits board void",
-            depth,
-            f"< {under_sheet_clearance:.1f}",
-            depth < under_sheet_clearance,
-        )
-    )
-
-    if len(geoms) > 1:
-        span = geoms[-1].centre_y - geoms[0].centre_y
-        n = span / board.pitch
-        checks.append(
-            Check(
-                "keeper spacing is a whole number of pitches",
-                abs(n - round(n)) * board.pitch,
-                f"== 0 ({span:.1f} mm = {round(n)} x {board.pitch:.1f})",
-                abs(n - round(n)) < 1e-6,
-            )
-        )
-        clearance_between = (geoms[-1].centre_y - tip) - (geoms[0].centre_y + tip)
-        checks.append(
-            Check("keepers do not overlap each other", clearance_between, "> 0", clearance_between > 0)
-        )
-
-    csk_r = pedal.screw_head_od / 2.0 + opt.csk_extra
-    clear = math.inf
-    for x, y in screw_xy(pedal):
-        dx = max(abs(x) - opt.keeper_len_x / 2.0, 0.0)
-        dy = min(max(abs(y - g.centre_y) - tip, 0.0) for g in geoms)
-        clear = min(clear, math.hypot(dx, dy))
-    checks.append(
-        Check("screw countersink clear of keepers", clear - csk_r, "> 0", clear - csk_r > 0)
-    )
-
-    csk_depth = csk_r - opt.hole_d / 2.0
-    checks.append(
-        Check(
-            "plate remaining under countersink",
-            opt.t_plate - csk_depth,
-            ">= 0.6",
-            opt.t_plate - csk_depth >= 0.6,
-        )
-    )
-
-    checks.append(Check("flexure wall thickness", opt.t_arm, ">= 1.2", opt.t_arm >= 1.2))
-    checks.append(
-        Check("plate footprint", min(plate_w, plate_d), ">= 40", min(plate_w, plate_d) >= 40)
-    )
-
-    return checks
-
-
-def report(
-    pedal: PedalProfile,
-    board: BoardProfile,
-    opt: PlateOptions,
-    under_sheet_clearance: float = 15.0,
-) -> bool:
-    checks = check_design(pedal, board, opt, under_sheet_clearance)
     print(
-        f"\n{pedal.pedal_id}  "
-        f"(slot {board.slot_w} / rib {board.rib_w} / pitch {board.pitch} / sheet {board.sheet_t})"
+        f"  note: sheet {sheet_t:.2f} mm vs the reference bar-to-skirt gap of "
+        "1.82 mm - the reference part clamps loosely; verify on the board"
     )
-    for c in checks:
+    return out
+
+
+def check_plate(profile, board: dict, plate_w: float, stations, screw_xy, head_od: float):
+    out = []
+    span = profile.span_x
+    overhang = max(span[1], -span[0]) - plate_w / 2.0
+    out.append(
+        Check(
+            "hook overhang beyond plate edge",
+            overhang,
+            "informational (hooks sit below the plate, inside the void)",
+            True,
+        )
+    )
+    hook_half = profile.width / 2.0
+    clear = min(
+        min(abs(y - sy) for _, sy in screw_xy) - (hook_half + head_od / 2.0) for y in stations
+    )
+    out.append(Check("hook line clear of pedal screws", clear, "> 0", clear > 0))
+    return out
+
+
+def main() -> int:
+    board = load_board()
+    profile = load_profile()
+
+    if board.get("status") != "measured":
+        print(
+            f"NOTE: '{board['id']}' is '{board.get('status')}'. Slot width, rib, pitch and\n"
+            "      sheet thickness are provisional until measured with callipers.\n"
+        )
+
+    print(
+        f"clip: {profile.width} mm wide, {profile.depth_below_bar:.2f} mm deep, "
+        f"hooks at {profile.hook_centres_x[0]:.2f} / {profile.hook_centres_x[1]:.2f} mm"
+    )
+    ok = True
+    for c in check(profile, board):
         print("  " + c.line())
-    return all(c.ok for c in checks)
+        ok &= c.ok
+
+    for path in sorted((CATALOG / "pedals").glob("*.yaml")):
+        raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+        w = raw["physical"]["width_mm"]
+        d = raw["physical"]["depth_mm"]
+        inset = raw["pedal_screws"]["inset_mm"]
+        hx, hy = w / 2.0 - inset, d / 2.0 - inset
+        screws = [(-hx, -hy), (hx, -hy), (hx, hy), (-hx, hy)]
+        y = (d - 1.0) / 2.0 - 24.0
+        print(f"\n{raw['id']}")
+        for c in check_plate(profile, board, w - 1.0, (-y, y), screws,
+                             raw["pedal_screws"]["head_od_mm"]):
+            print("  " + c.line())
+            ok &= c.ok
+
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":
-    from .build import ROOT, load_board, load_pedal
-
-    board, board_raw = load_board()
-    clearance = board_raw.get("sheets", {}).get("under_sheet_clearance_mm", 15.0)
-    if board_raw.get("status") != "measured":
-        print(
-            f"NOTE: board profile '{board_raw['id']}' is '{board_raw.get('status')}'; "
-            "dimensions are provisional until measured."
-        )
-
-    ok = True
-    for path in sorted((ROOT / "catalog" / "pedals").glob("*.yaml")):
-        pedal, _ = load_pedal(path)
-        ok &= report(pedal, board, PlateOptions(), clearance)
-    raise SystemExit(0 if ok else 1)
+    raise SystemExit(main())

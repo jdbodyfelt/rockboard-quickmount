@@ -159,7 +159,7 @@ items:
   - pedal: boss_ds_1
   - pedal: wampler_tumnus_deluxe
   - pedal: example_1590b
-    board: quad_4_2
+    board: cinque_5_2
 ```
 
 Rules:

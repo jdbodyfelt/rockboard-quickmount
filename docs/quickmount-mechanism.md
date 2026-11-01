@@ -33,73 +33,80 @@ The STLs were measured numerically with the tools in `tools/`:
 Plan-view (constant-Z) area-and-extent sweeps located the plate plane and the
 hook features; cross-sections normal to X and Y gave the hook profile.
 
-## 3. What the reference parts actually are
+## 3. What the reference clip actually is (measured)
 
-Six STLs were analysed. Three are complete pedal interface plates (Boss, MXR/EHX,
-Gamechanger Plasma); three are bare clips (a 2-slot, a 3-slot, and a Morningstar
-plate). Measured extents:
+The clip is a **constant cross-section extruded 16 mm across its width**. One
+section contains two hooks joined by a flat bar. `catalog/clips/reference_2space_clip.yaml`
+holds the measured polygon; the figures below are all taken from it.
 
-| Part | X | Y | Z | Volume | Notes |
-| --- | --- | --- | --- | --- | --- |
-| `Rockboard_Boss_Base_+_Clip` | 61.0 | 116.5 | 20.89 | 35 640 mm³ | plate 61 × 116.5 × 4.2 + two hook housings |
-| `Rockboard_Mxr_-_EHX_Clip` | 60.5 | 114.8 | 18.0 | 16 464 mm³ | plate 60 × 112 × 2 at the top of Z |
-| `Rockboard_Gamechanger_Plasma_Pedal` | 96.5 | 138.0 | 17.9 | 27 862 mm³ | no-hole variant, taped to the pedal |
-| `Morningstar_MC_6_Rockboard_Clip_no_holes` | 145.0 | 91.0 | 18.6 | 30 390 mm³ | no-hole variant, taped to the pedal |
-| `Rockboard_3_Slot_Clip` | 22.09 | 114.8 | 17.88 | 7 500 mm³ | bridge with a hook at each end |
-| `Rockboard_2_space_Clip` | 69.0 | 16.0 | 19.64 | 4 595 mm³ | bridge with a hook at each end, 16 mm wide |
+```
+                 arch            arch
+              ______           ______
+             /      \         /      \
+   skirt  __|        |       |        |__  skirt
+         |            \     /            |
+         |             |   |             |
+         +-------------+---+-------------+   bar
+         |             |   |             |
+         +-------------+---+-------------+
+```
 
-### 3.1 The engagement feature is a *pair of walls straddling a rib*
+Measured features (bar underside taken as z = 9.18 in the file's own axis):
 
-Taking the Boss plate as the clearest example, a constant-Z sweep shows:
-
-| z (mm) | Cross-section |
+| Feature | Value |
 | --- | --- |
-| 0.2 – 2.2 | full plate 61 × 116.5 (area 7099 mm²) |
-| 3.2 – 4.2 | reduced plate 53 × 108.5 (area 5714 mm²) — a 4 mm rim, 2 mm step |
-| 5.2 | two bars only, X −29.5…−7.5, Y −35.3…−32.8 and 43.3…45.8 |
-| 6.2 – 18.2 | **four** bars, each 2.5–3 mm thick, 22.2 mm long in X |
-| 19.2 – 20.9 | the bars of each pair merge into a dome |
+| Overall width at the hook tips | 69.00 mm |
+| Width across the bar | 35.40 mm |
+| Bar thickness | **3.00 mm** |
+| Clip width (extrusion) | 16.00 mm |
+| Post thickness | 2.50 mm |
+| Post height above the bar top | 7.00 mm |
+| Arch wall thickness | 2.50 mm |
+| Arch base to apex | 9.64 mm |
+| Arch outer wall sphere, thinnest section | 1.20 mm |
+| Lowest point below the bar underside | 19.64 mm |
+| Hook centre lines | 32.90 mm apart (~ one 33 mm pitch) |
 
-So each hook is a **hollow arch**: two walls 12.5 mm apart (inner faces
-−35.3 and −47.8), each ~3 mm thick, 22.2 mm long, about 13 mm tall, closed at the
-top. One wall of each arch carries an outward **barb** that appears between
-z = 6.0 and 11.25 (outer face steps from −47.8 → −50.85 → −52.15, i.e. 1.4 and then
-2.9 mm proud).
+The 3.00 mm bar thickness is the important discovery: it is exactly the plate
+thickness used by the author's own combined "Base + Clip" part. In that part the
+bar has been replaced by the pedal baseplate, and only the hook section protrudes.
+`Rockboard_Boss_Base_+_Clip` confirms it: a 61 x 116.5 plate with two hook
+housings below it, 22.2 mm long and ~13 mm deep.
 
-Reading that in assembly terms: the arch **drops over a slot rib**; its two walls
-sit down inside the two slots either side of that rib; the barbs project into
-those slots and catch the **underside of the sheet**. Lift the pedal and the
-barbs press on the sheet underside — a positive, non-friction lock.
+### 3.1 How it engages
 
-The 2-slot clip is the same idea reduced to a bare spring: a 35.5 × 16 strip whose
-ends curl up and back over, the arms 2.5 mm thick with a 14.3 mm gap between them,
-tips pointing inward. The author's own render describes it as a strip that "curls
-into a half-cylinder shape at both ends".
+Read as a mechanism, one hook is a **loop**: the post drops through a slot, the
+arch springs outward and over the neighbouring rib, and the thin 1.20 mm skirt
+descends on the far side. The two hooks are exactly one pitch apart, so they drop
+into two adjacent slots and the bar spans the rib between them.
 
-### 3.2 Consistent dimensions across independent designs
+The loop is the spring: 1.20 mm of wall at the skirt gives it enough compliance to
+pass the slot edge, while the 2.50 mm arch resists the pedal load.
 
-| Feature | Boss plate | 2-slot clip | MXR/EHX plate | Derivation |
-| --- | --- | --- | --- | --- |
-| Gap between hook walls | 12.5 mm | 14.3 mm | ~13 mm | ≈ **rib width** |
-| Wall thickness | 2.5–3.0 mm | 2.5 mm | ~3 mm | must fit inside the slot |
-| Barbs proud of wall | 2.9 mm | inward hooks | 1–3 mm | under-sheet engagement |
-| Plate thickness | 4.2 mm (2 + 2 stepped) | 2.0 mm | 2.0 mm | screw stack added |
-| Hook depth (plate face to sheet bite) | ~6–11 mm | ~7 mm | ~5–7 mm | standoff |
+### 3.2 What is still uncertain
 
-Three independently modelled parts agreeing on a **rib of ~12.5–14.3 mm** is the
-strongest evidence available without callipers on the board. The **sheet
-thickness** shows up as a 2.25 mm step in the 3-slot clip and 2.0 mm plate
-thicknesses, consistent with 2.0 mm cold-rolled aluminium plus powder coat.
+The reference part is geometrically ambiguous about which face grips the sheet.
+Measured gaps around the bar:
 
-### 3.3 Kinematics and failure modes
-
-| Behaviour | Finding |
+| Gap | Value |
 | --- | --- |
-| Insertion | The hook cannot be pushed straight in: the barb is wider than the throat. Every reference part relies on either a long lead-in ramp, a thin flexible wall, or a **slide/rotate after insertion**. |
-| Retention | Positive: the barb bears on the sheet underside. Not friction. |
-| Release | Needs a deliberate secondary motion (slide along, or flex the wall) — hence RockBoard ships a QuickRelease Tool. |
-| Primary failure | Layer splitting across the thin hook wall — the author's README says "Print on edge otherwise the clips break", which is a layer-orientation warning, not a shape warning. |
-| Secondary failure | Creep: a PETG barb held under preload relaxes at vehicle temperatures. |
+| Bar top to inner skirt tip | 1.82 mm |
+| Bar top to outer skirt tip | 4.00 mm |
+| Sheet thickness (assumed) | 2.00–2.10 mm |
+
+The 1.82 mm gap matches the sheet almost exactly, which suggests the sheet sits
+between the bar's top face and the skirt's inner step. But then the 2.50 mm posts
+would have to pass through the sheet, which is only possible at the slots — so the
+geometry only works if the bar is **under** the sheet and the skirt presses on the
+**top**.
+
+That cannot be settled from the mesh alone. It needs one minute with the clip in
+hand on a real board, and it is the single open question for the baseplate design.
+Both orientations are supported in code:
+
+- `mount_mode="bar_on_sheet"` — plate on the sheet, hooks below (the default, and
+  what the author's combined Base + Clip part implies);
+- `mount_mode="bar_under_sheet"` — bar under the sheet, hooks rising.
 
 ## 4. The OEM QuickMount (vendor facts, mechanism inferred)
 
@@ -120,114 +127,71 @@ slot opening, which is why the keeper is a C rather than a straight finger.
 > Unconfirmed: the exact keeper travel, preload, contact area, retention force and
 > cycle life. These need the physical plates in [inventory.md](inventory.md).
 
-## 5. Design chosen for this project
+## 5. What this project builds
 
-Requirements behind the choice: printable in PETG by Kea Modelling, no supports on
-mating faces, tolerance to a ±1 mm error in the provisional board dimensions, a
-genuine **pressure/snap** engagement (not a slide), and a release a user can
-operate without a special tool.
+Two parts are generated:
 
-**Chosen: C-shaped pressure flexures that snap over the slot edge.**
+1. **The clip, reproduced.** `out/clip_reference_2space.stl` is the measured
+   section extruded 16 mm, i.e. the reference clip itself, 69.0 x 16.0 x 19.64 mm,
+   within 0.6 % of the original volume. Print this first and test it on the board:
+   it answers the orientation question in §3.2 without any CAD risk.
 
-Each keeper is a pair of mirrored flexures. One flexure in cross-section (looking
-along the slot's long axis) is a C whose opening faces the plate:
+2. **A baseplate per pedal, carrying that same hook section.**
+   `out/<pedal>__cinque_5_2__petg__*.stl` is the pedal footprint, 3 mm thick, with
+   four countersunk pedal screws and the reference hook section under it at two
+   stations. The bar is absorbed by the plate because both are 3.00 mm thick, so
+   only the hook geometry protrudes.
 
-```
-        plate (z = 0)
-   ████████████████████████████
-        │                │
-        │ neck           │        barb shelf, 1.2 mm under the sheet
-        │             ┌──┘
-        │             │  ← 45° ramp starts here
-        │             │
-         ╲           ╱
-          ╲         ╱             C flexure, 18.5 mm developed length
-           ╲       ╱              1.8 mm wall
-            ╲     ╱
-             ╲___╱               U-bend, 9.3 mm below the plate face
-               ▲
-        pinch here to release
-```
+Differences from the reference part, and why:
 
-Read as a loop: the neck descends from the plate, the U-bend turns it around, and
-the rising branch carries the barb back up to the sheet. The **root is at the
-plate**, the **free end is the barb**, and the compliant length is the whole
-18.5 mm loop.
-
-| Step | What happens |
+| Change | Reason |
 | --- | --- |
-| Insert | The barb's 45° ramp meets the slot edge and cams the free end inward by 1.2 mm. Nothing else touches; the flexure opens like a spring. |
-| Snap | Past the sheet, the flexure springs back. The shelf sits **0.3 mm below the sheet underside**, so lifting the plate loads a flat face, not a ramp. |
-| Hold | Each keeper has two barbs (one per side of the slot), and the plate has two keepers: **4 load pads, 1.2 mm × 16 mm each**, bearing directly on the aluminium. |
-| Release | Press the two rising branches toward each other from under the board (3.1 mm access gap). Each barb collapses 1.2 mm and the plate lifts out. A 2 mm hex key works if fingers will not fit. |
+| Hook section scaled 1.003x in X | Puts the hook centres exactly one slot pitch apart for the target board instead of the reference's 32.90 mm |
+| Two hook lines instead of one | The reference clip is a single line; a 120 mm pedal needs support at both ends |
+| Bar replaced by the pedal plate | Same thing the author does in `Rockboard_Boss_Base_+_Clip` |
+| Countersunk pedal screws added | The pedal's original baseplate screws hold the plate on |
 
-Why this shape:
-
-- **It is a pressure clip.** Retention comes from spring pressure plus a positive
-  shelf, exactly like the OEM keeper; there is no slide, so nothing can drift
-  loose in a gig bag.
-- **The strain budget works in PETG.** Deflecting 1.2 mm over an 18.5 mm flexure
-  gives **0.95 % peak strain** against a 1.5 % limit for repeated cycles
-  (`python -m quickmount.validate` recomputes this).
-- **The root is far from the barb, deliberately.** A short keeper rooted next to
-  the barb would need ~4 % strain — guaranteed creep and cracking.
-- **The flexure stays inside the slot while posting through.** The neck (≤ 5.0 mm
-  from centre) and the rising branch (≤ 9.9 mm) are both inside the 10 mm slot
-  half-width; only the barb compresses.
-
-Trade-offs accepted in v0.1:
-
-- the keeper hangs 7.2 mm below the sheet, inside the board's void, so a board
-  with less than ~8 mm of under-sheet clearance will not take it (checked against
-  `under_sheet_clearance_mm` in the board profile);
-- release needs access to the underside of the board, which an open RockBoard
-  frame provides;
-- the middle span of the plate, between the two keepers, is unsupported and may
-  flex slightly under a heavy pedal; a third keeper is a one-line change
-  (`keeper_count: 3` would need an even pitch, so it is deferred).
+Everything else - post thickness, arch wall, skirt thickness, arch depth, overall
+width - is taken unchanged from the measurement.
 
 ## 6. Provisional board dimensions
 
+Target board: **RockBoard Cinque 5.2** (622 x 424 mm, 3.95 kg - envelope from the
+RockBoard catalogue).
+
 | Parameter | Value used | Basis |
 | --- | --- | --- |
-| Slot width | 20.0 mm | inferred from pitch 33 − rib 13 |
-| Rib width | 13.0 mm | mean of 12.5 / 14.3 from two independent clips |
-| Pitch | 33.0 mm | clip spacing divided by slot count (33.25, 31.9, 38.3 observed) |
+| Slot width | 20.0 mm | inferred from pitch 33 - rib 13 |
+| Rib width | 13.0 mm | 12.5 and 14.3 measured on two independent reference clips |
+| Pitch | 33.0 mm | reference hook spacing 32.90 mm; other clips imply 31.9 and 38.3 |
 | Sheet thickness | 2.1 mm | 2.0 mm aluminium + 0.1 mm powder coat |
-| Sheet top | datum (z = 0) | plate rests on the powder coat |
+| Under-sheet clearance | 22.0 mm | estimate; must exceed the 19.64 mm hook depth |
 
-These are **provisional**. `catalog/boards/quad_4x.yaml` carries
-`status: provisional`, and the manifest records it. Replace them with calliper
-readings from the Quad and delete the flag:
+These are **provisional**. `catalog/boards/cinque_5_2.yaml` carries
+`status: provisional` and the manifest records it. Replace them with four calliper
+readings and delete the flag:
 
-1. slot width, measured across the short dimension with the inside jaws;
+1. slot width, across the short dimension with the inside jaws;
 2. rib width between two adjacent slots;
 3. pitch, slot centre to slot centre;
 4. sheet thickness at the board edge with the micrometer.
 
-Then re-run `python -m quickmount.build --step` and
-`python -m quickmount.validate`. If the pitch differs, the hook spacing snaps to
-the new whole number of pitches automatically.
+Then `python -m quickmount.build --step` and `python -m quickmount.validate`. The
+hook spacing rescales to the new pitch automatically; the hook depth is fixed by
+the reference geometry, so check it against the measured under-sheet clearance.
 
 ## 7. Print orientation
 
-- modelled in use coordinates (`z = 0` is the board-facing face, keepers at
-  `z < 0`);
-- exported rotated 180° about X, so the **pedal face sits on the bed and the
-  keepers point up**.
+- the clip and the plates are modelled with the plate on top and the hooks below;
+- print them **as exported**: plate face down on the bed, hooks rising.
 
-That is the natural orientation for this shape: the C flexures become upright
-arches, and the barb's 45° ramp becomes a 45° slope rising away from the bed. The
-only overhang is the barb's shelf itself: a **1.3 mm horizontal face at the top of
-that 45° ramp**, four of them. In PETG at 0.2 mm layers that is a short,
-well-supported bridge.
+That makes each hook an upright loop: the arch becomes a vertical arch and the
+descending skirt becomes a vertical wall, so every filament runs along the load
+path. This is what the reference author means by "print on edge otherwise the
+clips break".
 
-- No supports. Use a 5 mm brim — the part is 65 × 120 mm and only 12.3 mm tall, so
-  it is stable.
-- Do **not** print it flat on the pedal face with the keepers pointing down; the
-  U-bends and the barbs would then be unsupported bridges.
-- Check the first article for whiskers under the barbs. The shelf sits 0.3 mm
-  below the sheet, so a small sag only makes the fit tighter, not looser.
+The only overhang is the underside of the arch's outer return, a short 45-60 deg
+region at the top of each loop. No supports; use a brim on the plates.
 
 ## 8. Screw stack
 
@@ -240,12 +204,12 @@ countersink recesses the head 1.55 mm, so the effective added length is
 
 | Item | Blocks | How to close |
 | --- | --- | --- |
-| Confirm the four board dimensions | Any real fit | Callipers on the Quad, §6 |
+| Which face grips the sheet (§3.2) | Final baseplate orientation | Print `clip_reference_2space.stl`, try it on the Cinque 5.2 |
+| Confirm the four board dimensions | Any real fit | Callipers on the Cinque 5.2, §6 |
 | Confirm pedal screw thread (M3 vs M3.5) | Screw order | Micrometer on a screw's major diameter |
 | Retention vs the OEM plate | Acceptance test | Luggage scale, per [quickmount-system.md](quickmount-system.md#8-verification-protocol-per-design) |
-| Snap force and release force in PETG | Usability | First printed article; adjust `barb_overlap` and `t_arm` |
-| Horizontal drift | Long-term security | Flexures fill the slot width; verify on the first article |
-| Whether the Quad's slot field matches Tres/Cinque | Board coverage | Borrow or measure a second board |
+| Two hook lines vs one | Pedal stability | First printed article |
+| Whether the Cinque's slot field matches Tres/Quad/Duo | Board coverage | Borrow or measure a second board |
 
 ## 10. Sources
 
