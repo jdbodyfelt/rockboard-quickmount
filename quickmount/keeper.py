@@ -13,7 +13,10 @@ Coordinates (use frame, one ring):
     x = 0        inner face of the post, where it meets the bar
     x < 0        outward: arch reach and skirt
     z = 0        bar/plate underside
-    z < 0        below the bar: post, arch, skirt
+    z > 0        above the plate: post, arch, skirt rise to z = +19.64
+
+The pedal side of the plate is therefore z = 0 and the board side is z = bar_t,
+which is the face the countersinks open on.
 """
 
 from __future__ import annotations
@@ -55,7 +58,7 @@ class KeeperSpec:
 
     @property
     def post_t(self) -> float:
-        return self.post_outer - self.post_inner
+        return abs(self.post_outer - self.post_inner)
 
     @property
     def arch_pivot(self) -> float:
@@ -83,16 +86,21 @@ def load_spec(path: pathlib.Path = CLIP_YAML) -> KeeperSpec:
     bar_z = float(raw["bar_underside_z"])
     xs = [p[0] for p in pts]
 
-    # The bar's ends are long vertical edges. Find them rather than assuming.
-    verticals = []
-    for (x0, z0), (x1, z1) in zip(pts, pts[1:] + pts[:1]):
-        if abs(x0 - x1) < 1e-6 and abs(z1 - z0) > 5.0:
-            verticals.append((round(x0, 2), abs(z1 - z0)))
-    verticals = sorted(set(verticals))
-    right = [v for v in verticals if v[0] > 0]
-    if len(right) < 2:
-        raise ValueError(f"cannot locate the bar ends in {path}")
-    post_inner, post_outer = right[0][0], right[1][0]
+    if "post_inner_x" in raw and "post_outer_x" in raw:
+        # a clip-only profile, with no bar to derive the post faces from
+        post_inner = float(raw["post_inner_x"])
+        post_outer = float(raw["post_outer_x"])
+    else:
+        # The bar's ends are long vertical edges. Find them rather than assuming.
+        verticals = []
+        for (x0, z0), (x1, z1) in zip(pts, pts[1:] + pts[:1]):
+            if abs(x0 - x1) < 1e-6 and abs(z1 - z0) > 5.0:
+                verticals.append((round(x0, 2), abs(z1 - z0)))
+        verticals = sorted(set(verticals))
+        right = [v for v in verticals if v[0] > 0]
+        if len(right) < 2:
+            raise ValueError(f"cannot locate the bar ends in {path}")
+        post_inner, post_outer = right[0][0], right[1][0]
 
     return KeeperSpec(
         points=tuple(pts),

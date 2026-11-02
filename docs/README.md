@@ -31,6 +31,7 @@ Rules:
 | [geometry-capture.md](geometry-capture.md) | Metrology procedure, tool list, record templates, tolerance budget, fit coupons, and the OEM baseline test protocol. |
 | [inventory.md](inventory.md) | Owned board, OEM plates, and pedals; what may be sectioned; first measurement session plan. |
 | [quickmount-mechanism.md](quickmount-mechanism.md) | Mechanical analysis of the slot grid and the QuickMount-compatible clips, the design chosen, provisional dimensions, and print orientation. |
+| [component-model.md](component-model.md) | The generator's component model: clip, spine (clips + clearance), wing (mount holes or retainer columns), and how each OEM arrangement maps onto it. |
 | [screws.md](screws.md) | Screw bill of materials for mounting the printed plates. |
 | [manufacturing.md](manufacturing.md) | Manufacturer profile (Kea Modelling), PETG decision, FDM design rules, vendor calibration coupon, ordering workflow, and vendor questions. |
 | [pedal-data.md](pedal-data.md) | Pedal dimensions and screw-hole data: sources, confidence model, and the lookup pipeline. |

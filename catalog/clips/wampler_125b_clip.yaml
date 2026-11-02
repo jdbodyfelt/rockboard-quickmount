@@ -1,0 +1,74 @@
+# Measured cross-section of the clip in the OEM 125B QuickMount plate
+#
+# Source: reference/Wampler/Wampler-125B.stl, taken from the part's end cap
+# (faces at z = 0, normal -Z) and rebased so the post's outer face sits at u = 0.
+#
+# This is a different clip from catalog/clips/reference_2space_clip.yaml: same
+# mechanism (post, arch, skirt), different arch shape and a 19.3 mm reach instead
+# of 16.8 mm. Used for mounts that reproduce the OEM 125B plate.
+#
+# Coordinates:
+#   u <= 0   outboard of the post face; the arch and skirt live here
+#   z = 0    plate underside (pedal face), clip rises to z = 19.65
+
+id: wampler_125b_clip
+source: "reference/Wampler/Wampler-125B.stl"
+licence: "reference mesh, measurements only"
+measured: 2026-11-02
+extrude_y_mm: 22.0
+bar_underside_z: 0.0
+# explicit post faces: the derived-from-verticals path expects a bar in the
+# profile, and this profile is the clip on its own
+post_inner_x: 0.0
+post_outer_x: -2.5
+arch_span_mm: 14.3
+arch_base_depth_mm: 10.0
+profile_xz:
+  - [-16.76, 16.52]
+  - [-19.30, 10.00]
+  - [-19.30, 7.00]
+  - [-18.00, 7.00]
+  - [-18.00, 0.00]
+  - [-16.80, 0.00]
+  - [-16.80, 10.00]
+  - [-16.72, 11.07]
+  - [-16.48, 12.11]
+  - [-16.09, 13.10]
+  - [-15.56, 14.03]
+  - [-14.89, 14.86]
+  - [-14.11, 15.59]
+  - [-13.23, 16.19]
+  - [-12.26, 16.66]
+  - [-11.24, 16.97]
+  - [-10.18, 17.13]
+  - [-9.12, 17.13]
+  - [-8.06, 16.97]
+  - [-7.04, 16.66]
+  - [-6.07, 16.19]
+  - [-5.19, 15.59]
+  - [-4.41, 14.86]
+  - [-3.74, 14.03]
+  - [-3.21, 13.10]
+  - [-2.82, 12.11]
+  - [-2.58, 11.07]
+  - [-2.50, 10.00]
+  - [-2.50, 3.00]
+  - [0.00, 3.00]
+  - [0.00, 10.00]
+  - [-0.09, 11.28]
+  - [-0.34, 12.54]
+  - [-0.76, 13.76]
+  - [-1.34, 14.90]
+  - [-2.06, 15.97]
+  - [-2.93, 16.92]
+  - [-3.90, 17.75]
+  - [-4.99, 18.45]
+  - [-6.15, 18.99]
+  - [-7.38, 19.38]
+  - [-8.64, 19.60]
+  - [-9.93, 19.65]
+  - [-11.21, 19.52]
+  - [-12.46, 19.23]
+  - [-13.66, 18.78]
+  - [-14.79, 18.17]
+  - [-15.83, 17.41]

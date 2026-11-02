@@ -55,11 +55,17 @@ Two slot families must be distinguished:
 
 Evidence that MOD slots are not universal: the catalogue's rotating drawer "fits MOD slots in RockBoard pedalboards (except RockBoard DUO 2.0, 2.1, 2.2, and 2.3)". Treat the Duo family as having no usable MOD slots until measured.
 
-Also Open:
+The official Cinque 5.4 drawing in [sources.md](sources.md#technical-drawings)
+shows the mounting slots running longitudinally and staggered across the board.
+It labels 18 mm slot width, 60 mm and 98 mm slot lengths, and a 16 mm rib. The
+coordinate frame below therefore treats **+X as the longitudinal slot direction**
+and **+Y as across the board**. This drawing is not a measured slot map for the
+project's Cinque 5.2.
 
-- slot orientation (longitudinal vs transverse)
-- number of slot columns/rows per model
-- slot pitch (centre-to-centre) in both axes
+Still open:
+
+- number and exact centre coordinates of the slot columns/rows on the 5.2
+- slot pitch (centre-to-centre) in both axes on the 5.2
 - whether the grid and pitch are identical across Duo/Tres/Quad/Cinque
 - whether the slot field is inset from the board edges and by how much
 
