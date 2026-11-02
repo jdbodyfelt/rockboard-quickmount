@@ -151,9 +151,9 @@ Three outputs, all from the measured cross-section:
 
 | Part | Size | Purpose |
 | --- | --- | --- |
-| `out/keeper_ring.stl` | 19.61 x 17.4 x 19.64 mm | one C-shaped keeper ring: the unit |
-| `out/keeper_arrangement_2ring.stl` | 73.11 x 17.4 x 19.64 mm | two rings on a bar, one pitch apart |
-| `out/keeper_arrangement_3ring.stl` | 107.36 x 17.4 x 19.64 mm | three rings, two pitches - for a wider bar |
+| `out/Keeper/keeper_ring.stl` | 19.61 x 17.4 x 19.64 mm | one C-shaped keeper ring: the unit |
+| `out/Keeper/keeper_arrangement_2ring.stl` | 73.11 x 17.4 x 19.64 mm | two rings on a bar, one pitch apart |
+| `out/Keeper/keeper_arrangement_3ring.stl` | 107.36 x 17.4 x 19.64 mm | three rings, two pitches - for a wider bar |
 
 The reference clip is 69.0 x 16.0 mm. Neither number survives contact with this
 board: the width is widened to reach the slot edge (17.4 mm) and the arch is

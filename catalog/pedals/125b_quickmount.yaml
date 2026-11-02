@@ -8,6 +8,7 @@
 # perpendicular to the RockBoard slots, so the two clips drop into two slot rows.
 
 id: 125b_quickmount
+output_dir: "125B Enclosure"
 name: "125B single-piece mount (two clips, four screws)"
 housing: 125b_vertical
 board: cinque_5_2

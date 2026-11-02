@@ -19,7 +19,8 @@ from .keeper import build_arrangement, build_ring, export, load_spec
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CATALOG = ROOT / "catalog"
-CODE_VERSION = "0.3.0"
+CODE_VERSION = "0.4.0"
+OUTPUT_DIRECTORY = "Keeper"
 
 
 def load_board(name: str) -> dict:
@@ -51,6 +52,8 @@ def main() -> int:
 
     out = pathlib.Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
+    parts_out = out / OUTPUT_DIRECTORY
+    parts_out.mkdir(parents=True, exist_ok=True)
 
     board = load_board(args.board)
     slots = board["slots"]
@@ -70,6 +73,8 @@ def main() -> int:
 
     manifest = {
         "code_version": CODE_VERSION,
+        "output_directory": OUTPUT_DIRECTORY,
+        "manifest": "manifest.json",
         "board": {
             "id": board["id"],
             "status": board.get("status"),
@@ -114,8 +119,8 @@ def main() -> int:
 
     rc = 0
     for name, part, meta in parts:
-        stl = out / f"{name}.stl"
-        step = out / f"{name}.step" if args.step else None
+        stl = parts_out / f"{name}.stl"
+        step = parts_out / f"{name}.step" if args.step else None
         export(part, str(stl), str(step) if step else None)
         mesh = trimesh.load(str(stl), force="mesh")
         rep = report(mesh)
@@ -128,8 +133,8 @@ def main() -> int:
         manifest["items"].append(
             {
                 "part": name,
-                "file": stl.name,
-                "step": step.name if step else None,
+                "file": stl.relative_to(out).as_posix(),
+                "step": step.relative_to(out).as_posix() if step else None,
                 **meta,
                 "mesh": rep,
                 "single_solid": single,

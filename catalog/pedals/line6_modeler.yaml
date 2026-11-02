@@ -9,6 +9,7 @@
 # The chassis has a bottom battery door, so the wing needs a through pocket.
 
 id: line6_modeler
+output_dir: "Line6 Modeler"
 name: "Line 6 modeler mount (transverse clips, two spines, four screws)"
 enclosure: "Line 6 DL4/FM4/MM4/DM4/AM4"
 board: cinque_5_2

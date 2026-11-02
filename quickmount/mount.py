@@ -31,7 +31,7 @@ from .components import (
 from .keeper import export, load_spec
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-CODE_VERSION = "0.8.0"
+CODE_VERSION = "0.9.0"
 
 
 def _points(raw) -> tuple[tuple[float, float], ...]:
@@ -187,10 +187,19 @@ def _rm_dup(ring):
     return pts[:-1] if len(pts) > 1 else pts
 
 
+def _manifest_path(path: pathlib.Path) -> str:
+    output_root = (ROOT / "out").resolve()
+    resolved = path.resolve()
+    try:
+        return resolved.relative_to(output_root).as_posix()
+    except ValueError:
+        return path.as_posix()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", required=True)
-    parser.add_argument("--out", default=None)
+    parser.add_argument("--out", default=None, help="output STL path (overrides the configured output folder)")
     parser.add_argument("--step", action="store_true")
     args = parser.parse_args()
 
@@ -201,9 +210,15 @@ def main() -> int:
     spec = load_spec(ROOT / clip_path) if clip_path else load_spec()
     part = build_mount(mount, spec)
 
-    out = pathlib.Path(args.out) if args.out else ROOT / "out" / f"{mount.name}.stl"
+    output_dir = raw.get("output_dir", mount.name)
+    out = (
+        pathlib.Path(args.out)
+        if args.out
+        else ROOT / "out" / output_dir / f"{mount.name}.stl"
+    )
     out.parent.mkdir(parents=True, exist_ok=True)
     step = out.with_suffix(".step") if args.step else None
+    sidecar = out.with_suffix(".json")
     export(part, str(out), str(step) if step else None)
 
     mesh = trimesh.load(str(out), force="mesh")
@@ -216,6 +231,12 @@ def main() -> int:
         "code_version": CODE_VERSION,
         "config": str(config),
         "part": mount.name,
+        "output_directory": _manifest_path(out.parent),
+        "outputs": {
+            "stl": _manifest_path(out),
+            "step": _manifest_path(step) if step else None,
+            "manifest": _manifest_path(sidecar),
+        },
         "thickness_mm": mount.thickness,
         "spines": [
             {
@@ -262,7 +283,6 @@ def main() -> int:
         print(f"   hole     ({hole['at'][0]:7.2f}, {hole['at'][1]:7.2f})  "
               f"pedal face {hole.get('bottom_dia', '?')}  board face {hole.get('top_dia', '?')}")
 
-    sidecar = out.with_suffix(".json")
     sidecar.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     print(f"manifest -> {sidecar}")
     return 0 if rep["watertight"] else 1

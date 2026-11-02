@@ -22,15 +22,15 @@ Manufacturing target: **Kea Modelling** (FDM, Mt Eden, Auckland) in **PETG** —
 
 ```bash
 pip install build123d trimesh shapely rtree pyyaml matplotlib
-python -m quickmount.build --step      # keeper ring + arrangements into out/
+python -m quickmount.build --step      # keeper ring + arrangements into out/Keeper/
 python -m quickmount.validate          # geometry checks against the board profile
 
 python -m quickmount.mount --config catalog/pedals/125b_quickmount.yaml --step
 ```
 
-Outputs: `keeper_ring`, `keeper_arrangement_2ring` (matches the reference clip),
-`keeper_arrangement_3ring`, and a whole pedal mount per config in
-`catalog/pedals/`.
+Keeper outputs go in `out/Keeper/` and are indexed by `out/manifest.json`.
+Pedal mounts go in their configured output folders (for example,
+`out/125B Enclosure/` and `out/Line6 Modeler/`), alongside a per-mount manifest.
 
 A mount is described as components — **spines** (clips strung along an axis, the
 board attachment) and **wings** (plate or beam surfaces carrying mount holes or
