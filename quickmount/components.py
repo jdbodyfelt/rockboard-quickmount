@@ -77,12 +77,12 @@ class MountHole:
     x: float
     y: float
     bore: float = 3.7
-    csk_dia: float = 6.7
+    csk_dia: float | None = 6.7
     csk_face: str = "bottom"       # the countersink opens on this face
 
     @property
     def csk_depth(self) -> float:
-        return (self.csk_dia - self.bore) / 2.0
+        return 0.0 if self.csk_dia is None else (self.csk_dia - self.bore) / 2.0
 
 
 @dataclass(frozen=True)
@@ -197,14 +197,23 @@ def _pocket_cutter(pocket: Pocket, thickness: float):
 
 
 def _csk_cutter(hole: MountHole, thickness: float):
-    """Through bore plus a 90 degree countersink on the requested face."""
+    """Through bore, optionally with a 90 degree countersink on the requested face."""
+    bore = Pos(hole.x, hole.y, -1.0) * Cylinder(
+        hole.bore / 2.0, thickness + 2.0, align=BOTTOM
+    )
+    if hole.csk_dia is None:
+        return bore
+    if hole.csk_dia < hole.bore:
+        raise ValueError("countersink diameter cannot be smaller than the bore")
+    if hole.csk_dia == hole.bore:
+        return bore
+
     r_bore, r_face = hole.bore / 2.0, hole.csk_dia / 2.0
     depth = hole.csk_depth
     if hole.csk_face == "bottom":
         cone = Pos(hole.x, hole.y, 0) * Cone(r_face, r_bore, depth, align=BOTTOM)
     else:
         cone = Pos(hole.x, hole.y, thickness - depth) * Cone(r_bore, r_face, depth, align=BOTTOM)
-    bore = Pos(hole.x, hole.y, -1.0) * Cylinder(hole.bore / 2.0, thickness + 2.0, align=BOTTOM)
     return cone + bore
 
 

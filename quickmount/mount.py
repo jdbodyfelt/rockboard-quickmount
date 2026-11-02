@@ -31,7 +31,7 @@ from .components import (
 from .keeper import export, load_spec
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-CODE_VERSION = "0.9.0"
+CODE_VERSION = "0.12.0"
 
 
 def _points(raw) -> tuple[tuple[float, float], ...]:
@@ -65,7 +65,11 @@ def load_mount(path: pathlib.Path) -> MountSpec:
                 x=float(h["x"]),
                 y=float(h["y"]),
                 bore=float(h.get("bore_mm", 3.7)),
-                csk_dia=float(h.get("csk_dia_mm", 6.7)),
+                csk_dia=(
+                    float(h.get("csk_dia_mm", 6.7))
+                    if h.get("csk_dia_mm", 6.7) is not None
+                    else None
+                ),
                 csk_face=h.get("csk_face", "bottom"),
             )
             for h in items or ()
@@ -226,11 +230,53 @@ def main() -> int:
     holes = list(mount.holes)
     for wing in mount.wings:
         holes.extend(wing.holes)
+    placement_center = (raw.get("board_placement") or {}).get("plate_center_mm")
+    spine_records = []
+    for spine in mount.spines:
+        clip_centres = []
+        for i in range(spine.clips):
+            position = (i - (spine.clips - 1) / 2.0) * spine.post_spacing
+            clip_centres.append(
+                [position, spine.offset]
+                if spine.axis == "x"
+                else [spine.offset, position]
+            )
+        board_clip_centres = (
+            [
+                [
+                    round(placement_center[0] + x, 2),
+                    round(placement_center[1] + y, 2),
+                ]
+                for x, y in clip_centres
+            ]
+            if placement_center is not None
+            else None
+        )
+        spine_records.append(
+            {
+                "name": spine.name,
+                "clips": spine.clips,
+                "axis": spine.axis,
+                "post_spacing_mm": spine.post_spacing,
+                "clip_width_mm": spine.clip_width,
+                "offset_mm": spine.offset,
+                "clip_centres_mm": clip_centres,
+                "board_clip_centres_mm": board_clip_centres,
+                "flare": spine.flare,
+            }
+        )
 
     manifest = {
         "code_version": CODE_VERSION,
         "config": str(config),
         "part": mount.name,
+        "status": raw.get("status"),
+        "board": raw.get("board"),
+        "source": raw.get("source"),
+        "board_placement": raw.get("board_placement"),
+        "pedal_modifications": raw.get("pedal_modifications", []),
+        "fasteners": raw.get("fasteners", []),
+        "open_questions": raw.get("open_questions", []),
         "output_directory": _manifest_path(out.parent),
         "outputs": {
             "stl": _manifest_path(out),
@@ -238,17 +284,7 @@ def main() -> int:
             "manifest": _manifest_path(sidecar),
         },
         "thickness_mm": mount.thickness,
-        "spines": [
-            {
-                "name": s.name,
-                "clips": s.clips,
-                "axis": s.axis,
-                "post_spacing_mm": s.post_spacing,
-                "clip_width_mm": s.clip_width,
-                "flare": s.flare,
-            }
-            for s in mount.spines
-        ],
+        "spines": spine_records,
         "wings": [{"name": w.name, "holes": len(w.holes), "columns": len(w.columns)} for w in mount.wings],
         "brand_stamp": (
             {

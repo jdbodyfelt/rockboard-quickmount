@@ -9,7 +9,7 @@ parameters, its own validation, and its own failure mode.
 | **Clip** | one board slot | one C-shaped keeper ring: post, arch, skirt | profile (measured), arch scale, width across the slot |
 | **Spine** | the slot grid | 1..n clips strung along an axis, plus a bar joining them | clip count, post spacing (= slot pitch), axis, flare direction, plate clearance |
 | **Wing** | the pedal | plate or beam surfaces | outline, thickness |
-| **Mount hole** | the pedal | bore + 90° countersink | position, bore, countersink diameter, face |
+| **Mount hole** | the pedal | clearance bore, optionally with a 90° countersink | position, bore, optional countersink diameter and face |
 | **Retainer column** | the pedal | vertical post with a lip | position, height, thickness, depth, lip, facing |
 | **Brand stamp** | mount identity | two-line recessed text on the flat pedal-facing surface | fixed company name, model number, position, font, depth, rotation |
 
@@ -75,10 +75,10 @@ unverified assumptions until checked against the Cinque 5.2 slot-centre matrix.
 
 Wings are the surfaces that reach the pedal, and they come in two flavours:
 
-- **mount holes** — a bore plus a countersink, matching the pedal's baseplate
-  screws. In every OEM plate the countersink opens on the **board** face, i.e. the
-  same face the clips are on, so the screw head is flush where the board is and
-  the pedal sits on the plain face.
+- **mount holes** — a clearance bore, optionally countersunk, matching the
+  pedal's baseplate screws. Where a countersink is used, it opens on the
+  **board** face, i.e. the same face the clips are on, so the screw head is flush
+  where the board is and the pedal sits on the plain face.
 - **retainer columns** — vertical posts with a lip that catch the sides of a pedal
   with no baseplate holes (solid-case pedals, Type G). These do not need
   countersinks because nothing is screwed through them.
@@ -148,3 +148,29 @@ way, and `python -m quickmount.mount` rebuilds it:
 
 Both board numbers are marked provisional in the board profile. Neither should be
 treated as settled until the Cinque is measured with callipers.
+
+## 6. DigiTech Whammy IV draft
+
+`catalog/pedals/digitech_whammy_iv.yaml` captures the supplied 200 × 203.2 mm
+footprint, R6.35 corners, 4 mm plate, and four corner holes (Ø3.8 mm plain
+clearance bores for #6-32 UNC screws). It sits to the right of the brown OC-2,
+with its right edge aligned to the TU-3 tuner and both Velcro strips crossing
+under the pedal, as shown in
+[the placement photo](../reference/Cinque%20Captures/whammy_spot.jpg). In that
+photo, +X runs right along the board and +Y points down across it; the plate
+center is estimated at [+385, +96.5] mm from the board center. Its four clips
+are aligned to openings visible in the photo; 17.7 mm clip width follows the
+18 mm slots in [the Cinque 5.4 layout drawing](../reference/Cinque%20Captures/Cinque_54.jpg).
+Clip spacing and center placement remain photo-derived estimates, not measured
+coordinates, so test-fit on the physical board before use. The clip assemblies
+are rotated 90° so their across-slot width follows the slot openings. The
+recessed “Melting / Skies / DTW IV” stamp is rotated upright for the board view
+with the pedal removed.
+
+The supplied pedal spec places the rubber-foot centres about 15 mm from the
+edges and the screw centres 8 mm from the edges, putting their centres about
+10 mm apart diagonally. The feet are therefore assumed to cover the screws and
+are to be removed; the mount has no foot pockets. The supplied #6-32 UNC fastener
+specification calls for non-countersunk heads, so the four plate holes are plain
+Ø3.8 mm FDM clearance bores. Either 1/4 in or 1/2 in under-head length is listed;
+confirm the required thread engagement before assembly.
