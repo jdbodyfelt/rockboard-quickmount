@@ -87,7 +87,8 @@ Good for: plate outlines, hole centres, slot pitch and length, pedal footprints,
 | B-07 | Sheet thickness | | | | Micrometer | | | Open |
 | B-08 | Powder coat thickness | | | | Micrometer | | | Open |
 | B-09 | Mounting plane angle | | | | Height gauge | | | Open |
-| B-10 | Under-sheet clearance | | | | Depth gauge | | | Open |
+| B-10 | Under-sheet clearance (sheet underside to first obstruction below a slot) | | | | Caliper depth rod | | | Open |
+| B-11 | Brace spacing / width | | | | Caliper | | | Open |
 
 ### 3.2 OEM plate record
 

@@ -24,7 +24,13 @@ envelope:
 sheets:
   aluminium_mm: 2.0
   powder_coat_mm: 0.1
+  # Clear vertical space below the sheet, i.e. from the sheet's underside down to
+  # the first solid thing (U-brace) beneath a slot. The keeper ring hangs 19.64 mm
+  # below the bar, so this must exceed that. Measure through a slot with the
+  # caliper's depth rod, then subtract the sheet thickness.
   under_sheet_clearance_mm: 22.0
+  brace_spacing_mm: null      # centre to centre; clips avoid brace lines if small
+  brace_width_mm: null
 
 slots:
   width_mm: 17.7
