@@ -1,17 +1,20 @@
 # RockBoard Cinque 5.2
 #
-# Envelope: Official RockBoard catalogue (5.2 = 622 x 424 mm, 3.95 kg). The
-# Cinque 5.4 technical drawing confirms the family envelope as 1002 mm long for
-# the 5.4, same depth.
+# Envelope: Official RockBoard catalogue (5.2 = 622 x 424 mm, 3.95 kg).
 #
-# Slot grid, two independent sources:
-#   slot width 17.7 mm  - callipers on the board
-#   rib width  16 mm    - dimensioned on the official Cinque 5.4 technical drawing
-#                         (vector callout between two adjacent slots)
-#   pitch      33.7 mm  - derived: slot + rib
+# Slot grid - measured by the user on the board, powder coat included:
+#   slot width  17.7 mm              calipers
+#   rib width   16.3 - 16.8 mm       micrometer, several ribs
+#   pitch       34.0 - 34.5 mm       derived: slot + rib (nominal 34.25)
 #
-# The reference clip's own hook spacing is 32.90 mm, i.e. 0.8 mm under this
-# pitch, which is consistent with a hobby part built from the same board.
+# Both readings include the powder coat. Nominal bare metal is roughly 0.1-0.2 mm
+# narrower on the slot and wider on the rib, so the printed part must be sized off
+# the coated numbers (the part touches the coating, not the metal).
+#
+# The reference clip's hook spacing is 32.90 mm, i.e. 1.1-1.6 mm under this pitch.
+# Its arch span (16.8 mm) also equals the upper rib measurement exactly, leaving no
+# margin for the skirt to enter the neighbouring slot. The ring arch is therefore
+# widened rather than copied blind - see docs/quickmount-mechanism.md.
 
 id: cinque_5_2
 status: partial
@@ -25,22 +28,26 @@ sheets:
 
 slots:
   width_mm: 17.7
-  rib_mm: 16.0
-  pitch_mm: 33.7
+  rib_mm: 16.55          # nominal; range 16.3-16.8
+  rib_min_mm: 16.3
+  rib_max_mm: 16.8
+  pitch_mm: 34.25        # nominal; range 34.0-34.5
+  pitch_min_mm: 34.0
+  pitch_max_mm: 34.5
 
 field_status:
   slot_width:
     status: measured
-    source: "callipers, inside jaws, 2026-11-02"
+    source: "callipers, inside jaws, 2026-11-02, powder coat included"
   rib_width:
-    status: official
-    source: "RockBoard Cinque 5.4 technical drawing, dimensioned gap between adjacent slots"
+    status: measured
+    source: "micrometer, several ribs, 2026-11-02, powder coat included (16.3-16.8)"
   pitch:
     status: derived
-    source: "slot width + rib width"
+    source: "slot width + rib width; measure directly across 4 slots to tighten"
   sheet_thickness:
     status: assumed
     source: "2.0 mm aluminium + 0.1 mm powder coat"
   under_sheet_clearance:
     status: assumed
-    source: "estimate; must exceed the 19.64 mm ring depth"
+    source: "estimate; must exceed the ring depth"

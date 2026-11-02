@@ -56,6 +56,14 @@ class KeeperSpec:
     def post_t(self) -> float:
         return self.post_outer - self.post_inner
 
+    @property
+    def arch_pivot(self) -> float:
+        """Local x of the post's outer face, the point the arch springs from."""
+        return self.post_outer - self.post_inner
+
+    def scaled_arch_span(self, arch_scale: float) -> float:
+        return self.arch_span * arch_scale
+
     def summary(self) -> dict:
         return {
             "width_mm": round(self.width, 2),
@@ -98,7 +106,7 @@ def load_spec(path: pathlib.Path = CLIP_YAML) -> KeeperSpec:
     )
 
 
-def _ring_polygon(spec: KeeperSpec, overlap: float = 1.5) -> SPoly:
+def _ring_polygon(spec: KeeperSpec, overlap: float = 1.5, arch_scale: float = 1.0) -> SPoly:
     """One ring, re-based so the bar end lies at x = 0 and the bar underside at z = 0.
 
     The cut runs `overlap` inboard of the bar end, so the ring carries a sliver of
@@ -110,13 +118,22 @@ def _ring_polygon(spec: KeeperSpec, overlap: float = 1.5) -> SPoly:
     ring = poly.intersection(cut)
     if ring.is_empty:
         raise ValueError("ring cut produced an empty polygon")
-    return SPoly([(x - spec.post_inner, z - spec.bar_z) for x, z in ring.exterior.coords])
+    pivot = spec.post_outer - spec.post_inner
+    pts = []
+    for x, z in ring.exterior.coords:
+        u = x - spec.post_inner
+        # stretch only the part outboard of the post face, so the post keeps its
+        # thickness and only the arch reach changes
+        if u < pivot:
+            u = pivot + (u - pivot) * arch_scale
+        pts.append((u, z - spec.bar_z))
+    return SPoly(pts)
 
 
-def build_ring(spec: KeeperSpec | None = None, mirror: bool = False):
+def build_ring(spec: KeeperSpec | None = None, mirror: bool = False, arch_scale: float = 1.0):
     """One keeper ring, inner face at x = 0, bar underside at z = 0."""
     s = spec or load_spec()
-    pts = list(_ring_polygon(s).exterior.coords)[:-1]
+    pts = list(_ring_polygon(s, arch_scale=arch_scale).exterior.coords)[:-1]
     if mirror:
         pts = [(-x, z) for x, z in pts]
     solid = extrude(Plane.XZ * Polygon(*pts, align=None), amount=s.width)
@@ -124,7 +141,12 @@ def build_ring(spec: KeeperSpec | None = None, mirror: bool = False):
     return Pos(0, -(bb.min.Y + bb.max.Y) / 2, 0) * solid
 
 
-def build_arrangement(spec: KeeperSpec | None = None, rings: int = 2, pitch: float | None = None):
+def build_arrangement(
+    spec: KeeperSpec | None = None,
+    rings: int = 2,
+    pitch: float | None = None,
+    arch_scale: float = 1.0,
+):
     """A bar with `rings` keeper rings: one at each end plus any in between.
 
     Ring spacing is `pitch` (default: the measured reference spacing). The bar
@@ -152,7 +174,7 @@ def build_arrangement(spec: KeeperSpec | None = None, rings: int = 2, pitch: flo
     centres = [-(rings - 1) * p / 2.0 + i * p for i in range(rings)]
     for c in centres:
         mirrored = c > 0
-        ring = build_ring(s, mirror=mirrored)
+        ring = build_ring(s, mirror=mirrored, arch_scale=arch_scale)
         x = c + post_offset if mirrored else c - post_offset
         part = part + Pos(x, 0, 0) * ring
     return part, bar_len

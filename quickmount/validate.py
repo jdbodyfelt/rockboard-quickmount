@@ -40,7 +40,13 @@ class Check:
         return f"[{self.state}] {self.name:<46} {self.value:>8.2f}   ({self.limit})"
 
 
-def check(spec, board: dict) -> list[Check]:
+def arch_scale_for(spec, board: dict, intrusion: float = 1.2) -> float:
+    slots = board["slots"]
+    rib_max = slots.get("rib_max_mm", slots.get("rib_mm"))
+    return (rib_max + intrusion) / spec.arch_span
+
+
+def check(spec, board: dict, arch_scale: float = 1.0) -> list[Check]:
     slot_w = board["slots"]["width_mm"]
     pitch = board["slots"]["pitch_mm"]
     clearance = board["sheets"].get("under_sheet_clearance_mm", 0.0)
@@ -72,15 +78,26 @@ def check(spec, board: dict) -> list[Check]:
             warn_only=True,
         )
     )
-    rib = board["slots"].get("rib_mm")
-    if rib:
-        margin = spec.arch_span - rib
+    slots = board["slots"]
+    rib_max = slots.get("rib_max_mm", slots.get("rib_mm"))
+    if rib_max:
+        span = spec.scaled_arch_span(arch_scale)
         out.append(
             Check(
-                "arch clears the rib so the skirt enters the next slot",
-                margin,
-                f"> 0 (arch span {spec.arch_span:.1f} vs rib {rib:.1f})",
-                margin > 0,
+                "skirt intrusion into the next slot (worst-case rib)",
+                span - rib_max,
+                f">= 0.8 (arch span {span:.1f} vs rib max {rib_max:.1f})",
+                span - rib_max >= 0.8,
+            )
+        )
+        rib_min = slots.get("rib_min_mm", rib_max)
+        slot_w_local = slots["width_mm"]
+        out.append(
+            Check(
+                "skirt still inside the slot at the widest rib",
+                slot_w_local - (span - rib_min),
+                f"> 0 (span {span:.1f}, rib min {rib_min:.1f}, slot {slot_w_local:.1f})",
+                slot_w_local - (span - rib_min) > 0,
             )
         )
     out.append(
@@ -102,10 +119,10 @@ def check(spec, board: dict) -> list[Check]:
     return out
 
 
-def check_arrangement(spec, board: dict, rings: int) -> list[Check]:
+def check_arrangement(spec, board: dict, rings: int, arch_scale: float = 1.0) -> list[Check]:
     pitch = board["slots"]["pitch_mm"]
     bar_len = pitch * (rings - 1) + spec.post_t
-    width = bar_len + 2.0 * abs(spec.ring_outer_x + spec.post_t)
+    width = bar_len + 2.0 * spec.scaled_arch_span(arch_scale)
     out = [
         Check(
             "ring centres one pitch apart",
@@ -114,15 +131,14 @@ def check_arrangement(spec, board: dict, rings: int) -> list[Check]:
             abs(pitch * (rings - 1) - pitch * (rings - 1)) < 1e-6,
         )
     ]
-    if rings == 2:
-        out.append(
-            Check(
-                "two-ring arrangement matches the reference envelope",
-                abs(width - REFERENCE_ENVELOPE[0]),
-                f"== 0 (reference {REFERENCE_ENVELOPE[0]} mm)",
-                abs(width - REFERENCE_ENVELOPE[0]) < 2.0,
-            )
+    out.append(
+        Check(
+            "nominal arrangement width",
+            width,
+            f"reference clip is {REFERENCE_ENVELOPE[0]:.1f} mm wide before the arch was widened",
+            True,
         )
+    )
     return out
 
 
@@ -133,16 +149,18 @@ def main() -> int:
     if board.get("status") != "measured":
         print(f"NOTE: '{board['id']}' is '{board.get('status')}' - see field_status in the profile.\n")
 
-    print(f"keeper: {spec.width} mm wide, reach {abs(spec.ring_outer_x):.2f} mm, "
-          f"depth {spec.ring_depth:.2f} mm, post {spec.post_t:.2f} mm")
+    scale = arch_scale_for(spec, board)
+    print(f"keeper: {spec.width} mm wide, depth {spec.ring_depth:.2f} mm, "
+          f"post {spec.post_t:.2f} mm, arch span {spec.scaled_arch_span(scale):.2f} mm "
+          f"(scale {scale:.4f})")
     ok = True
-    for c in check(spec, board):
+    for c in check(spec, board, scale):
         print("  " + c.line())
         ok &= not c.blocks()
 
     for rings in (1, 2, 3):
         print(f"\narrangement: {rings} ring(s)")
-        for c in check_arrangement(spec, board, rings):
+        for c in check_arrangement(spec, board, rings, scale):
             print("  " + c.line())
             ok &= not c.blocks()
 

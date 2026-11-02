@@ -178,32 +178,60 @@ any pedal in that family.
 
 ## 6. Board dimensions
 
-Target board: **RockBoard Cinque 5.2** (622 x 424 mm). The Cinque 5.4 official
-technical drawing confirmed the family depth and gave one grid dimension.
+Target board: **RockBoard Cinque 5.2** (622 x 424 mm).
 
 | Parameter | Value | Source | Status |
 | --- | --- | --- | --- |
-| Slot width | 17.7 mm | Callipers on the board | Measured |
-| Rib width | **16.0 mm** | Official Cinque 5.4 technical drawing - dimensioned gap between two adjacent slots | Official |
-| Pitch | **33.7 mm** | Derived: slot + rib | Derived |
+| Slot width | 17.7 mm | Callipers on the board, powder coat included | Measured |
+| Rib width | **16.3 - 16.8 mm** | Micrometer, several ribs, powder coat included | Measured |
+| Rib width, bare metal | 16 mm | Official Cinque 5.4 technical drawing ("16" punch-out) | Official |
+| Pitch | **34.0 - 34.5 mm** (nominal 34.25) | Derived: slot + rib | Derived |
 | Sheet thickness | 2.1 mm | 2.0 mm aluminium + 0.1 mm coat | Assumed |
-| Under-sheet clearance | 22.0 mm | Estimate; must exceed the 19.64 mm ring depth | Assumed |
+| Under-sheet clearance | 22.0 mm | Estimate; must exceed the ring depth | Assumed |
 
-Two independent sources agree on the pitch to within 0.8 mm: this derivation gives
-33.7 mm, and the reference clip's own hook spacing is 32.90 mm. That cross-check is
-the best evidence that the reference clip was made for this board family.
+The drawing's 16 mm and the micrometer's 16.3-16.8 mm agree once the powder coat is
+accounted for: 16 mm of metal plus roughly 0.15-0.4 mm of coating per rib. The part
+touches the coating, so **the coated numbers govern**.
 
-The geometry also closes consistently:
+### 6.1 The reference clip does not fit this board as-drawn
+
+Two findings that invalidate copying the reference geometry unchanged:
+
+| Problem | Numbers |
+| --- | --- |
+| Hook spacing too short | Reference 32.90 mm vs measured pitch 34.0-34.5 mm: **1.1-1.6 mm short** |
+| Arch span has no margin | Reference arch span 16.8 mm vs rib **16.3-16.8 mm**: at the top of the rib range the skirt cannot enter the neighbouring slot at all |
+
+So the arch is widened: the outboard part of the ring (everything beyond the post's
+outer face) is scaled about that face until the arch span clears the **largest**
+measured rib with a 1.2 mm intrusion:
+
+```
+target span = rib_max + 1.2 = 16.8 + 1.2 = 18.0 mm
+scale       = 18.0 / 16.8   = 1.0714
+```
+
+The post keeps its 2.50 mm thickness because the scaling pivot is the post's outer
+face. Only the arch reach and the skirt move. The ring goes from 19.30 mm to
+20.50 mm of reach, and the two-ring arrangement from a nominal 69.0 mm to 72.75 mm.
+
+Checks now enforced by `python -m quickmount.validate`:
 
 | Check | Value |
 | --- | --- |
-| Ring width vs slot | 16.0 in 17.7 = **0.85 mm per side** |
-| Arch span (post face to skirt face) | 16.8 mm |
-| Arch span minus rib | **+0.8 mm**, so the skirt drops 0.8 mm into the neighbouring slot |
+| Skirt intrusion at the worst-case rib | 1.20 mm |
+| Skirt still inside the slot at the smallest rib | 16.00 mm of room |
+| Ring width vs slot | 16.0 in 17.7 = 0.85 mm per side |
+| Pitch tolerance across two rings | ±0.25 mm, absorbed by the 0.85 mm per-side slack |
 
-An 0.85 mm per-side clearance is looser than a locating fit. That is the reference
-part's own proportion, so it is kept as the default, but it is flagged as a warning
-and `ring_width` is a parameter.
+### 6.2 Remaining uncertainty
+
+- **Pitch** is derived, not measured directly. Measuring slot-centre to slot-centre
+  across four slots and dividing by four would remove the ±0.25 mm uncertainty.
+- **Ring width.** 0.85 mm per side is looser than a locating fit. This is the
+  reference part's own proportion and is flagged as a warning. `ring_width` is a
+  parameter; if the printed ring rattles in the slot, 17.0 mm is the obvious value.
+- **Sheet thickness and under-sheet clearance** are still assumptions.
 
 ### 6.1 What the official drawing does and does not give
 

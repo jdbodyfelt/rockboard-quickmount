@@ -47,8 +47,16 @@ def main() -> int:
     out.mkdir(parents=True, exist_ok=True)
 
     board = load_board(args.board)
-    pitch = board["slots"]["pitch_mm"]
+    slots = board["slots"]
+    pitch = slots["pitch_mm"]
     spec = load_spec()
+
+    # The arch must span the rib with margin, otherwise the skirt cannot drop into
+    # the neighbouring slot. Design against the largest measured rib.
+    rib_max = slots.get("rib_max_mm", slots.get("rib_mm"))
+    intrusion = 1.2
+    required_span = rib_max + intrusion
+    arch_scale = required_span / spec.arch_span
 
     manifest = {
         "code_version": CODE_VERSION,
@@ -63,18 +71,28 @@ def main() -> int:
             ),
             "under_sheet_clearance_mm": board["sheets"].get("under_sheet_clearance_mm"),
         },
-        "keeper": spec.summary(),
+        "keeper": {
+            **spec.summary(),
+            "arch_scale": round(arch_scale, 4),
+            "arch_span_mm": round(spec.scaled_arch_span(arch_scale), 2),
+            "rib_max_mm": rib_max,
+            "skirt_intrusion_mm": round(spec.scaled_arch_span(arch_scale) - rib_max, 2),
+        },
         "arrangement_pitch_mm": pitch,
         "items": [],
     }
 
-    parts: list[tuple[str, object, dict]] = [("keeper_ring", build_ring(spec), {})]
+    parts: list[tuple[str, object, dict]] = [
+        ("keeper_ring", build_ring(spec, arch_scale=arch_scale), {})
+    ]
 
     wanted = [int(x) for x in str(args.rings).split(",") if x.strip()]
     for n in sorted(set(wanted)):
         if n < 1:
             continue
-        part, bar_len = build_arrangement(spec, rings=n, pitch=pitch)
+        part, bar_len = build_arrangement(
+            spec, rings=n, pitch=pitch, arch_scale=arch_scale
+        )
         parts.append(
             (
                 f"keeper_arrangement_{n}ring",
@@ -110,7 +128,11 @@ def main() -> int:
             rc = 1
 
     (out / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
-    print(f"\nmanifest -> {out / 'manifest.json'}")
+    print(
+        f"\narch span {spec.scaled_arch_span(arch_scale):.2f} mm "
+        f"(rib max {rib_max:.2f} + {intrusion:.1f} intrusion, scale {arch_scale:.4f})"
+    )
+    print(f"manifest -> {out / 'manifest.json'}")
     return rc
 
 
