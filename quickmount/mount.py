@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import pathlib
 
 import trimesh
@@ -32,6 +33,14 @@ from .keeper import export, load_spec
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CODE_VERSION = "0.12.0"
+
+
+class _KnownSystemFontMetadataFilter(logging.Filter):
+    def filter(self, record: logging.LogRecord) -> bool:
+        return not (
+            record.msg == "'name' table stringOffset incorrect. Expected: %s; Actual: %s"
+            and record.args == (342, 398)
+        )
 
 
 def _points(raw) -> tuple[tuple[float, float], ...]:
@@ -212,7 +221,13 @@ def main() -> int:
     mount = load_mount(config)
     clip_path = raw.get("clip")
     spec = load_spec(ROOT / clip_path) if clip_path else load_spec()
-    part = build_mount(mount, spec)
+    font_logger = logging.getLogger("fontTools.ttLib.tables._n_a_m_e")
+    font_filter = _KnownSystemFontMetadataFilter()
+    font_logger.addFilter(font_filter)
+    try:
+        part = build_mount(mount, spec)
+    finally:
+        font_logger.removeFilter(font_filter)
 
     output_dir = raw.get("output_dir", mount.name)
     out = (
