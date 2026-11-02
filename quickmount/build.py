@@ -41,6 +41,12 @@ def main() -> int:
     ap.add_argument("--board", default="cinque_5_2")
     ap.add_argument("--step", action="store_true")
     ap.add_argument("--rings", default="1,2,3")
+    ap.add_argument(
+        "--ring-width",
+        type=float,
+        default=None,
+        help="across-slot width; defaults to slot width - 0.3 (light push fit)",
+    )
     args = ap.parse_args()
 
     out = pathlib.Path(args.out)
@@ -58,6 +64,10 @@ def main() -> int:
     required_span = rib_max + intrusion
     arch_scale = required_span / spec.arch_span
 
+    # Retention is the skirt pressing on the slot edge, so the across-slot width
+    # has to reach the edge. A light push fit, not the reference part's 16.0 mm.
+    ring_width = args.ring_width if args.ring_width else slots["width_mm"] - 0.3
+
     manifest = {
         "code_version": CODE_VERSION,
         "board": {
@@ -73,6 +83,7 @@ def main() -> int:
         },
         "keeper": {
             **spec.summary(),
+            "ring_width_mm": round(ring_width, 2),
             "arch_scale": round(arch_scale, 4),
             "arch_span_mm": round(spec.scaled_arch_span(arch_scale), 2),
             "rib_max_mm": rib_max,
@@ -83,7 +94,7 @@ def main() -> int:
     }
 
     parts: list[tuple[str, object, dict]] = [
-        ("keeper_ring", build_ring(spec, arch_scale=arch_scale), {})
+        ("keeper_ring", build_ring(spec, arch_scale=arch_scale, width=ring_width), {})
     ]
 
     wanted = [int(x) for x in str(args.rings).split(",") if x.strip()]
@@ -91,7 +102,7 @@ def main() -> int:
         if n < 1:
             continue
         part, bar_len = build_arrangement(
-            spec, rings=n, pitch=pitch, arch_scale=arch_scale
+            spec, rings=n, pitch=pitch, arch_scale=arch_scale, width=ring_width
         )
         parts.append(
             (
@@ -129,7 +140,11 @@ def main() -> int:
 
     (out / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     print(
-        f"\narch span {spec.scaled_arch_span(arch_scale):.2f} mm "
+        f"\nring width {ring_width:.2f} mm in a {slots['width_mm']:.1f} mm slot"
+        f"  ({slots['width_mm'] - ring_width:.2f} mm total clearance)"
+    )
+    print(
+        f"arch span {spec.scaled_arch_span(arch_scale):.2f} mm "
         f"(rib max {rib_max:.2f} + {intrusion:.1f} intrusion, scale {arch_scale:.4f})"
     )
     print(f"manifest -> {out / 'manifest.json'}")

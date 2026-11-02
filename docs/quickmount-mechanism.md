@@ -85,28 +85,25 @@ pass the slot edge, while the 2.50 mm arch resists the pedal load.
 
 ### 3.2 What is still uncertain
 
-The reference part is geometrically ambiguous about which face grips the sheet.
-Measured gaps around the bar:
+The measured clamp geometry around the bar:
 
 | Gap | Value |
 | --- | --- |
 | Bar top to inner skirt tip | 1.82 mm |
 | Bar top to outer skirt tip | 4.00 mm |
-| Sheet thickness (assumed) | 2.00–2.10 mm |
+| Sheet thickness (assumed) | 2.0-2.1 mm |
 
-The 1.82 mm gap matches the sheet almost exactly, which suggests the sheet sits
-between the bar's top face and the skirt's inner step. But then the 2.50 mm posts
-would have to pass through the sheet, which is only possible at the slots — so the
-geometry only works if the bar is **under** the sheet and the skirt presses on the
-**top**.
+The 1.82 mm gap is close to the sheet thickness, which suggests the sheet edge is
+caught between the bar's top face and the skirt's inner step. That is consistent
+with a lateral clamp on the edge, but the exact lip contact patch and the spring
+preload are not measurable from the mesh.
 
-That cannot be settled from the mesh alone. It needs one minute with the clip in
-hand on a real board, and it is the single open question for the baseplate design.
-Both orientations are supported in code:
+Consequences for the model:
 
-- `mount_mode="bar_on_sheet"` — plate on the sheet, hooks below (the default, and
-  what the author's combined Base + Clip part implies);
-- `mount_mode="bar_under_sheet"` — bar under the sheet, hooks rising.
+- the **ring width** is now driven by the slot width, not by the reference part;
+- the **skirt's lip depth** (1.82 / 4.00 mm) is kept from the measurement and
+  should be checked against the real sheet once the board is in hand;
+- **preload is unknown**; the first print is the test.
 
 ## 4. The OEM QuickMount (vendor facts, mechanism inferred)
 
@@ -136,14 +133,18 @@ Three outputs, all from the measured cross-section:
 
 | Part | Size | Purpose |
 | --- | --- | --- |
-| `out/keeper_ring.stl` | 18.3 x 16.0 x 19.64 mm | one C-shaped keeper ring: the unit |
-| `out/keeper_arrangement_2ring.stl` | **69.1** x 16.0 x 19.64 mm | two rings on a bar, one pitch apart - matches the reference clip (69.0 mm) within 0.1 mm |
-| `out/keeper_arrangement_3ring.stl` | 102.1 x 16.0 x 19.64 mm | three rings, two pitches - for a wider bar |
+| `out/keeper_ring.stl` | 19.61 x 17.4 x 19.64 mm | one C-shaped keeper ring: the unit |
+| `out/keeper_arrangement_2ring.stl` | 73.11 x 17.4 x 19.64 mm | two rings on a bar, one pitch apart |
+| `out/keeper_arrangement_3ring.stl` | 107.36 x 17.4 x 19.64 mm | three rings, two pitches - for a wider bar |
 
-Each ring is a closed loop of the measured profile: a 2.50 mm post, a 2.50 mm
-arch springing outward and over, and a 1.20 mm skirt returning down. The arch's
-depth below the bar underside is 19.64 mm, and the ring's outward reach from the
-bar end is 16.8 mm.
+The reference clip is 69.0 x 16.0 mm. Neither number survives contact with this
+board: the width is widened to reach the slot edge (17.4 mm) and the arch is
+widened to clear the measured rib (see section 6.1).
+
+Each ring is a closed loop of the measured profile: a 2.50 mm post, a 2.50 mm arch
+springing outward and over, and a 1.20 mm skirt returning down - the skirt being
+the spring that presses on the slot edge. The arch's depth below the bar underside
+is 19.64 mm, and its span is widened from the measured 16.8 mm to 18.0 mm.
 
 ### 5.1 Arrangements
 

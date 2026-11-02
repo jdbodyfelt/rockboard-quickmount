@@ -130,13 +130,24 @@ def _ring_polygon(spec: KeeperSpec, overlap: float = 1.5, arch_scale: float = 1.
     return SPoly(pts)
 
 
-def build_ring(spec: KeeperSpec | None = None, mirror: bool = False, arch_scale: float = 1.0):
-    """One keeper ring, inner face at x = 0, bar underside at z = 0."""
+def build_ring(
+    spec: KeeperSpec | None = None,
+    mirror: bool = False,
+    arch_scale: float = 1.0,
+    width: float | None = None,
+):
+    """One keeper ring, inner face at x = 0, bar underside at z = 0.
+
+    `width` is the across-slot dimension. Retention is spring pressure of the thin
+    skirt against the slot edge, so this must be close to the slot width - being
+    narrower than the slot means no contact and no pressure.
+    """
     s = spec or load_spec()
+    w = s.width if width is None else width
     pts = list(_ring_polygon(s, arch_scale=arch_scale).exterior.coords)[:-1]
     if mirror:
         pts = [(-x, z) for x, z in pts]
-    solid = extrude(Plane.XZ * Polygon(*pts, align=None), amount=s.width)
+    solid = extrude(Plane.XZ * Polygon(*pts, align=None), amount=w)
     bb = solid.bounding_box()
     return Pos(0, -(bb.min.Y + bb.max.Y) / 2, 0) * solid
 
@@ -146,6 +157,7 @@ def build_arrangement(
     rings: int = 2,
     pitch: float | None = None,
     arch_scale: float = 1.0,
+    width: float | None = None,
 ):
     """A bar with `rings` keeper rings: one at each end plus any in between.
 
@@ -153,6 +165,7 @@ def build_arrangement(
     length follows from it, so the bar ends land on the post faces.
     """
     s = spec or load_spec()
+    w = s.width if width is None else width
     p = pitch if pitch is not None else 32.90
     if rings < 1:
         raise ValueError("need at least one ring")
@@ -162,10 +175,10 @@ def build_arrangement(
     bar_len = p * (rings - 1) + 2.0 * post_offset
     part = extrude(
         Plane.XY * Polygon(
-            (-bar_len / 2, -s.width / 2),
-            (bar_len / 2, -s.width / 2),
-            (bar_len / 2, s.width / 2),
-            (-bar_len / 2, s.width / 2),
+            (-bar_len / 2, -w / 2),
+            (bar_len / 2, -w / 2),
+            (bar_len / 2, w / 2),
+            (-bar_len / 2, w / 2),
             align=None,
         ),
         amount=s.bar_t,
@@ -174,7 +187,7 @@ def build_arrangement(
     centres = [-(rings - 1) * p / 2.0 + i * p for i in range(rings)]
     for c in centres:
         mirrored = c > 0
-        ring = build_ring(s, mirror=mirrored, arch_scale=arch_scale)
+        ring = build_ring(s, mirror=mirrored, arch_scale=arch_scale, width=w)
         x = c + post_offset if mirrored else c - post_offset
         part = part + Pos(x, 0, 0) * ring
     return part, bar_len

@@ -46,7 +46,12 @@ def arch_scale_for(spec, board: dict, intrusion: float = 1.2) -> float:
     return (rib_max + intrusion) / spec.arch_span
 
 
-def check(spec, board: dict, arch_scale: float = 1.0) -> list[Check]:
+def ring_width_for(board: dict) -> float:
+    """Retention is pressure on the slot edge, so size the ring to reach the edge."""
+    return board["slots"]["width_mm"] - 0.3
+
+
+def check(spec, board: dict, arch_scale: float = 1.0, ring_width: float | None = None) -> list[Check]:
     slot_w = board["slots"]["width_mm"]
     pitch = board["slots"]["pitch_mm"]
     clearance = board["sheets"].get("under_sheet_clearance_mm", 0.0)
@@ -60,22 +65,14 @@ def check(spec, board: dict, arch_scale: float = 1.0) -> list[Check]:
             spec.ring_depth < clearance,
         )
     )
+    w = spec.width if ring_width is None else ring_width
+    total = slot_w - w
     out.append(
         Check(
-            "ring width fits inside one slot",
-            slot_w - spec.width,
-            f"> 0 (ring {spec.width} mm, slot {slot_w} mm)",
-            0 < slot_w - spec.width,
-        )
-    )
-    per_side = (slot_w - spec.width) / 2.0
-    out.append(
-        Check(
-            "ring clearance per side",
-            per_side,
-            "0.2-0.6 mm is a locating fit; the reference ring is 16.0 mm for a 17.7 mm slot",
-            per_side < 0.6,
-            warn_only=True,
+            "ring reaches the slot edge (spring pressure)",
+            total,
+            f"0.1-0.5 mm total (ring {w:.1f} mm, slot {slot_w:.1f} mm)",
+            0.1 <= total <= 0.5,
         )
     )
     slots = board["slots"]
@@ -150,11 +147,12 @@ def main() -> int:
         print(f"NOTE: '{board['id']}' is '{board.get('status')}' - see field_status in the profile.\n")
 
     scale = arch_scale_for(spec, board)
-    print(f"keeper: {spec.width} mm wide, depth {spec.ring_depth:.2f} mm, "
+    ring_w = ring_width_for(board)
+    print(f"keeper: {ring_w:.2f} mm wide (push fit), depth {spec.ring_depth:.2f} mm, "
           f"post {spec.post_t:.2f} mm, arch span {spec.scaled_arch_span(scale):.2f} mm "
           f"(scale {scale:.4f})")
     ok = True
-    for c in check(spec, board, scale):
+    for c in check(spec, board, scale, ring_w):
         print("  " + c.line())
         ok &= not c.blocks()
 
