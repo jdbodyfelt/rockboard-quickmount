@@ -27,6 +27,9 @@ bar_underside_z: 9.18
 # has to clear for the skirt to drop into the neighbouring slot.
 arch_span_mm: 16.8
 skirt_inner_x: -9.90
+# Depth of the arch's inner base below the bar underside. The arch must clear the
+# full sheet thickness before it can spring outward under the board.
+arch_base_depth_mm: 10.0
 profile_xz:
   - [-8.98, 26.55]
   - [-8.00, 27.28]

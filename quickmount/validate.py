@@ -57,12 +57,22 @@ def check(spec, board: dict, arch_scale: float = 1.0, ring_width: float | None =
     clearance = board["sheets"].get("under_sheet_clearance_mm", 0.0)
     out = []
 
+    sheet_t = board["sheets"]["aluminium_mm"] + board["sheets"]["powder_coat_mm"]
     out.append(
         Check(
-            "keeper depth fits the under-sheet void",
-            spec.ring_depth,
-            f"< {clearance:.1f} measured clearance",
-            spec.ring_depth < clearance,
+            "arch base clears the full sheet thickness",
+            spec.arch_base_depth - sheet_t,
+            f"> 0 (arch base {spec.arch_base_depth:.1f} below bar, sheet {sheet_t:.1f})",
+            spec.arch_base_depth > sheet_t,
+        )
+    )
+    below_sheet = spec.ring_depth - sheet_t
+    out.append(
+        Check(
+            "ring depth below the sheet fits the board void",
+            below_sheet,
+            f"< {clearance:.1f} measured clearance (ring {spec.ring_depth:.1f} below bar)",
+            below_sheet < clearance,
         )
     )
     w = spec.width if ring_width is None else ring_width

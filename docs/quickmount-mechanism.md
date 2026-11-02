@@ -83,27 +83,45 @@ into two adjacent slots and the bar spans the rib between them.
 The loop is the spring: 1.20 mm of wall at the skirt gives it enough compliance to
 pass the slot edge, while the 2.50 mm arch resists the pedal load.
 
-### 3.2 What is still uncertain
+### 3.2 The sheet is 3 mm - which settles how the lip works
 
-The measured clamp geometry around the bar:
+The sheet measures **3.0 mm** (micrometer), plus a little powder coat. RockBoard's
+catalogue specifies cold-rolled aluminium across the range; it feels dense, but the
+material spec is aluminium.
 
-| Gap | Value |
+That single number rules out one reading of the measured geometry. The reference
+part's inner skirt tip sits **1.82 mm** below the bar's top face. If the sheet were
+1.8 mm thick, it could be clamped between the bar and that tip. At 3.0 mm it cannot:
+
+| Gap below bar top | Sheet is 3.0 mm |
 | --- | --- |
-| Bar top to inner skirt tip | 1.82 mm |
-| Bar top to outer skirt tip | 4.00 mm |
-| Sheet thickness (assumed) | 2.0-2.1 mm |
+| 1.82 mm (inner skirt tip) | **inside** the sheet |
+| 4.00 mm (outer skirt tip) | 1.0 mm below the sheet |
 
-The 1.82 mm gap is close to the sheet thickness, which suggests the sheet edge is
-caught between the bar's top face and the skirt's inner step. That is consistent
-with a lateral clamp on the edge, but the exact lip contact patch and the spring
-preload are not measurable from the mesh.
+So the 1.82 mm tip is not a clamp jaw. It sits *alongside the slot wall*, which is
+exactly what a lateral lip-clamp needs: the lip presses on the 3 mm-tall slot edge
+and friction does the rest. That agrees with the undercarriage evidence ("locks that
+little lip to the edge") and with the need for a tool to prise it off.
 
-Consequences for the model:
+The 19.64 mm ring depth splits as:
 
-- the **ring width** is now driven by the slot width, not by the reference part;
-- the **skirt's lip depth** (1.82 / 4.00 mm) is kept from the measurement and
-  should be checked against the real sheet once the board is in hand;
-- **preload is unknown**; the first print is the test.
+| Region | Depth |
+| --- | --- |
+| Through the sheet | 3.1 mm |
+| Below the sheet | 16.5 mm |
+
+The arch's inner base is 10.0 mm below the bar, i.e. **6.9 mm clear of the sheet**,
+so it springs outward in open air rather than scraping the sheet's underside.
+
+### 3.3 What is still uncertain
+
+- **Lip preload.** Not measurable from the mesh or the photos. The first print is
+  the test; if it does not grip, reduce the 0.30 mm total slot clearance.
+- **Exact lip contact patch**, i.e. how much of the 1.20 mm skirt's edge actually
+  bears on the slot wall.
+- **Under-sheet clearance.** Assumed 22.0 mm; 16.5 mm is needed below the sheet.
+  Braces only block at their own lines, so this is a placement rule as much as a
+  dimension.
 
 ## 4. The OEM QuickMount (vendor facts, mechanism inferred)
 
@@ -187,7 +205,7 @@ Target board: **RockBoard Cinque 5.2** (622 x 424 mm).
 | Rib width | **16.3 - 16.8 mm** | Micrometer, several ribs, powder coat included | Measured |
 | Rib width, bare metal | 16 mm | Official Cinque 5.4 technical drawing ("16" punch-out) | Official |
 | Pitch | **34.0 - 34.5 mm** (nominal 34.25) | Derived: slot + rib | Derived |
-| Sheet thickness | 2.1 mm | 2.0 mm aluminium + 0.1 mm coat | Assumed |
+| Sheet thickness | **3.0 mm** | Micrometer | Measured |
 | Under-sheet clearance | 22.0 mm | Estimate; must exceed the ring depth | Assumed |
 
 The drawing's 16 mm and the micrometer's 16.3-16.8 mm agree once the powder coat is

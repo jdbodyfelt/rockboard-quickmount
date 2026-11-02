@@ -22,7 +22,9 @@ envelope:
   width_mm: 622.0
   depth_mm: 424.0
 sheets:
-  aluminium_mm: 2.0
+  # Measured 3.0 mm. RockBoard's catalogue specifies cold-rolled aluminium for the
+  # whole range; the section feels dense but the material spec is aluminium.
+  aluminium_mm: 3.0
   powder_coat_mm: 0.1
   # Clear vertical space below the sheet, i.e. from the sheet's underside down to
   # the first solid thing (U-brace) beneath a slot. The keeper ring hangs 19.64 mm
@@ -52,8 +54,8 @@ field_status:
     status: derived
     source: "slot width + rib width; measure directly across 4 slots to tighten"
   sheet_thickness:
-    status: assumed
-    source: "2.0 mm aluminium + 0.1 mm powder coat"
+    status: measured
+    source: "micrometer, 3.0 mm sheet + 0.1 mm powder coat, 2026-11-02"
   under_sheet_clearance:
     status: assumed
     source: "estimate; must exceed the ring depth"

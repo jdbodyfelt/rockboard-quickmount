@@ -51,6 +51,7 @@ class KeeperSpec:
     ring_depth: float     # below the bar underside, positive
     bar_t: float          # bar thickness == plate thickness
     arch_span: float = 16.8   # post outer face to skirt inner face (clears the rib)
+    arch_base_depth: float = 10.0  # arch base below the bar underside
 
     @property
     def post_t(self) -> float:
@@ -72,6 +73,7 @@ class KeeperSpec:
             "post_thickness_mm": round(self.post_t, 2),
             "bar_thickness_mm": round(self.bar_t, 2),
             "arch_span_mm": round(self.arch_span, 2),
+            "arch_base_depth_mm": round(self.arch_base_depth, 2),
         }
 
 
@@ -103,6 +105,7 @@ def load_spec(path: pathlib.Path = CLIP_YAML) -> KeeperSpec:
         ring_depth=max(z for _, z in pts) - bar_z,
         bar_t=3.0,
         arch_span=float(raw.get("arch_span_mm", 16.8)),
+        arch_base_depth=float(raw.get("arch_base_depth_mm", 10.0)),
     )
 
 

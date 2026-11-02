@@ -91,7 +91,7 @@ Things that affect the mounting plane:
 | Slot end radius | `slot_r` | Corner clearance on tabs | Open |
 | Rib width between slots | `rib_w` | Maximum keeper footprint without bridging | Open |
 | Slot pitch (X, Y) | `pitch_x`, `pitch_y` | Multi-tab plates align with two or more slots | Open |
-| Sheet thickness | `t_sheet` | Tab engagement depth, stiffness | Open |
+| Sheet thickness | `t_sheet` | Tab engagement depth, stiffness | **Measured 3.0 mm** |
 | Mounting plane angle | `angle_board` | Pedal stance, riser design | Open |
 | Powder coat thickness | `t_pc` | Effective slot width reduction | Open |
 | Slot edge chamfer/radius | `chamfer` | Insertion lead-in, wear | Open |
