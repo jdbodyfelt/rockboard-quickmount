@@ -6,6 +6,12 @@
   "model": "Cinque 5.4",
   "status": "partial",
   "sources": ["ref/cinque54_drawing.jpg"],
+  "datum": {
+    "origin": "centre of the mounting field on the top face",
+    "x_axis": "along the board length",
+    "y_axis": "across the board depth, +Y toward the 91.5 mm rear wall",
+    "z_axis": "away from the board, toward the pedals"
+  },
   "envelope": {
     "width_mm": 1002.0,
     "depth_mm": 424.0
@@ -13,46 +19,92 @@
   "sheets": {
     "aluminium_mm": 3.0,
     "powder_coat_mm": 0.1,
-    "under_sheet_clearance_mm": 22.0,
-    "brace_spacing_mm": null,
-    "brace_width_mm": null
+    "under_sheet_clearance_mm": null,
+    "brace_spacing_mm": 228.0,
+    "brace_width_mm": 52.0,
+    "brace_count": 3,
+    "brace_screw_dia_mm": 3.0
   },
   "slots": {
-    "width_mm": 17.7,
-    "width_official_mm": 18.0,
-    "rib_mm": 16.55,
-    "rib_min_mm": 16.3,
-    "rib_max_mm": 16.8,
-    "rib_official_mm": 16.0,
-    "pitch_mm": 34.25,
-    "pitch_min_mm": 34.0,
-    "pitch_max_mm": 34.5,
+    "width_mm": 18.0,
+    "rib_mm": 16.0,
+    "pitch_mm": 34.0,
     "length_families_mm": [60.0, 98.0],
     "end_radius_mm": 4.0,
+    "in_column_pitch_mm": 76.0,
+    "in_column_gap_mm": 16.0,
+    "column_types": {
+      "short_only": { "short": 13 },
+      "long_then_short": { "long": 1, "short": 11, "tail_gap_mm": 38.0 }
+    },
     "axis": "x",
     "repeats_along": "y"
   },
   "field": {
+    "length_mm": 972.0,
     "depth_mm": 394.0,
     "edge_margin_mm": 15.0,
-    "first_rib_centre_from_edge_mm": 41.0,
-    "note": "owner reads about 45 mm on the board; confirm with calipers"
+    "first_rib_centre_from_edge_mm": null
+  },
+  "body": {
+    "front_wall_mm": 24.5,
+    "rear_wall_mm": 91.5,
+    "underside_angle_deg": 9.0,
+    "rear_wall_thickness_mm": 7.5,
+    "rear_flange_mm": 27.5,
+    "inner_length_mm": 923.0,
+    "carry_opening": {
+      "width_mm": 169.0,
+      "height_mm": 40.5,
+      "below_top_mm": 24.0,
+      "end_offset_mm": 37.5
+    },
+    "end_port": {
+      "dia_mm": 22.0,
+      "below_top_mm": 24.5,
+      "from_rear_mm": 20.0
+    },
+    "end_holes": {
+      "dia_mm": 4.5,
+      "count": 2,
+      "pitch_mm": 17.0,
+      "below_top_mm": 15.0,
+      "from_rear_mm": 27.5
+    },
+    "feet": {
+      "along_length": 5,
+      "across_depth": 2,
+      "dia_mm": 22.0,
+      "height_mm": 8.0
+    }
   },
   "provenance": {
-    "envelope": { "level": 3, "source": "RockBoard catalogue size comparison", "retrieved": "2026-11-04" },
-    "slot_width": { "level": 4, "source": "calipers on the owned Cinque 5.2, powder coat included", "retrieved": "2026-11-02" },
-    "rib_width": { "level": 4, "source": "micrometer on the owned Cinque 5.2", "retrieved": "2026-11-02" },
-    "pitch": { "level": 3, "source": "derived as slot width + rib width; tighten by measuring across four slots", "retrieved": "2026-11-02" },
-    "slot_lengths": { "level": 3, "source": "Cinque 5.4 technical drawing", "retrieved": "2026-11-04" },
-    "grid_phase": { "level": 0, "source": "no board has been measured for absolute rib position", "retrieved": null }
+    "envelope": { "level": 3, "source": "Cinque 5.4 technical drawing: 1002 x 424", "retrieved": "2026-11-04" },
+    "sheet": { "level": 1, "source": "3.0 mm cold-rolled aluminium and 0.1 mm powder coat are not annotated on the drawing; design intent carried from the Cinque construction", "retrieved": null },
+    "field": { "level": 3, "source": "Cinque 5.4 technical drawing: 972 slot field length against 1002 board, 394 against 424, so 15 mm margin all round", "retrieved": "2026-11-04" },
+    "slot_width": { "level": 3, "source": "Cinque 5.4 technical drawing, annotated 18", "retrieved": "2026-11-04" },
+    "rib_width": { "level": 3, "source": "Cinque 5.4 technical drawing, annotated 16", "retrieved": "2026-11-04" },
+    "pitch": { "level": 3, "source": "slot width + rib = 34, as drawn", "retrieved": "2026-11-04" },
+    "slot_lengths": { "level": 3, "source": "Cinque 5.4 technical drawing, annotated 60 and 98, end radius R4, 16 mm gap between slots in a column", "retrieved": "2026-11-04" },
+    "column_layout": { "level": 3, "source": "derived by fitting the annotated 18 / 16 / 60 / 98 / 16 into the annotated 972 x 394 field: 12 columns, 13 slots of 60 in the short columns, one 98 plus 11 of 60 in the alternate columns", "retrieved": "2026-11-04" },
+    "body_heights": { "level": 3, "source": "Cinque 5.4 technical drawing profile views: 24.5 front, 91.5 rear, 9 degree underside, 7.5 rear wall, 27.5 flange", "retrieved": "2026-11-04" },
+    "carry_opening": { "level": 3, "source": "Cinque 5.4 technical drawing elevation: 169 x 40.5, 24 below the top; the 37.5 mm end offset is read off the same view scaled against its own printed dimensions", "retrieved": "2026-11-04" },
+    "end_details": { "level": 3, "source": "Cinque 5.4 technical drawing end elevation: port dia 22, two dia 4.5 at 17 pitch, 15 and 24.5 below the top, 20 and 27.5 from the rear", "retrieved": "2026-11-04" },
+    "braces": { "level": 3, "source": "Cinque 5.4 technical drawing: 456 between the outer brace screws, so 228 pitch and three braces; the 52 mm band width is read off the plan", "retrieved": "2026-11-04" },
+    "grid_phase": { "level": 3, "source": "the slot columns are symmetric about the board centre line, taken from the equal margins on the plan", "retrieved": "2026-11-04" }
   },
   "open_questions": [
-    "Grid phase is unmeasured: where the first rib centre falls relative to the board origin. Every placement is relative-only until one rib position is taken.",
-    "The project owns a Cinque 5.2, not a 5.4. Slot numbers are carried over from the 5.2 and from the official 5.4 drawing."
+    "Sheet thickness and powder coat are not annotated on the drawing; 3.0 and 0.1 mm are carried as design intent.",
+    "The 923 mm inner length is annotated but the view it belongs to does not show what it spans; the model runs the walls and end caps to the plate edge and leaves this as a reference dimension.",
+    "Under-sheet clearance is not annotated: the braces fill the section, so the clear height under the sheet has to be measured on a board.",
+    "The 3 mm countersunk brace screws are drawn in plan but their positions are not extracted, so the top plate carries no fixing holes yet.",
+    "The underside is a 9 degree wedge while the elevation draws level feet, so how the board stands on the floor is unresolved. The model keeps the top face horizontal, which is the frame every mount is designed in."
   ],
   "notes": [
-    "The drawing is not uniformly scaled: it measures 847 px across for 1002 mm but 266 px tall for 424 mm, a 35 percent anisotropy. Only printed dimensions are usable; never scale off its pixels.",
+    "The drawing is not uniformly scaled: the plan measures 847 px for 1002 mm but 266 px for 424 mm, a 35 percent anisotropy, and the elevation views are drawn at yet another scale. Every number here is either printed on the drawing or derived from printed numbers; none is scaled off pixels except the 37.5 mm carry-opening offset, which is calibrated against three printed dimensions in the same view.",
     "Slots run along +X, so ribs also run along +X and the keeper arch reaches along +Y.",
-    "Any two clips must sit a whole number of pitches apart."
+    "Any two clips must sit a whole number of 34 mm pitches apart.",
+    "The plan draws eight slot columns across the depth, but eight cannot carry the annotated 18 mm slot and 16 mm rib across a 394 mm field. Twelve columns fit exactly, so the plan's column count is schematic and the annotated grid wins.",
+    "The 972 mm field length divides exactly into 13 slots of 60 on a 16 mm gap, which is the check that the printed grid is self-consistent."
   ]
 }

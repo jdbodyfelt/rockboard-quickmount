@@ -25,10 +25,27 @@ The first step of any job is always to build a configuration from the references
 | `line6_modeler/` | DL4 / FM4 / MM4 / DM4 / AM4 shared chassis |
 | `pedal_riser/` | Second-tier riser; base inherited from the measured 125B mount |
 | `enclosure_125b/` | Vertical 125B housing and the measured OEM plate |
-| `rockboard_cinque_54/` | RockBoard Cinque 5.4 board profile (slot grid) |
-| `commons/` | Shared geometry and objects: clips, fastener presets, OEM type library |
+| `rockboard_cinque_54/` | RockBoard Cinque 5.4 board: the slot grid substrate, and the whole board around it |
+| `commons/` | Shared geometry and objects: the retainer, fastener presets, OEM type library |
 
-`commons/` holds two kinds of shared material: shared inputs (`cfg/fasteners.json`, `cfg/quickmount_types.json`, `src/assets/fonts/`) and the OEM blueprint set under `ref/quickmount_drawings/`.
+`commons/` holds shared inputs (`cfg/fasteners.json`, `cfg/quickmount_types.json`, `cfg/retainer.json`, `src/assets/fonts/`), the retainer generator (`src/retainer.py` → `dwg/retainer.stl`), and the OEM blueprint set under `ref/quickmount_drawings/`.
+
+## Running a generator
+
+Each project's `src/` module reads its own config and writes into its own `dwg/`. A board project still uses two parts: the whole assembly, and the bare top plate that every mount has to fit.
+
+```bash
+python rockboard_cinque_54/src/cinque.py                    # board and top plate, STEP and STL
+python rockboard_cinque_54/src/cinque.py --part top-plate --format step
+python rockboard_cinque_54/src/cinque.py --check            # derived slot field, no geometry
+```
+
+CADQuery lives in the repo's `.venv`:
+
+```bash
+uv venv --python 3.12 .venv
+uv pip install --python .venv/Scripts/python.exe cadquery
+```
 
 ## Config conventions
 
@@ -36,7 +53,7 @@ The first step of any job is always to build a configuration from the references
 - Paths in a config are relative to that project's own folder, so a pedal reaching into `commons/` writes `../commons/...`.
 - Unknown values are `null`, never a guessed number. A null blocks generation on purpose.
 - Fasteners are referenced by id from `commons/cfg/fasteners.json` rather than restated per pedal, so a corrected clearance applies everywhere at once.
-- Datum is the pedal's bottom-face centre, +X along width, +Y along depth, +Z away from the pedal, viewed from below.
+- Datum is the pedal's bottom-face centre, +X along width, +Y along depth, +Z away from the pedal, viewed from below. A board project states its own datum in a `datum` block instead, because the plate sits on top of it.
 - Every dimension block carries `provenance` with a confidence level and its source:
 
 | Level | Meaning |
