@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "id": "fasteners",
+  "kind": "shared_catalog",
+  "description": "Fastener presets shared by every project. Project configs reference these by id instead of restating clearance tables, so a corrected clearance applies everywhere at once.",
+  "threads": {
+    "m3x0.5": {
+      "designation": "M3 x 0.5",
+      "major_dia_mm": 3.0,
+      "pitch_mm": 0.5,
+      "head": "flat_head_countersunk",
+      "head_angle_deg": 90.0,
+      "head_clearance_dia_mm": [6.0, 6.4],
+      "countersink_top_dia_mm": 6.2,
+      "stock_length_mm": 6.0,
+      "clearance_hole_mm": {
+        "tight": 3.2,
+        "standard": 3.4,
+        "fdm": 3.5
+      },
+      "provenance": {
+        "level": 3,
+        "source": "vendored in each project's ref/ spec markdown; the three Strymon, Line 6 specs agree",
+        "retrieved": "2026-11-04"
+      }
+    },
+    "unc_6_32": {
+      "designation": "#6-32 UNC",
+      "major_dia_mm": 3.5,
+      "pitch_mm": null,
+      "tpi": 32,
+      "head": "pan_or_button",
+      "head_angle_deg": null,
+      "head_clearance_dia_mm": null,
+      "countersink_top_dia_mm": null,
+      "stock_length_mm": [6.35, 12.7],
+      "clearance_hole_mm": {
+        "tight": 3.6,
+        "standard": 3.7,
+        "fdm": 3.8
+      },
+      "provenance": {
+        "level": 3,
+        "source": "digitech_whammy_v/ref/digitech_whammy_v_cad_specifications.md section 2",
+        "retrieved": "2026-11-04"
+      }
+    }
+  },
+  "notes": [
+    "Counterbored holes are not modelled here; any pedal config that sets countersink=false takes the plain clearance diameter only.",
+    "The head_clearance_dia_mm range is a check on the countersink tool, not a tolerance on the screw."
+  ]
+}

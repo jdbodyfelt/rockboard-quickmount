@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "id": "pedal_riser",
+  "kind": "riser",
+  "description": "Second-tier riser that lifts a pedal a step above the board while keeping it clipped in. The base is the measured 125B mount outline reduced to a solid.",
+  "sources": ["ref/QuickMount-Riser.pdf"],
+  "based_on": "enclosure_125b",
+  "base": {
+    "width_mm": 120.0,
+    "depth_mm": 65.0,
+    "corner_radius_mm": 3.0,
+    "plate_thickness_mm": 3.0
+  },
+  "clips": {
+    "spine_axis": "x",
+    "clip_count": 2,
+    "post_spacing_mm": 76.2,
+    "clip_width_mm": 22.0,
+    "arch_reach_mm": 19.3,
+    "source": "measured 125B OEM mount; see enclosure_125b/cfg/enclosure_125b.json"
+  },
+  "tilt": {
+    "angle_deg": null,
+    "status": "open"
+  },
+  "mount_holes": [],
+  "brand_stamp": null,
+  "provenance": {
+    "base": { "level": 4, "source": "measured 125B OEM mount mesh, inherited via enclosure_125b", "retrieved": "2026-11-04" },
+    "clips": { "level": 4, "source": "measured 125B OEM mount mesh, inherited via enclosure_125b", "retrieved": "2026-11-04" },
+    "tilt": { "level": 0, "source": null, "retrieved": null }
+  },
+  "open_questions": [
+    "Riser body, front lip, grommets and tilt are not modelled; only the flat base exists.",
+    "Mount holes are deliberately absent from the base; pedal attachment belongs to a later feature."
+  ],
+  "notes": [
+    "The riser's resting surface is the plate's own underside, so the base must stay identical to the 125B mount outline rather than being redrawn."
+  ]
+}

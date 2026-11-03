@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "id": "digitech_whammy_v",
+  "kind": "pedal",
+  "brand": "DigiTech",
+  "model": "Whammy V",
+  "sources": [
+    "ref/digitech_whammy_v_cad_specifications.md",
+    "ref/user_manual.pdf",
+    "ref/whammy_spot.jpg"
+  ],
+  "physical": {
+    "width_mm": 165.0,
+    "depth_mm": 197.0,
+    "height_mm": null,
+    "corner_radius_mm": 6.35,
+    "weight_g": 1600
+  },
+  "mounting": {
+    "hole_count": 4,
+    "hole_pattern": {
+      "dx_mm": 149.0,
+      "dy_mm": 181.0,
+      "edge_offset_mm": 8.0
+    },
+    "fastener": "unc_6_32",
+    "hole_choice": "fdm",
+    "countersink": false,
+    "head_type": "phillips_pan_or_button_or_round",
+    "quickmount_type": null
+  },
+  "feet": {
+    "present": true,
+    "inset_from_edge_mm": 15.0,
+    "stock_feet_retained": true
+  },
+  "clearance": {
+    "min_plate_thickness_mm": 3.0,
+    "reason": "carries about 1.6 kg plus the torque of expression-pedal travel",
+    "base_pan": "flat stamped steel, exposed once the stock rubber feet are removed"
+  },
+  "plate": {
+    "thickness_mm": { "aluminium": [2.5, 3.0], "steel": [1.5, 2.0], "fdm": [4.0, 5.0] },
+    "boss_infill_percent": 100
+  },
+  "provenance": {
+    "physical": { "level": 2, "source": "ref/digitech_whammy_v_cad_specifications.md section 1", "retrieved": "2026-11-04" },
+    "mounting": { "level": 2, "source": "ref/digitech_whammy_v_cad_specifications.md section 2", "retrieved": "2026-11-04" },
+    "clearance": { "level": 2, "source": "ref/digitech_whammy_v_cad_specifications.md section 3", "retrieved": "2026-11-04" }
+  },
+  "open_questions": [
+    "MANUAL_TODOS item 1: the stock feet must stay in place, so the plate needs edge-finger mounts that clear them.",
+    "No QuickMount type covers a Whammy; type H is DigiTech compact only."
+  ],
+  "notes": [
+    "Do not mix this footprint with the Whammy IV (200.0 x 203.2 mm). They are different pedals with the same screw thread.",
+    "Power is 9V DC centre-negative on the V, 9V AC on the IV; that difference is a reliable way to tell them apart in the field.",
+    "Non-countersunk heads: the plate takes plain clearance holes, no 90 degree profile."
+  ]
+}

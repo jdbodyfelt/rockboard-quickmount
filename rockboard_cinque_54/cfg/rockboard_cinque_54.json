@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "id": "rockboard_cinque_54",
+  "kind": "board",
+  "family": "RockBoard Cinque",
+  "model": "Cinque 5.4",
+  "status": "partial",
+  "sources": ["ref/cinque54_drawing.jpg"],
+  "envelope": {
+    "width_mm": 1002.0,
+    "depth_mm": 424.0
+  },
+  "sheets": {
+    "aluminium_mm": 3.0,
+    "powder_coat_mm": 0.1,
+    "under_sheet_clearance_mm": 22.0,
+    "brace_spacing_mm": null,
+    "brace_width_mm": null
+  },
+  "slots": {
+    "width_mm": 17.7,
+    "width_official_mm": 18.0,
+    "rib_mm": 16.55,
+    "rib_min_mm": 16.3,
+    "rib_max_mm": 16.8,
+    "rib_official_mm": 16.0,
+    "pitch_mm": 34.25,
+    "pitch_min_mm": 34.0,
+    "pitch_max_mm": 34.5,
+    "length_families_mm": [60.0, 98.0],
+    "end_radius_mm": 4.0,
+    "axis": "x",
+    "repeats_along": "y"
+  },
+  "field": {
+    "depth_mm": 394.0,
+    "edge_margin_mm": 15.0,
+    "first_rib_centre_from_edge_mm": 41.0,
+    "note": "owner reads about 45 mm on the board; confirm with calipers"
+  },
+  "provenance": {
+    "envelope": { "level": 3, "source": "RockBoard catalogue size comparison", "retrieved": "2026-11-04" },
+    "slot_width": { "level": 4, "source": "calipers on the owned Cinque 5.2, powder coat included", "retrieved": "2026-11-02" },
+    "rib_width": { "level": 4, "source": "micrometer on the owned Cinque 5.2", "retrieved": "2026-11-02" },
+    "pitch": { "level": 3, "source": "derived as slot width + rib width; tighten by measuring across four slots", "retrieved": "2026-11-02" },
+    "slot_lengths": { "level": 3, "source": "Cinque 5.4 technical drawing", "retrieved": "2026-11-04" },
+    "grid_phase": { "level": 0, "source": "no board has been measured for absolute rib position", "retrieved": null }
+  },
+  "open_questions": [
+    "Grid phase is unmeasured: where the first rib centre falls relative to the board origin. Every placement is relative-only until one rib position is taken.",
+    "The project owns a Cinque 5.2, not a 5.4. Slot numbers are carried over from the 5.2 and from the official 5.4 drawing."
+  ],
+  "notes": [
+    "The drawing is not uniformly scaled: it measures 847 px across for 1002 mm but 266 px tall for 424 mm, a 35 percent anisotropy. Only printed dimensions are usable; never scale off its pixels.",
+    "Slots run along +X, so ribs also run along +X and the keeper arch reaches along +Y.",
+    "Any two clips must sit a whole number of pitches apart."
+  ]
+}

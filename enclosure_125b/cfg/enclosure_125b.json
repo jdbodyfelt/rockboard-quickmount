@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "id": "enclosure_125b",
+  "kind": "enclosure",
+  "description": "Vertical 125B housing family and the one-piece OEM QuickMount plate measured from it. One plate geometry serves every 125B pedal RockBoard covers.",
+  "housing": {
+    "name": "125B",
+    "orientation": "vertical",
+    "quickmount_type": "B1",
+    "examples": [
+      { "brand": "Wampler", "model": "Tumnus Deluxe", "width_mm": 66.3, "depth_mm": 121.3 },
+      { "brand": "Walrus Audio", "model": "Mira", "width_mm": 67.0, "depth_mm": 123.0 }
+    ]
+  },
+  "mount": {
+    "status": "measured",
+    "drawing": "dwg/125B_quickmount.stl",
+    "structure": "one spine carrying two clips, plus a wing that reaches all four baseplate screws",
+    "plate_thickness_mm": 3.0,
+    "outline": {
+      "width_mm": 120.0,
+      "depth_mm": 65.0,
+      "corner_radius_mm": 3.0,
+      "cx": 0.0,
+      "cy": 11.0
+    },
+    "spine": {
+      "axis": "x",
+      "clip_count": 2,
+      "post_spacing_mm": 76.2,
+      "clip_width_mm": 22.0,
+      "arch_scale": 1.0,
+      "arch_reach_mm": 19.3,
+      "flare": "outward",
+      "clearance_mm": 2.0,
+      "clearance_width_mm": 2.0,
+      "clearance_radius_mm": 6.0,
+      "offset_mm": 11.0
+    },
+    "mount_holes": [
+      { "x_mm": -55.6, "y_mm": -17.6, "bore_mm": 3.7, "csk_dia_mm": 6.7, "csk_face": "top" },
+      { "x_mm": 55.6, "y_mm": -17.6, "bore_mm": 3.7, "csk_dia_mm": 6.7, "csk_face": "top" },
+      { "x_mm": -55.6, "y_mm": 39.6, "bore_mm": 3.7, "csk_dia_mm": 6.7, "csk_face": "top" },
+      { "x_mm": 55.6, "y_mm": 39.6, "bore_mm": 3.7, "csk_dia_mm": 6.7, "csk_face": "top" }
+    ],
+    "provenance": {
+      "outline": { "level": 4, "source": "mesh bounds of the OEM 125B plate", "retrieved": "2026-11-02" },
+      "spine": { "level": 4, "source": "mesh sections at y = 4..18", "retrieved": "2026-11-02" },
+      "mount_holes": { "level": 4, "source": "mesh vertex rings on the hole walls", "retrieved": "2026-11-02" }
+    }
+  },
+  "open_questions": [
+    "Clip width measures 22.0 mm across but the board slot width is 17.7 mm. The clip cannot pass a 17.7 mm slot, so one of the two is wrong.",
+    "Post faces are 76.2 mm apart against a board pitch of 34.25 mm; confirm the clips land on rib centres."
+  ],
+  "notes": [
+    "A separate 3-4 mm adhesive mat sits board-side, between plate and board."
+  ]
+}

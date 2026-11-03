@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "id": "line6_modeler",
+  "kind": "pedal",
+  "brand": "Line 6",
+  "description": "The 4-switch modeler family shares one cast aluminium chassis, so one plate geometry serves every model.",
+  "models": ["DL4 MkI", "FM4", "MM4", "DM4", "AM4"],
+  "sources": ["ref/line_6_modeler_cad_bracket_specifications.md"],
+  "physical": {
+    "width_mm": 254.0,
+    "depth_mm": 152.0,
+    "height_mm": null,
+    "corner_radius_mm": 9.5,
+    "weight_g": null
+  },
+  "mounting": {
+    "hole_count": 4,
+    "hole_pattern": {
+      "dx_mm": 238.0,
+      "dy_mm": 136.0,
+      "edge_offset_mm": 8.0
+    },
+    "fastener": "m3x0.5",
+    "hole_choice": "fdm",
+    "countersink": true,
+    "max_total_screw_length_mm": null,
+    "quickmount_type": null
+  },
+  "battery_door": {
+    "present": true,
+    "cells": "4 x C",
+    "access": "bottom",
+    "width_mm": 164.0,
+    "depth_mm": 62.0,
+    "x_mm": 0.0,
+    "y_mm": null,
+    "latch_relief_depth_mm": 4.0
+  },
+  "plate": {
+    "thickness_mm": { "aluminium": [2.0, 3.0], "fdm": [3.5, 5.0] },
+    "boss_infill_percent": 100
+  },
+  "provenance": {
+    "physical": { "level": 2, "source": "ref/line_6_modeler_cad_bracket_specifications.md section 1", "retrieved": "2026-11-04" },
+    "mounting": { "level": 2, "source": "ref/line_6_modeler_cad_bracket_specifications.md section 2", "retrieved": "2026-11-04" },
+    "battery_door": { "level": 2, "source": "ref/line_6_modeler_cad_bracket_specifications.md section 3", "retrieved": "2026-11-04" }
+  },
+  "open_questions": [
+    "Battery door Y offset toward the front edge is described but not dimensioned; it must be measured before a solid plate is generated.",
+    "MANUAL_TODOS item 4: rebuild kits to be ordered before any physical fit check, so the test chassis may not be available yet.",
+    "MANUAL_TODOS item 3: a battery-compartment lock may replace the screw holes entirely; do not commit to the four-hole plate until that is decided."
+  ],
+  "notes": [
+    "A solid full-coverage plate needs a 4.0 mm pocket relief for the battery door tabs and slider clip, or a 164.0 x 62.0 cutout.",
+    "No QuickMount type covers this chassis; type L6 is the HX Stomp, a different housing."
+  ]
+}

@@ -219,17 +219,21 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-# Third-party reference downloads (CC BY-NC-SA, analysis only)
-reference/
+# Third-party reference material (analysis only, not redistributed):
+# vendor manuals and RockBoard blueprint PDFs, and downloaded reference meshes.
+# Scraped markdown, own photos and own drawings stay tracked.
+**/ref/*.pdf
+**/ref/**/*.pdf
+**/ref/Strymon_v*.stl
 
 # Python
 __pycache__/
 *.pyc
 
 
-# Source download of third-party reference models (see docs/quickmount-mechanism.md)
+# Source download of third-party reference models
 *.zip
 
-# Build output (regenerate with python -m quickmount.build)
+# Scratch build output. Committed drawings and meshes belong in <project>/dwg/.
 out/
 

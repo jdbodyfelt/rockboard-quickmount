@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "id": "quickmount_types",
+  "kind": "shared_catalog",
+  "description": "RockBoard OEM QuickMount type library. A type is a housing-family plate, not a pedal-specific one: one pattern usually covers many models across several brands. Use this to decide whether an OEM plate already solves a pedal before modelling anything.",
+  "product_no_pattern": "RBO B QM T <type>",
+  "types": {
+    "A": { "compatibility": ["MXR standard", "Electro-Harmonix nano"] },
+    "B1": { "compatibility": ["Keeley", "EarthQuaker Devices", "JHS", "Mooer GL 100", "Seymour Duncan", "Friedman", "Wampler EQ / Velvet Fuzz", "several Walrus models", "vertical 125B housings"] },
+    "C": { "compatibility": ["larger vertical housings: EarthQuaker, EHX, Keeley, MXR, JHS, Darkglass"] },
+    "D": { "compatibility": ["larger horizontal housings: EHX, Keeley, MXR", "Warwick Gnome amp"] },
+    "E": { "compatibility": ["BOSS compact series"] },
+    "E200": { "compatibility": ["BOSS DD-200", "EQ-200", "IR-200", "MD-200", "OD-200"] },
+    "F": { "compatibility": ["Ibanez Tube Screamer", "Maxon Nine series"] },
+    "FT1-FT5": { "compatibility": ["specific Fulltone models: OCD, CS-Ranger, Supa-Trem, Deja Vibe, Full-Drive 1/2/3"] },
+    "G": { "compatibility": ["TC Electronic standard"] },
+    "H": { "compatibility": ["DigiTech compact series"] },
+    "I": { "compatibility": ["Eventide H9"] },
+    "I1": { "compatibility": ["Eventide Blackhole, Knife Drop, MicroPitch, Riptide, Tricera, UltraTap"] },
+    "J": { "compatibility": ["medium Strymon"] },
+    "J1": { "compatibility": ["BOSS 500-series", "Strymon large-format"] },
+    "J2": { "compatibility": ["Strymon Nightsky", "Strymon Volante"] },
+    "K": { "compatibility": ["Mooer micro series", "IK Multimedia ToneX One"] },
+    "KE": { "compatibility": ["Kemper Profiler Player"] },
+    "L": { "compatibility": ["mini-style housings: MXR, Pigtronix, Xotic, TC mini"] },
+    "L6": { "compatibility": ["Line 6 HX Stomp"] },
+    "LE1-LE4": { "compatibility": ["Lehle models"] },
+    "M": { "compatibility": ["Dunlop Cry Baby standard wah", "RockBoard StageTuner ST-02"] },
+    "MR": { "compatibility": ["Meris Hedra"] },
+    "N": { "compatibility": ["TC-Helicon Harmony Singer 2, Duplicator, Mic Mechanic 2"] },
+    "NRL": { "compatibility": ["Neural DSP Quad Cortex"] },
+    "O": { "compatibility": ["Friedman Overdrive Deluxe", "Walrus Descent"] },
+    "OE": { "compatibility": ["Origin Effects Cali76, Cali76 FET"] },
+    "PC1-PC3": { "compatibility": ["Pro Co Fat Rat, The Rat, Lil Rat"] },
+    "SR1-SR2": { "compatibility": ["Source Audio models"] },
+    "TC": { "compatibility": ["TC Electronic compact range"] },
+    "UA": { "compatibility": ["Universal Audio compact range"] },
+    "UH": { "compatibility": ["universal horizontal"], "published_hole_spacing_mm": [[51.0, 103.0], [73.0, 91.0]] },
+    "UV": { "compatibility": ["universal vertical"], "published_hole_spacing_mm": [[96.0, 48.0]] },
+    "WH1-WH3": { "compatibility": ["Way Huge models"] }
+  },
+  "inventory_on_hand": [
+    { "type": "E", "quantity": 2, "fitted_to": ["BOSS OC-2", "BOSS OD-3"], "use": "repeatability check: same plate must fit both" },
+    { "type": "M", "quantity": 1, "fitted_to": ["Dunlop wah"] },
+    { "type": "J1", "quantity": 1, "fitted_to": ["Strymon TimeLine"] }
+  ],
+  "accessories": ["Cable Fix clips", "Pick Box", "QuickRelease Tool", "Second Tier riser", "PedalSafe covers"],
+  "provenance": {
+    "level": 3,
+    "source": "RockBoard catalogue pp. 19-22 and the QuickMount Finder",
+    "retrieved": "2026-11-04"
+  },
+  "notes": [
+    "The UH type publishing an explicit mounting-hole distance is the precedent to follow: hole geometry is the defining dimension of a plate.",
+    "No plate may be cut, sawn, or permanently modified during measurement; the on-hand plates stay usable."
+  ]
+}

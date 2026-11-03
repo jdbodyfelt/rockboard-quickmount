@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "id": "strymon_timeline_multiswitch",
+  "kind": "pedal",
+  "brand": "Strymon",
+  "description": "One joined mount for a TimeLine plus a MultiSwitch. The TimeLine is large-format and sits on a small angle riser; the MultiSwitch stays flat.",
+  "sources": [
+    "ref/strymon_timeline_cad_bracket_specifications.md",
+    "ref/strymon_miniswitch_cad_bracket_specifications.md",
+    "ref/timeline.jpg",
+    "ref/timeline_spot.jpg",
+    "ref/multiswitch.jpg",
+    "ref/Strymon_v1.stl",
+    "ref/Strymon_v2.stl",
+    "ref/Strymon_v3.stl"
+  ],
+  "layout": {
+    "arrangement": "single joined baseplate; TimeLine raised on an angle riser, MultiSwitch flat",
+    "status": "proposed",
+    "riser_angle_deg": null,
+    "driver": "all-button access to the TimeLine front row fixes the riser angle",
+    "provenance": { "level": 1, "source": "MANUAL_TODOS item 2 (owner intent)", "retrieved": "2026-11-04" }
+  },
+  "units": [
+    {
+      "id": "timeline",
+      "model": "TimeLine",
+      "physical": {
+        "width_mm": 171.0,
+        "depth_mm": 130.0,
+        "height_mm": null,
+        "corner_radius_mm": 3.0,
+        "weight_g": null
+      },
+      "mounting": {
+        "hole_count": 4,
+        "hole_pattern": {
+          "dx_mm": 158.0,
+          "dy_mm": 117.0,
+          "edge_offset_mm": 6.5
+        },
+        "fastener": "m3x0.5",
+        "hole_choice": "fdm",
+        "countersink": true,
+        "max_total_screw_length_mm": 8.0,
+        "max_protrusion_past_wall_mm": 4.0,
+        "quickmount_type": "J1"
+      },
+      "relief": {
+        "serial_label_recess_depth_mm": 0.8,
+        "serial_label_recess_location": "center-top",
+        "perimeter_flush_margin_mm": 5.0
+      },
+      "plate": {
+        "thickness_mm": { "aluminium": [1.5, 2.0], "steel": [1.2, 1.5], "fdm": [3.0, 4.0] },
+        "boss_infill_percent": 100
+      },
+      "provenance": {
+        "physical": { "level": 2, "source": "ref/strymon_timeline_cad_bracket_specifications.md section 1", "retrieved": "2026-11-04" },
+        "mounting": { "level": 2, "source": "ref/strymon_timeline_cad_bracket_specifications.md section 2", "retrieved": "2026-11-04" }
+      }
+    },
+    {
+      "id": "multiswitch",
+      "model": "MultiSwitch",
+      "aliases": ["MiniSwitch", "Favorite switch"],
+      "physical": {
+        "width_mm": 50.8,
+        "depth_mm": 57.1,
+        "height_mm": null,
+        "corner_radius_mm": 2.5,
+        "weight_g": null
+      },
+      "mounting": {
+        "hole_count": 4,
+        "hole_pattern": {
+          "dx_mm": 40.8,
+          "dy_mm": 47.1,
+          "edge_offset_mm": 5.0
+        },
+        "fastener": "m3x0.5",
+        "hole_choice": "fdm",
+        "countersink": true,
+        "max_total_screw_length_mm": 7.5,
+        "quickmount_type": null
+      },
+      "plate": {
+        "thickness_mm": { "aluminium": [1.5, 2.0], "fdm": [2.5, 3.5] },
+        "boss_infill_percent": 100
+      },
+      "provenance": {
+        "physical": { "level": 2, "source": "ref/strymon_miniswitch_cad_bracket_specifications.md section 1", "retrieved": "2026-11-04" },
+        "mounting": { "level": 2, "source": "ref/strymon_miniswitch_cad_bracket_specifications.md section 2", "retrieved": "2026-11-04" }
+      }
+    }
+  ],
+  "open_questions": [
+    "TimeLine and MultiSwitch heights are unknown; the riser step needs both.",
+    "No QuickMount type is published for the MultiSwitch compact housing.",
+    "Which of Strymon_v1/v2/v3.stl is the current reference mesh is not recorded."
+  ],
+  "notes": [
+    "Both units use M3 x 0.5 flat-head screws, but the safe total length differs (8.0 mm TimeLine, 7.5 mm MultiSwitch). Do not share one screw length across the joined plate."
+  ]
+}
