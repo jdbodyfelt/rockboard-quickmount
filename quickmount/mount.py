@@ -18,6 +18,7 @@ import pathlib
 
 import trimesh
 import yaml
+from build123d import Axis, ExportSVG, Unit, export_step
 
 from .components import (
     BrandStamp,
@@ -27,6 +28,7 @@ from .components import (
     RetainerColumn,
     SpineSpec,
     WingSpec,
+    build_boundary,
     build_mount,
 )
 from .keeper import export, load_spec
@@ -91,6 +93,7 @@ def load_mount(path: pathlib.Path) -> MountSpec:
             clearance_radius=float(s.get("clearance_radius_mm", 0.0)),
             flare=s.get("flare", "outward"),
             offset=float(s.get("offset_mm", 0.0)),
+            along_offset=float(s.get("along_offset_mm", 0.0)),
             name=s.get("name", "spine"),
         )
         for s in raw.get("spines", [])
@@ -147,6 +150,7 @@ def load_mount(path: pathlib.Path) -> MountSpec:
                     corner_radius=float(p.get("corner_radius_mm", 0.0)),
                     through=bool(p.get("through", True)),
                     depth_mm=float(p.get("pocket_depth_mm", 0.0)),
+                    face=p.get("face", "board"),
                     name=p.get("name", "pocket"),
                 )
                 for p in w.get("pockets", [])
@@ -242,6 +246,11 @@ def main() -> int:
     parser.add_argument("--config", required=True)
     parser.add_argument("--out", default=None, help="output STL path (overrides the configured output folder)")
     parser.add_argument("--step", action="store_true")
+    parser.add_argument(
+        "--boundary",
+        action="store_true",
+        help="export the pedal-face silhouette instead of the whole part (SVG + STEP)",
+    )
     args = parser.parse_args()
 
     config = pathlib.Path(args.config)
@@ -264,6 +273,22 @@ def main() -> int:
         else ROOT / "out" / output_dir / f"{mount.name}.stl"
     )
     out.parent.mkdir(parents=True, exist_ok=True)
+
+    if args.boundary:
+        face = build_boundary(mount, spec).faces().sort_by(Axis.Z)[0]
+        svg = out.with_name(f"{mount.name}_boundary.svg")
+        exporter = ExportSVG(unit=Unit.MM, line_weight=0.4)
+        exporter.add_shape(face)
+        exporter.write(str(svg))
+        step_out = out.with_name(f"{mount.name}_boundary.step")
+        export_step(face, str(step_out))
+        box = face.bounding_box()
+        print(f"[ok] {mount.name}_boundary")
+        print(f"   size     {round(box.size.X, 2)} x {round(box.size.Y, 2)} mm")
+        print(f"   area     {round(face.area, 2)} mm2, {len(face.wires())} wires")
+        print(f"boundary -> {svg}")
+        return 0
+
     step = out.with_suffix(".step") if args.step else None
     sidecar = out.with_suffix(".json")
     export(part, str(out), str(step) if step else None)
@@ -278,7 +303,10 @@ def main() -> int:
     for spine in mount.spines:
         clip_centres = []
         for i in range(spine.clips):
-            position = (i - (spine.clips - 1) / 2.0) * spine.post_spacing
+            position = (
+                (i - (spine.clips - 1) / 2.0) * spine.post_spacing
+                + spine.along_offset
+            )
             clip_centres.append(
                 [position, spine.offset]
                 if spine.axis == "x"
@@ -303,6 +331,7 @@ def main() -> int:
                 "post_spacing_mm": spine.post_spacing,
                 "clip_width_mm": spine.clip_width,
                 "offset_mm": spine.offset,
+                "along_offset_mm": spine.along_offset,
                 "clip_centres_mm": clip_centres,
                 "board_clip_centres_mm": board_clip_centres,
                 "flare": spine.flare,
@@ -328,7 +357,26 @@ def main() -> int:
         },
         "thickness_mm": mount.thickness,
         "spines": spine_records,
-        "wings": [{"name": w.name, "holes": len(w.holes), "columns": len(w.columns)} for w in mount.wings],
+        "wings": [
+            {
+                "name": w.name,
+                "holes": len(w.holes),
+                "columns": len(w.columns),
+                "pockets": [
+                    {
+                        "name": p.name,
+                        "centre_mm": [p.cx, p.cy],
+                        "size_mm": [p.width, p.depth],
+                        "corner_radius_mm": p.corner_radius,
+                        "through": p.through,
+                        "depth_mm": None if p.through else p.depth_mm,
+                        "face": None if p.through else p.face,
+                    }
+                    for p in w.pockets
+                ],
+            }
+            for w in mount.wings
+        ],
         "brand_stamp": (
             {
                 "lines": ["Melting", "Skies", mount.brand_stamp.model_number],

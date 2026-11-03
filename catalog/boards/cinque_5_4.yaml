@@ -1,0 +1,85 @@
+# RockBoard Cinque 5.4
+#
+# Envelope: 1002 x 424 mm (official RockBoard catalogue size comparison).
+#
+# The project owns a Cinque 5.2, not a 5.4, so the slot numbers below are carried
+# over from the measured 5.2 and from the official 5.4 technical drawing. Treat
+# the grid as the same family until a 5.4 is measured.
+#
+# Slot grid - official Cinque 5.4 technical drawing (text converted to outlines,
+# so the dimensions were read from a 300 dpi render):
+#   slot width  18 mm    long slots, two length families (60 mm and 98 mm)
+#   rib width   16 mm
+# Slot grid - measured on the owned Cinque 5.2, powder coat included:
+#   slot width  17.7 mm
+#   rib width   16.3 - 16.8 mm
+#   pitch       34.0 - 34.5 mm  (derived as slot + rib)
+#
+# Slot orientation: slots run along the board's long axis, which is +X in the
+# coordinate frame of docs/rockboard-system.md. Ribs therefore also run along +X,
+# and the keeper arch - which straddles a rib - reaches along +Y.
+#
+# UNMEASURED on any board: the absolute phase of the grid, i.e. where the first
+# rib centre falls relative to the board's origin. Clips must land on rib centres,
+# so a mount's plate_center must be chosen after measuring one rib position, and
+# any two clips must be a whole number of pitches apart. Until the phase is known
+# every placement is relative-only.
+
+id: cinque_5_4
+status: partial
+envelope:
+  width_mm: 1002.0
+  depth_mm: 424.0
+sheets:
+  aluminium_mm: 3.0
+  powder_coat_mm: 0.1
+  under_sheet_clearance_mm: 22.0
+  brace_spacing_mm: null
+  brace_width_mm: null
+
+slots:
+  width_mm: 17.7          # measured 5.2; the 5.4 drawing says 18
+  width_official_mm: 18.0
+  rib_mm: 16.55           # nominal; measured range 16.3-16.8
+  rib_min_mm: 16.3
+  rib_max_mm: 16.8
+  rib_official_mm: 16.0
+  pitch_mm: 34.25         # nominal; measured range 34.0-34.5
+  pitch_min_mm: 34.0
+  pitch_max_mm: 34.5
+  length_families_mm: [60.0, 98.0]
+  axis: x                 # slot long axis; ribs also run along x
+  repeats_along: y        # slots repeat across the board depth
+
+# Read off the official Cinque 5.4 technical drawing (reference/Cinque Captures/Cinque_54.jpg,
+# rotated 90 degrees): overall depth 424, slot field depth 394, so the field is
+# inset 15 mm from each long edge. Slot lengths are 60 and 98 mm, slot width 18,
+# rib 16, slot end radius R4.
+#
+# CAUTION on that drawing: it is not drawn to a uniform scale. The plan measures
+# 847 px across for 1002 mm but only 266 px tall for 424 mm, a 35% anisotropy, and
+# a pixel-measured row pitch comes out near 47.5 mm against an annotated slot + rib
+# of 34. Only the dimensions printed on the drawing (424, 394, 18, 16, 60, 98) are
+# usable; do not scale measurements off its pixels.
+field:
+  depth_mm: 394.0
+  edge_margin_mm: 15.0
+  first_rib_centre_from_edge_mm: 41.0     # 15 + 18 + 8, nominal
+  note: "owner reads ~45 mm on the board; confirm with calipers"
+
+field_status:
+  slot_width:
+    status: measured
+    source: "callipers on the owned 5.2, 2026-11-02, powder coat included"
+  rib_width:
+    status: measured
+    source: "micrometer on the owned 5.2, 2026-11-02 (16.3-16.8)"
+  pitch:
+    status: derived
+    source: "slot width + rib width; measure directly across four slots to tighten"
+  grid_phase:
+    status: open
+    source: "no board has been measured for absolute rib position"
+  slot_lengths:
+    status: official
+    source: "Cinque 5.4 technical drawing"

@@ -82,6 +82,13 @@ Starting rules for the generator's default profile. They are hypotheses until th
 
 The slot/tab clearances from [geometry-capture.md](geometry-capture.md#5-tolerance-budget) remain the governing values; these rules constrain how the part is built around them.
 
+A plate that is large relative to its fasteners should not be left solid: cut
+through-windows so the remaining frame is uniform thickness, or split it so the
+same part is printed twice. Either removes material and machine time and reduces
+the warp a large flat PETG plate develops. Where a pedal keeps its rubber feet,
+pocket them instead of removing them, and keep at least 1.2 mm of material under
+each pocket floor.
+
 ## 4. Process calibration (vendor coupon)
 
 Before the first production plate, order a **calibration coupon** from Kea through the instant-quote flow. One coupon set contains:

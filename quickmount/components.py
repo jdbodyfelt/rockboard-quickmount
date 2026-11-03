@@ -55,6 +55,9 @@ class SpineSpec:
     along them for a single-row one. `flare` is "outward" for a spine that spans
     two rows (clips flare away from the centre) or "inline" for one row (all
     clips flare the same way, like the reference 2-space clip).
+
+    `along_offset` shifts the whole clip row along `axis`; it is how a single clip
+    is placed at one end of a split plate instead of on the plate centreline.
     """
 
     clips: int = 2
@@ -67,6 +70,7 @@ class SpineSpec:
     clearance_radius: float = 0.0  # rounded inner corners of the notch
     flare: str = "outward"         # "outward" or "inline"
     offset: float = 0.0            # spine centre along the other axis
+    along_offset: float = 0.0      # clip row shift along the spine axis
     name: str = "spine"
 
 
@@ -121,7 +125,12 @@ class RetainerColumn:
 
 @dataclass(frozen=True)
 class Pocket:
-    """A clearance cut in a wing: battery door, rubber-foot pocket, label relief."""
+    """A cut in a wing: lightening window, battery door, rubber-foot pocket, label relief.
+
+    `face` selects which surface a blind pocket opens on. `"pedal"` opens on the
+    pedal-facing surface at z = 0, which is where a rubber foot needs its recess;
+    `"board"` opens on the clip side at z = thickness. Ignored when `through`.
+    """
 
     cx: float
     cy: float
@@ -130,6 +139,7 @@ class Pocket:
     corner_radius: float = 0.0
     through: bool = True
     depth_mm: float = 0.0          # used when `through` is False
+    face: str = "board"            # "pedal" or "board"
     name: str = "pocket"
 
 
@@ -192,7 +202,14 @@ def _pocket_cutter(pocket: Pocket, thickness: float):
     else:
         sketch = Pos(pocket.cx, pocket.cy, 0) * Rectangle(pocket.width, pocket.depth)
     solid = extrude(sketch, amount=height)
-    z0 = -1.0 if pocket.through else thickness - pocket.depth_mm
+    if pocket.through:
+        z0 = -1.0
+    elif pocket.face == "pedal":
+        z0 = 0.0                      # opens on the pedal face and cuts inward
+    elif pocket.face == "board":
+        z0 = thickness - pocket.depth_mm
+    else:
+        raise ValueError(f"pocket face must be 'pedal' or 'board', got {pocket.face!r}")
     return Pos(0, 0, z0) * solid
 
 
@@ -363,8 +380,9 @@ def build_spine(
     """One spine: `clips` keepers on an axis, strung by a bar.
 
     Clip post faces land exactly `post_spacing` apart, so the spine drops into the
-    slot grid with no arithmetic in between. Returns the solid, those post-face
-    positions along the spine axis, and the ring reach outboard of them.
+    slot grid with no arithmetic in between. `along_offset` shifts that whole row
+    along the spine axis. Returns the solid, those post-face positions along the
+    spine axis, and the ring reach outboard of them.
 
     `include_bar=False` leaves the bar out: use it when a wing already covers the
     spine, otherwise the bar's faces land coincident with the plate's.
@@ -374,7 +392,10 @@ def build_spine(
     if n < 1:
         raise ValueError("a spine needs at least one clip")
 
-    positions = [(i - (n - 1) / 2.0) * spine.post_spacing for i in range(n)]
+    positions = [
+        (i - (n - 1) / 2.0) * spine.post_spacing + spine.along_offset
+        for i in range(n)
+    ]
     reach = ring_reach(s, spine.arch_scale, spine.clip_width)
 
     part = None
@@ -432,6 +453,30 @@ def _clearance_cut(
     if spine.axis == "x":
         return Pos(sign * mid, spine.offset, -1.0) * cutter
     return Pos(spine.offset, sign * mid, -1.0) * (Rot(0, 0, 90) * cutter)
+
+
+def build_boundary(mount: MountSpec, spec: KeeperSpec | None = None):
+    """The plate silhouette at the pedal face: wing outline minus clip notches.
+
+    This is the plate's own footprint with nothing else on it - no clips, no
+    holes, no stamp. For the 125B that is an H: a 120 x 65 outline with R3
+    corners, notched 24 mm deep from each long side.
+    """
+    s = spec or load_spec()
+    part = None
+    for wing in mount.wings:
+        plate = _plate(wing, mount.thickness)
+        part = plate if part is None else part + plate
+    if part is None:
+        raise ValueError("a boundary needs at least one wing")
+
+    for spine in mount.spines:
+        idx = 0 if spine.axis == "x" else 1
+        edge = max((abs(p[idx]) for w in mount.wings for p in w.points()), default=None)
+        _, post_faces, reach = build_spine(spine, s, include_bar=False)
+        for face in post_faces:
+            part = part - _clearance_cut(spine, face, reach, s, mount.thickness, edge)
+    return part
 
 
 def build_mount(mount: MountSpec, spec: KeeperSpec | None = None):
