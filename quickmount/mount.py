@@ -47,8 +47,36 @@ def _points(raw) -> tuple[tuple[float, float], ...]:
     return tuple((float(p[0]), float(p[1])) for p in raw)
 
 
+def _merge(base: dict, override: dict) -> dict:
+    """Overlay `override` onto `base`; a null value removes the key entirely."""
+    merged = dict(base)
+    for key, value in override.items():
+        if value is None:
+            merged.pop(key, None)
+        elif isinstance(value, dict) and isinstance(merged.get(key), dict):
+            merged[key] = _merge(merged[key], value)
+        else:
+            merged[key] = value
+    return merged
+
+
+def load_raw(path: pathlib.Path) -> dict:
+    """A mount config, with `base_mount` pulled in so geometry is never duplicated.
+
+    `base_mount` is a path relative to the including file. Fields the child sets
+    win; `field: null` and `field: []` deliberately clear an inherited value, which
+    is how a derived part drops the base part's holes or brand stamp.
+    """
+    raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    base = raw.pop("base_mount", None)
+    if base is None:
+        return raw
+    inherited = load_raw((path.parent / base).resolve())
+    return _merge(inherited, raw)
+
+
 def load_mount(path: pathlib.Path) -> MountSpec:
-    raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+    raw = load_raw(path)
     plate = raw.get("plate", {})
 
     spines = tuple(
@@ -217,7 +245,7 @@ def main() -> int:
     args = parser.parse_args()
 
     config = pathlib.Path(args.config)
-    raw = yaml.safe_load(config.read_text(encoding="utf-8"))
+    raw = load_raw(config)
     mount = load_mount(config)
     clip_path = raw.get("clip")
     spec = load_spec(ROOT / clip_path) if clip_path else load_spec()

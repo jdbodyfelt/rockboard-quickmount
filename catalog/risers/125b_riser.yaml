@@ -1,0 +1,31 @@
+# 125B riser
+#
+# The riser's resting surface is the 125B plate's own underside: the flat strip
+# the OEM riser's bent-under lip presents to the board. So the base of the riser
+# is the measured 125B mount itself, reduced to a solid.
+#
+# Everything geometric is inherited from the measured part; only the changes made
+# for the riser are declared here, so the 120 x 65 outline, R3 corners, 3.0 mm
+# plate and two-clip spine can never drift away from the base they were measured
+# on.
+#
+# Deliberately absent:
+#   - mount holes      the pedal screws belong to a later feature, not the base
+#   - brand stamp      no Melting / Skies / 125B engraving yet
+
+id: 125b_riser
+output_dir: "125B Riser"
+name: "125B riser (solid plate, no mount holes, no stamp)"
+base_mount: ../pedals/125b_quickmount.yaml
+status: derived
+
+mount_holes: []
+brand_stamp: null
+
+provenance:
+  outline: {level: 4, source: "inherited from catalog/pedals/125b_quickmount.yaml"}
+  spine: {level: 4, source: "inherited from catalog/pedals/125b_quickmount.yaml"}
+  mount_holes: {level: 4, source: "intentionally omitted; pedal attachment is deferred"}
+
+open_questions:
+  - "Plate only; the riser body, lip, grommets and tilt are not modelled yet."

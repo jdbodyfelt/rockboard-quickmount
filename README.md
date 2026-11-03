@@ -26,6 +26,7 @@ python -m quickmount.build --step      # keeper ring + arrangements into out/Kee
 python -m quickmount.validate          # geometry checks against the board profile
 
 python -m quickmount.mount --config catalog/pedals/125b_quickmount.yaml --step
+python -m quickmount.mount --config catalog/risers/125b_riser.yaml --step
 ```
 
 Keeper outputs go in `out/Keeper/` and are indexed by `out/manifest.json`.
@@ -38,7 +39,9 @@ retainer columns, the pedal attachment). See
 [docs/component-model.md](docs/component-model.md).
 
 Keeper geometry in [catalog/clips/](catalog/clips), board geometry in
-[catalog/boards/](catalog/boards), housing families in [catalog/housings/](catalog/housings). The slot dimensions there are **provisional**
+[catalog/boards/](catalog/boards), housing families in
+[catalog/housings/](catalog/housings), and riser parts in
+[catalog/risers/](catalog/risers). The slot dimensions there are **provisional**
 until measured with callipers — see
 [docs/quickmount-mechanism.md](docs/quickmount-mechanism.md#6-board-dimensions).
 Screws: [docs/screws.md](docs/screws.md).
