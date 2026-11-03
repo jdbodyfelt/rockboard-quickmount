@@ -1,0 +1,146 @@
+# DigiTech Whammy V mount - measured 2026-11-03 on the owner's pedal.
+#
+# Orientation: footswitch end is FRONT (+Y), the opposite short edge is REAR
+# (-Y), long sides are LEFT (-X) and RIGHT (+X), viewed from above.
+
+id: digitech_whammy_v
+output_dir: "DigiTech Whammy V"
+name: "DigiTech Whammy V mount (measured plate, foot recesses)"
+enclosure: "DigiTech Whammy V"
+board: cinque_5_4
+status: draft
+
+measurements:
+  # All measured by the owner with callipers/micrometer, 2026-11-03.
+  envelope:
+    width_mm: 165.0            # A1, left to right at the widest point
+    depth_mm: 197.0            # A2, front to rear at the widest point
+    corner_radius_mm: 0.0      # A5, formed sheet, effectively square
+  bottom:
+    form: "stamped and bent sheet, folded up on left, right and rear; front is open"
+    flush_with_walls: true     # A3
+    recessed_rim: false        # A4 not applicable
+    obstacles: "rubber feet only"   # A6
+  top_piece: "front and top are a second piece, bolted with five hex-head black screws"
+  feet:
+    count: 4                   # B1, one per corner
+    base_dia_mm: 11.0          # B2
+    height_mm: 2.5             # B3
+    top_dia_mm: 10.0           # B4
+    contact_face: flat
+    inset_left_right_mm: 15.5  # B5
+    inset_rear_mm: 15.5        # B5
+    inset_front_mm: 18.0       # B5, +2.5 over the others
+    metal_cup: false           # B6
+  provenance: {level: 4, source: "owner measurement 2026-11-03", date: "2026-11-03"}
+
+provenance:
+  outline: {level: 4, source: "owner measurement 2026-11-03 (A1, A2, A5)"}
+  feet: {level: 4, source: "owner measurement 2026-11-03 (B1-B6)"}
+  spine: {level: 3, source: "placed on the Cinque 5.4 slot grid, 3 x 34.0 mm pitch; grid phase open"}
+
+plate:
+  thickness_mm: 4.0
+
+pedal_modifications:
+  - "None. The four rubber feet stay fitted and sit in recesses cut into the plate."
+
+spines:
+  # Four clips in two spines. Each spine is a pair of clips spaced ALONG the
+  # board's cross axis (+Y), because a keeper arch straddles a rib and ribs run
+  # along +X. Clip centres sit on rib centres, so the spacing must be a whole
+  # number of slot pitches: 3 x 34.0 = 102.0 mm, measured post face to post face.
+  # 102 mm puts the pair 51 mm either side of the plate centre, inside the
+  # 197 mm pedal depth with room for the arch reach and its clearance notch.
+  # The two spines sit 110 mm apart along +X so the plate cannot rock about Y.
+  - name: left_spine
+    clips: 2
+    post_spacing_mm: 102.0
+    axis: y
+    clip_width_mm: 17.7
+    arch_scale: 1.0
+    flare: outward
+    clearance_mm: 2.0
+    offset_mm: -55.0
+    along_offset_mm: 2.5
+  - name: right_spine
+    clips: 2
+    post_spacing_mm: 102.0
+    axis: y
+    clip_width_mm: 17.7
+    arch_scale: 1.0
+    flare: outward
+    clearance_mm: 2.0
+    offset_mm: 55.0
+    along_offset_mm: 2.5
+
+wings:
+  # Full measured footprint. Solid except for four blind foot recesses opening on
+  # the pedal face. 11.6 mm circular pockets clear the 11 mm foot base and are
+  # 2.8 mm deep (2.5 mm foot + 0.3 mm), leaving a 1.2 mm floor under each foot.
+  - name: pedal_plate
+    width_mm: 165.0
+    depth_mm: 197.0
+    corner_radius_mm: 0.0
+    pockets:
+      - {name: foot_rear_left,   cx: -67.0, cy: -83.0, width_mm: 11.6, depth_mm: 11.6, corner_radius_mm: 5.7, through: false, pocket_depth_mm: 2.8, face: pedal}
+      - {name: foot_rear_right,  cx:  67.0, cy: -83.0, width_mm: 11.6, depth_mm: 11.6, corner_radius_mm: 5.7, through: false, pocket_depth_mm: 2.8, face: pedal}
+      - {name: foot_front_left,  cx: -67.0, cy:  80.5, width_mm: 11.6, depth_mm: 11.6, corner_radius_mm: 5.7, through: false, pocket_depth_mm: 2.8, face: pedal}
+      - {name: foot_front_right, cx:  67.0, cy:  80.5, width_mm: 11.6, depth_mm: 11.6, corner_radius_mm: 5.7, through: false, pocket_depth_mm: 2.8, face: pedal}
+
+# Retention is by edge fingers bearing on the five hex-head chassis screws, not by
+# screws through this plate. The four corner screw positions in the earlier draft
+# came from an unverified 200 x 203.2 drawing and cannot exist on a 163 mm width.
+mount_holes: []
+
+fasteners: []
+
+brand_stamp:
+  model_number: "DTW IV"
+  cx: 0.0
+  cy: 0.0
+  font: Lacquer
+  font_path: ../../assets/fonts/Lacquer-Regular.ttf
+  bold_amount_mm: 0.2
+  font_size_mm: 9.5
+  line_spacing_mm: 11.0
+  model_gap_mm: 12.0
+  depth_mm: 0.4
+  frame_padding_mm: 2.5
+  frame_width_mm: 0.8
+  frame_radius_mm: 2.0
+  rotation_deg: 180.0
+
+board_placement:
+  # Owner inspection of the actual Cinque 5.4: the pedal's lower face and right
+  # face sit flush against the board's lower and right edges. Derived from that,
+  # not estimated from a photo. Board envelope 1002 x 424, pedal 165 x 197,
+  # +X along the board's length, +Y across its depth (down in plan view).
+  region: right_corner
+  plate_center_mm: [418.5, 113.5]
+  alignment:
+    right_edge: "flush with the board's right edge (501 - 82.5)"
+    lower_edge: "flush with the board's lower edge (212 - 98.5)"
+    velcro: "both transverse strips cross the pedal footprint"
+  source: "owner inspection on the Cinque 5.4, 2026-11-04"
+  confidence: measured_flush_corner
+  # The clip rows then land 47.5 and 149.5 mm from the lower edge, 102 mm apart.
+  # Ribs repeat every 34.0 mm (slot 18 + rib 16). From the official drawing the
+  # 424 mm board with a 394 mm slot field gives a 15 mm edge margin, so the first
+  # rib centre sits 15 + 18 + 8 = 41 mm from the edge; the owner measured ~45 mm
+  # on the board, which is the same rib within tape error. Using 45 mm, the rows
+  # must move 2.5 mm toward the lower edge: along_offset_mm = +2.5 on both spines.
+  grid_phase:
+    status: partially_measured
+    clip_rows_from_lower_edge_mm: [47.5, 149.5]
+    rib_centres_from_lower_edge_mm: "45 + 34k (owner), 41 + 34k (drawing)"
+    applied_along_offset_mm: 2.5
+    correction_limit_mm: 17.0
+
+open_questions:
+  - "Rib phase: owner reads ~45 mm from the board's lower outer edge to the nearest rib centre; the drawing implies 41 mm. The clip row is set for 45 and lands at 45 and 147 mm. Confirm with calipers: if it is nearer 41, the clip row moves 4 mm further forward and the front clip's flex notch then reaches 76.3 mm, breaking into the front foot recess (which starts at 74.7 mm). That case needs a fallback: 2-pitch clip spacing, or a shallower foot pocket."
+  - "Front foot clearance is tight by design: the front clip's flex notch ends 2.4 mm short of the front foot recess. Check the printed part keeps that ligament."
+  - "Slot spans: the two clip X positions are 27.5 mm and 137.5 mm from the board's right edge. Confirm both fall inside a slot opening rather than across a slot end, since slots are 60 mm or 98 mm long and staggered."
+  - "The plate copies the pedal footprint exactly, so with the pedal flush to the board's right edge the plate edge reaches the board's folded edge. Check the board's edge lip does not prevent the plate sitting flat there."
+  - "Clip width is 17.7 mm, the measured Cinque 5.2 slot width, against an 18 mm official slot on the 5.4. Confirm which board is actually being drilled for."
+  - "Side-wall capture (Z-profile top edge, slanted front/rear ends, 14 mm ear notches) still needs measurement before the edge fingers can be drawn."

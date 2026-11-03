@@ -41,6 +41,11 @@ Three knobs cover every OEM arrangement seen so far:
   its centre (the 125B); `inline` points every arch the same way, reproducing the
   reference 2-space clip.
 
+`along_offset` shifts the whole clip row along `axis`. The default 0 centres it;
+a single clip with `along_offset: 38.1` sits one slot row up, which lets a split
+plate keep one clip per spine while preserving the mirrored flare of the full
+plate's upper clip.
+
 `post_spacing` is measured post face to post face and must equal the board's slot
 pitch: that one number is the whole coupling between the mount and the board.
 
@@ -85,6 +90,23 @@ Wings are the surfaces that reach the pedal, and they come in two flavours:
 
 A mount can mix both: screw holes at one end, a column at the other, for pedals
 whose baseplate only has two screws.
+
+### Pockets and lightening
+
+A wing does not have to be solid. `WingSpec.pockets` cuts after the plate is
+extruded, and each pocket is either `through` or blind on a named `face`:
+`pedal` opens on the pedal-facing surface at z = 0, `board` opens on the clip side
+at z = thickness. The Whammy V uses four blind `pedal`-face pockets so its stock
+rubber feet sit in recesses instead of being removed; each pocket clears the
+11 mm foot base by 0.6 mm and is 2.8 mm deep for the 2.5 mm foot, leaving a
+1.2 mm floor.
+
+Through-windows are the other option for a plate much larger than its fasteners:
+cut the dead area away and keep a uniform frame. Whichever is used, keep each cut
+clear of the clip post land and the screw boss, and round its corners so the load
+path has no sharp internal corner. For the Whammy the plate outline is driven by
+the pedal's measured footprint, so any lightening is deferred until the edge-finger
+retention is laid out.
 
 ## 3. The brand stamp
 
@@ -149,28 +171,69 @@ way, and `python -m quickmount.mount` rebuilds it:
 Both board numbers are marked provisional in the board profile. Neither should be
 treated as settled until the Cinque is measured with callipers.
 
-## 6. DigiTech Whammy IV draft
+## 6. DigiTech Whammy V draft
 
-`catalog/pedals/digitech_whammy_iv.yaml` captures the supplied 200 × 203.2 mm
-footprint, R6.35 corners, 4 mm plate, and four corner holes (Ø3.8 mm plain
-clearance bores for #6-32 UNC screws). It sits to the right of the brown OC-2,
-with its right edge aligned to the TU-3 tuner and both Velcro strips crossing
-under the pedal, as shown in
-[the placement photo](../reference/Cinque%20Captures/whammy_spot.jpg). In that
-photo, +X runs right along the board and +Y points down across it; the plate
-center is estimated at [+385, +96.5] mm from the board center. Its four clips
-are aligned to openings visible in the photo; 17.7 mm clip width follows the
-18 mm slots in [the Cinque 5.4 layout drawing](../reference/Cinque%20Captures/Cinque_54.jpg).
-Clip spacing and center placement remain photo-derived estimates, not measured
-coordinates, so test-fit on the physical board before use. The clip assemblies
-are rotated 90° so their across-slot width follows the slot openings. The
-recessed “Melting / Skies / DTW IV” stamp is rotated upright for the board view
-with the pedal removed.
+`catalog/pedals/digitech_whammy_v.yaml` is built from the owner's own
+measurements of the physical pedal (2026-11-03), not from a supplied drawing.
 
-The supplied pedal spec places the rubber-foot centres about 15 mm from the
-edges and the screw centres 8 mm from the edges, putting their centres about
-10 mm apart diagonally. The feet are therefore assumed to cover the screws and
-are to be removed; the mount has no foot pockets. The supplied #6-32 UNC fastener
-specification calls for non-countersunk heads, so the four plate holes are plain
-Ø3.8 mm FDM clearance bores. Either 1/4 in or 1/2 in under-head length is listed;
-confirm the required thread engagement before assembly.
+| Feature | Measured |
+| --- | --- |
+| Envelope | 165.0 × 197.0 mm (published 165 × 197; owner callipers read 163 × 195) |
+| Corners | square — the lower shell is a stamped and bent sheet, not a filleted casting |
+| Lower shell | full sheet, folded up on the left, right and rear sides; the front is open |
+| Upper assembly | front and top are a second piece, bolted with five black hex-head screws |
+| Feet | 4, one per corner; Ø11 base, Ø10 flat contact face, 2.5 mm high, no metal cup |
+| Foot inset | 15.5 mm from the left, right and rear edges; 18 mm from the front |
+
+Retention is by **edge fingers** that hook the side wall and bear on the five
+hex-head screws, not by screws through the plate. The four corner mounting holes
+in the earlier draft came from an unverified 200 × 203.2 mm drawing and cannot
+exist on a 165 mm width, so `mount_holes` is empty.
+
+The plate is 165 × 197 mm, 4 mm thick, with four blind recesses on the pedal face
+for the stock rubber feet, which stay fitted. Each recess clears the 11 mm foot
+base by 0.6 mm and is 2.8 mm deep against the 2.5 mm foot, leaving 1.2 mm of
+material beneath.
+
+The clips are placed from the board outward rather than from the pedal inward. A
+keeper arch straddles a **rib**, and on RockBoard the slots (and therefore the
+ribs) run along the board's long axis, so the arch reaches across the board in
++Y. That fixes the spine axis to Y, and it means clip centres must sit on rib
+centres — so their separation has to be a whole number of slot pitches. The
+Whammy uses 3 × 34.0 = 102.0 mm post-face to post-face, putting the pair ±51 mm
+across the plate, with the two spines 110 mm apart along +X so the plate cannot
+rock about either axis. The superseded draft's 76.2 mm spacing was 2.24 pitches,
+which cannot land on the grid at all.
+
+The plate's position on the board is **measured, not estimated**: on the actual
+Cinque 5.4 the pedal's lower face and right face sit flush against the board's
+lower and right edges. With a 1002 × 424 board and a 165 × 197 pedal, that puts
+the plate centre at [+418.5, +113.5] mm and the four clips at board coordinates
+(363.5, 62.5), (363.5, 164.5), (473.5, 62.5) and (473.5, 164.5).
+
+Still open:
+
+1. **Rib phase.** The clip rows land 47.5 and 149.5 mm from the board's lower edge
+   on the bare geometry. Ribs repeat every 34.0 mm, and the official drawing's
+   424 mm board with a 394 mm slot field implies a 15 mm edge margin and a first
+   rib centre at 15 + 18 + 8 = 41 mm; the owner reads ~45 mm on the board. The
+   clip row carries `along_offset_mm: 2.5` to sit on 45 and 147 mm. If calipers
+   say 41, the row moves another 4 mm and the front clip's flex notch reaches
+   76.3 mm, into the front foot recess at 74.7 mm — that case needs either 2-pitch
+   clip spacing or a shallower foot pocket. As built, the ligament between those
+   two cuts is 2.4 mm.
+2. **Slot spans.** The clip columns are 27.5 and 137.5 mm from the board's right
+   edge. Slots are 60 mm or 98 mm long and staggered, so confirm both columns fall
+   inside a slot opening rather than across a slot end.
+3. **Board edge lip.** The plate copies the pedal footprint exactly, so flush to
+   the board's right edge its edge reaches the board's folded edge. Check the lip
+   does not hold the plate off the sheet.
+4. **Slot width.** The clip is 17.7 mm wide, the measured Cinque 5.2 slot width,
+   against 18 mm on the official 5.4 drawing.
+5. **Side wall.** The wall's top edge is a "Z": it slopes front to rear and steps
+   where the rocker pedal starts, the front and rear ends are slanted, and there
+   is a row of 14 mm ear-cut notches where the mount ears were bent. The manual's
+   plan and elevations, rescaled to 165 × 197 and 197 mm wide respectively, give
+   a wall top edge that falls about 4 mm over 114 mm (roughly 2°) and steps near
+   the front, but the sketch cannot resolve the notches or the step, so those
+   need micrometer values before the fingers are drawn.
