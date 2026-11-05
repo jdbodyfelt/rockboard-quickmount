@@ -3,7 +3,7 @@
   "id": "pedal_riser",
   "kind": "riser",
   "description": "Second-tier riser that lifts a pedal a step above the board while keeping it clipped in. The base is the measured 125B mount outline reduced to a solid.",
-  "sources": ["ref/QuickMount-Riser.pdf"],
+  "sources": ["../commons/ref/stepups/PedalRiser.pdf"],
   "based_on": "enclosure_125b",
   "base": {
     "width_mm": 120.0,

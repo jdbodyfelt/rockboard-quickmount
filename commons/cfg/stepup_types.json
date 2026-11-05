@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "id": "stepup_types",
+  "kind": "riser_catalog",
+  "description": "RockBoard riser family: the Step Up kits and the pedal risers, which lift pedals to a second tier. Dimensions are the unit's overall envelope, length x width x height.",
+  "types": {
+    "StepUp-1": {
+      "drawing": "StepUp-1.pdf",
+      "pedal_capacity": 1,
+      "dimensions_mm": {
+        "length": 90.0,
+        "width": 145.0,
+        "height": 25.0
+      },
+      "geometry_source": "product-spec"
+    },
+    "StepUp-2": {
+      "drawing": "StepUp-2.pdf",
+      "pedal_capacity": 2,
+      "dimensions_mm": {
+        "length": 180.0,
+        "width": 142.5,
+        "height": 25.0
+      },
+      "geometry_source": "drawing",
+      "note": "length read off the drawing; width and height are carried over from Step Up 1, which publishes 90 x 145 x 25"
+    },
+    "StepUp-3": {
+      "drawing": "StepUp-3.pdf",
+      "pedal_capacity": 3,
+      "dimensions_mm": {
+        "length": 255.0,
+        "width": 142.5,
+        "height": 25.0
+      },
+      "geometry_source": "drawing",
+      "note": "length read off the drawing; width and height are carried over from Step Up 1, which publishes 90 x 145 x 25"
+    },
+    "PedalRiser": {
+      "drawing": "PedalRiser.pdf",
+      "pedal_capacity": 1,
+      "dimensions_mm": {
+        "length": 121.0,
+        "width": 76.0,
+        "height": 41.0
+      },
+      "geometry_source": "drawing"
+    },
+    "PedalRiser-L": {
+      "drawing": "PedalRiser-L.pdf",
+      "pedal_capacity": 1,
+      "dimensions_mm": {
+        "length": 212.0,
+        "width": 134.5,
+        "height": null
+      },
+      "geometry_source": "drawing",
+      "note": "height not legible on the sheet; the 121 callout is the top-plate run, not the envelope"
+    },
+    "SecondTier-Tier2S": {
+      "drawing": "SecondTier-Tier2S.pdf",
+      "pedal_capacity": null,
+      "dimensions_mm": {
+        "length": 150.0,
+        "width": 320.0,
+        "height": 85.0
+      },
+      "fits_board_series": ["TRES", "QUAD", "CINQUE"],
+      "geometry_source": "product-spec"
+    }
+  },
+  "caveats": ["Step Up kits are angled; height is the rise at the high edge.", "Absent or null values are unknown, not zero."],
+  "provenance": {
+    "level": 3,
+    "source": "the published spec sheet on https://www.rockboard.de/en/accessories/pedal-riser/ and https://www.rockboard.de/en/accessories/second-tiers/, plus the drawings in ref/stepups",
+    "retrieved": "2026-11-05"
+  }
+}

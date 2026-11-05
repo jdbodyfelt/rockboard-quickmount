@@ -1,0 +1,291 @@
+{
+  "schema_version": 1,
+  "id": "pedalsafe_types",
+  "kind": "shared_catalog",
+  "description": "RockBoard PedalSafe type library. A PedalSafe is a transparent rubber pedal cover that clips to a QuickMount plate; a type is a cover family, keyed to the pedal housing it protects, not a specific model. fits_quickmount_type names the plate the cover clips to, so plate geometry comes from quickmount_types.json rather than being repeated here.",
+  "product_no_pattern": "RBO B PS T <type>",
+  "types": {
+    "A1": {
+      "compatibility": ["PedalSafe Protective Cover for Electro Harmonix nano series and MXR standard size pedals with 1 input and 1 output jack"],
+      "fits_quickmount_type": "A",
+      "housing_dimensions_mm": [110.0, 60.0, 32.0],
+      "drawings": ["PedalSafe-TypeA1-UNI.pdf", "PedalSafe-TypeA1.pdf"]
+    },
+    "A1.1": {
+      "compatibility": ["PedalSafe Protective Cover for MXR standard size and Dunlop Echoplex Delay pedals"],
+      "fits_quickmount_type": "A",
+      "mounting_hole_spacing_published": "51 x 102",
+      "drawings": ["PedalSafe-TypeA1.1.pdf"]
+    },
+    "A2": {
+      "compatibility": ["PedalSafe Protective Cover for Electro Harmonix nano series and MXR standard size pedals with 2 input and 2 output jacks"],
+      "fits_quickmount_type": "A",
+      "housing_dimensions_mm": [112.0, 60.0, 30.0],
+      "mounting_hole_spacing_published": "51 x 102",
+      "drawings": ["PedalSafe-TypeA2-UNI.pdf", "PedalSafe-TypeA2.pdf"]
+    },
+    "B": {
+      "compatibility": ["PedalSafe Protective Cover for EarthQuaker Devices, Seymour Duncan and many other effects pedals with standard size housings"],
+      "fits_quickmount_type": "B",
+      "housing_dimensions_mm": [122.0, 67.0, 40.0],
+      "mounting_hole_spacing_published": "57-59 x 110-112",
+      "drawings": ["PedalSafe-TypeB-UNI.pdf", "PedalSafe-TypeB.pdf"]
+    },
+    "B1": {
+      "compatibility": ["PedalSafe Protective Cover for FRIEDMAN WAMPLER EQ, WAMPLER VelvetFuzz, WALRUS DeepSix, WALRUS JULIA V2, WALRUS 385 OD,WALRUS Jupiter V2 pedals"],
+      "fits_quickmount_type": "B1",
+      "drawings": ["PedalSafe-TypeB1-UNI.pdf", "PedalSafe-TypeB1.pdf"]
+    },
+    "B2": {
+      "compatibility": ["PedalSafe Protective Cover for WALRUS ARP-87, WALRUS Monument V2 pedals"],
+      "fits_quickmount_type": "B1",
+      "drawings": ["PedalSafe-TypeB2.pdf"]
+    },
+    "B3": {
+      "compatibility": ["PedalSafe Protective Cover for WALRUS MAKKO D1 pedals"],
+      "fits_quickmount_type": "B1",
+      "drawings": ["PedalSafe-TypeB3.pdf"]
+    },
+    "B4": {
+      "compatibility": ["PedalSafe protective cover suitable for the MOOER GL100 pedal"],
+      "drawings": ["PedalSafe-TypeB4-RBO.pdf", "PedalSafe-TypeB4-UNI.pdf"]
+    },
+    "C": {
+      "compatibility": ["PedalSafe Protective Cover for EarthQuaker Devices, Electro Harmonix, Keeley Electronics, MXR, JHS Pedals, Darkglass Electronics and many other effects pedals with larger vertical housings"],
+      "fits_quickmount_type": "C",
+      "housing_dimensions_mm": [120.0, 95.0, 38.0],
+      "mounting_hole_spacing_published": "78-83 x 110",
+      "drawings": ["PedalSafe-TypeC-UNI.pdf", "PedalSafe-TypeC.pdf"]
+    },
+    "C2": {
+      "compatibility": ["PedalSafe Protective Cover for WALRUS EB-10, WAMPLER TapeEcho, WAMPLER PlexiDrive pedals"],
+      "fits_quickmount_type": "C",
+      "drawings": ["PedalSafe-TypeC2.pdf"]
+    },
+    "D1": {
+      "compatibility": ["PedalSafe Protective Cover for Electro Harmonix, Keeley Electronics, MXR and many other effects pedals with larger horizontal housings and a one-row knob configuration"],
+      "fits_quickmount_type": "D",
+      "housing_dimensions_mm": [94.0, 125.0, 37.0],
+      "mounting_hole_spacing_published": "110 x 78-83",
+      "drawings": ["PedalSafe-TypeD1-UNI.pdf", "PedalSafe-TypeD1.pdf"]
+    },
+    "D2": {
+      "compatibility": ["PedalSafe Protective Cover for Electro Harmonix, Keeley Electronics, MXR and many other effects pedals with larger horizontal housings and a two-row knob configuration"],
+      "fits_quickmount_type": "D",
+      "housing_dimensions_mm": [94.0, 125.0, 37.0],
+      "mounting_hole_spacing_published": "110 x 78-83",
+      "drawings": ["PedalSafe-TypeD2-UNI.pdf", "PedalSafe-TypeD2.pdf"]
+    },
+    "D3": {
+      "compatibility": ["PedalSafe Protective Cover for WAMPLER Paisley Deluxe, WAMPLER HotWired, WAMPLER Dual Fusion pedals"],
+      "fits_quickmount_type": "D",
+      "drawings": ["PedalSafe-TypeD3.pdf"]
+    },
+    "E1": {
+      "compatibility": ["PedalSafe Protective Cover for Boss Compact Series, BOSS RC3 LoopStation, BOSS RC5 LoopStation pedals"],
+      "drawings": ["PedalSafe-TypeE1.pdf"]
+    },
+    "E200": {
+      "compatibility": ["PedalSafe protective cover suitable for pedals of the BOSS 200 series"],
+      "drawings": ["PedalSafe-TypeE200-RBO.pdf", "PedalSafe-TypeE200-UNI.pdf"]
+    },
+    "F": {
+      "compatibility": ["PedalSafe Protective Cover for standard size Ibanez TS and Maxon Nine series effects pedals"],
+      "fits_quickmount_type": "F",
+      "housing_dimensions_mm": [125.0, 65.0, 52.0],
+      "mounting_hole_spacing_published": "56 x 82",
+      "drawings": ["PedalSafe-TypeF-UNI.pdf", "PedalSafe-TypeF.pdf"]
+    },
+    "FT1": {
+      "compatibility": ["PedalSafe Protective Cover for FULLTONE OCD, FULLTONE 69 MK2 pedals"],
+      "drawings": ["PedalSafe-TypeFT1.pdf"]
+    },
+    "FT2": {
+      "compatibility": ["PedalSafe Protective Cover for FULLTONE CS Range Booster, FULLTONE Fulldrive 1, FULLTONE Mas-Malo, FULLTONE QueenBee pedals"],
+      "drawings": ["PedalSafe-TypeFT2.pdf"]
+    },
+    "FT3.1": {
+      "compatibility": ["PedalSafe Protective Cover for FULLTONE SupaTrem pedals"],
+      "drawings": ["PedalSafe-TypeFT3.1.pdf"]
+    },
+    "FT3.2": {
+      "compatibility": ["PedalSafe Protective Cover for FULLTONE FullDrive 2 pedals"],
+      "drawings": ["PedalSafe-TypeFT3.2.pdf"]
+    },
+    "FT4": {
+      "compatibility": ["PedalSafe Protective Cover for FULLTONE DejaVibe pedals"],
+      "drawings": ["PedalSafe-TypeFT4.pdf"]
+    },
+    "FT5": {
+      "compatibility": ["PedalSafe Protective Cover for FULLTONE FullDrive 3 pedals"],
+      "drawings": ["PedalSafe-TypeFT5.pdf"]
+    },
+    "G": {
+      "compatibility": ["PedalSafe Protective Cover for standard size TC Electronic effects pedals with side mounted jacks"],
+      "fits_quickmount_type": "G",
+      "drawings": ["PedalSafe-TypeG-UNI.pdf", "PedalSafe-TypeG.pdf"]
+    },
+    "H": {
+      "compatibility": ["PedalSafe Protective Cover for DigiTech compact series effects pedals"],
+      "fits_quickmount_type": "H",
+      "housing_dimensions_mm": [112.0, 58.0, 30.0],
+      "mounting_hole_spacing_published": "47 x 110",
+      "drawings": ["PedalSafe-TypeH-UNI.pdf", "PedalSafe-TypeH.pdf"]
+    },
+    "I1": {
+      "compatibility": ["PedalSafe protective cover suitable for the EVENTIDE Blackhole, Knife Drop, MicroPitch Delay, Riptide, Tricera Chorus and UltraTap pedals"],
+      "drawings": ["PedalSafe-TypeI1-RBO.pdf", "PedalSafe-TypeI1-UNI.pdf"]
+    },
+    "J": {
+      "compatibility": ["PedalSafe Protective Cover for medium-sized Strymon effects pedals"],
+      "fits_quickmount_type": "J",
+      "housing_dimensions_mm": [115.0, 100.0, 47.0],
+      "mounting_hole_spacing_published": "76 x 96",
+      "drawings": ["PedalSafe-TypeJ-UNI.pdf", "PedalSafe-TypeJ.pdf"]
+    },
+    "J1.1": {
+      "compatibility": ["PedalSafe Protective Cover for BOSS DD-500, BOSS MD-500, BOSS RC-500, BOSS RV-500 pedals"],
+      "drawings": ["PedalSafe-TypeJ1.1.pdf"]
+    },
+    "J1.2": {
+      "compatibility": ["PedalSafe Protective Cover for STRYMON BigSky, STRYMON Mobius, STRYMON TimeLine pedals"],
+      "drawings": ["PedalSafe-TypeJ1.2.pdf"]
+    },
+    "J2": {
+      "compatibility": ["PedalSafe Protective Cover for STRYMON NightSky, STRYMON Volante pedals"],
+      "drawings": ["PedalSafe-TypeJ2.pdf"]
+    },
+    "K1": {
+      "compatibility": ["PedalSafe Protective Cover for Mooer micro series effects pedals with a large knob configuration"],
+      "fits_quickmount_type": "K",
+      "housing_dimensions_mm": [92.0, 37.0, 37.0],
+      "mounting_hole_spacing_published": "28 x 82",
+      "drawings": ["PedalSafe-TypeK1-UNI.pdf", "PedalSafe-TypeK1.pdf"]
+    },
+    "K2": {
+      "compatibility": ["PedalSafe Protective Cover for Mooer micro series effects pedals with multiple small knobs or large display configuration (Micro Preamp Series, New Micro Series, Radar etc.)"],
+      "fits_quickmount_type": "K",
+      "housing_dimensions_mm": [92.0, 37.0, 37.0],
+      "mounting_hole_spacing_published": "28 x 82",
+      "drawings": ["PedalSafe-TypeK2-UNI.pdf", "PedalSafe-TypeK2.pdf"]
+    },
+    "K3": {
+      "compatibility": ["PedalSafe protective cover suitable for the IK Multimedia ToneX One pedal"],
+      "drawings": ["PedalSafe-TypeK3-RBO.pdf", "PedalSafe-TypeK3-UNI.pdf"]
+    },
+    "KE": {
+      "compatibility": ["PedalSafe protective cover suitable for the KEMPER Profiler Player pedal"],
+      "drawings": ["PedalSafe-TypeKE-RBO.pdf", "PedalSafe-TypeKE-UNI.pdf"]
+    },
+    "L": {
+      "compatibility": ["PedalSafe Protective Cover for MXR, Pigtronix, Xotic, XVive and many other effects pedals with mini-sized housings"],
+      "fits_quickmount_type": "L",
+      "housing_dimensions_mm": [94.0, 37.0, 37.0],
+      "mounting_hole_spacing_published": "29 x 72-82",
+      "drawings": ["PedalSafe-TypeL-UNI.pdf", "PedalSafe-TypeL.pdf"]
+    },
+    "L6": {
+      "compatibility": ["PedalSafe Protective Cover for LINE6 HX Stomp pedals"],
+      "drawings": ["PedalSafe-TypeL6.pdf"]
+    },
+    "LE1": {
+      "compatibility": ["PedalSafe Protective Cover for LEHLE SundayDriver II, LEHLE P-Splitt III pedals"],
+      "drawings": ["PedalSafe-TypeLE1.pdf"]
+    },
+    "LE2": {
+      "compatibility": ["PedalSafe Protective Cover for LEHLE Little Lehle III, LEHLE SundayDriver SW II pedals"],
+      "drawings": ["PedalSafe-TypeLE2.pdf"]
+    },
+    "LE3": {
+      "compatibility": ["PedalSafe Protective Cover for LEHLE Parallel SW II, LEHLE Little Dual pedals"],
+      "drawings": ["PedalSafe-TypeLE3.pdf"]
+    },
+    "LE4": {
+      "compatibility": ["PedalSafe Protective Cover for LEHLE Dual, LEHLE D.Loop, LEHLE 3@1, LEHLE 1@3 pedals"],
+      "drawings": ["PedalSafe-TypeLE4.pdf"]
+    },
+    "LTC": {
+      "compatibility": ["PedalSafe protective cover suitable for the TC ELECTRONIC Ditto Looper, Ditto+ Looper, Mimiq Mini Doubler, Sub \u2018N\u2018 Up Mini Octaver, Polytune 2 Mini, Polytune 3 Mini, Spark Mini Booster, Vortex Flanger, Hall of Fame Mini Reverb, Hall of Fame 2 Mini Reverb, Corona Mini Chorus, Infinite Mini Sample Sustainer, Shaker Mini Vibrato, Hypergravity Mini Compressor and Flashback 2 Mini Delay pedals"],
+      "drawings": ["PedalSafe-TypeLTC-RBO.pdf", "PedalSafe-TypeLTC-UNI.pdf"]
+    },
+    "MR": {
+      "compatibility": ["PedalSafe Protective Cover for MERIS Pedals (Hedra)"],
+      "drawings": ["PedalSafe-TypeMR.pdf"]
+    },
+    "N": {
+      "compatibility": ["PedalSafe Protective Cover for TC Harmony Singer 2, TC Duplicator, TC MicMechanic pedals"],
+      "drawings": ["PedalSafe-TypeN.pdf"]
+    },
+    "NRL": {
+      "compatibility": ["PedalSafe protective cover suitable for the NEURAL DSP Quad Cortex pedal"],
+      "drawings": ["PedalSafe-TypeNRL-RBO.pdf", "PedalSafe-TypeNRL-UNI.pdf"]
+    },
+    "O": {
+      "compatibility": ["PedalSafe Protective Cover for FRIEDMAN Overdrive Deluxe, WALRUS Descent pedals"],
+      "fits_quickmount_type": "O",
+      "drawings": ["PedalSafe-TypeO-UNI.pdf", "PedalSafe-TypeO.pdf"]
+    },
+    "OE": {
+      "compatibility": ["PedalSafe protective cover suitable for the ORIGIN EFFECTS Cali76 Bass Compressor and Cali76 FET Compressor pedals"],
+      "drawings": ["PedalSafe-TypeOE-RBO.pdf", "PedalSafe-TypeOE-UNI.pdf"]
+    },
+    "PC1": {
+      "compatibility": ["PedalSafe protective cover suitable for the PROCO Fat Rat pedal"],
+      "drawings": ["PedalSafe-TypePC1-RBO.pdf", "PedalSafe-TypePC1-UNI.pdf"]
+    },
+    "PC2": {
+      "compatibility": ["PedalSafe protective cover suitable for the PROCO The Rat pedal"],
+      "drawings": ["PedalSafe-TypePC2-RBO.pdf", "PedalSafe-TypePC2-UNI.pdf"]
+    },
+    "PC3": {
+      "compatibility": ["PedalSafe protective cover suitable for the PROCO Lil\u00b4Rat pedal"],
+      "drawings": ["PedalSafe-TypePC3-RBO.pdf", "PedalSafe-TypePC3-UNI.pdf"]
+    },
+    "SR1": {
+      "compatibility": ["PedalSafe Protective Cover for SOURCE AUDIO AfterShock, SOURCE AUDIO Vertigo, SOURCE AUDIO TrueSpring Reverb, SOURCE AUDIO Gemini Chorus, SOURCE AUDIO C4 Synth, SOURCE AUDIO EQ pedals"],
+      "drawings": ["PedalSafe-TypeSR1.pdf"]
+    },
+    "SR2": {
+      "compatibility": ["PedalSafe Protective Cover for SOURCE AUDIO Ventris Dual Reverb, SOURCE AUDIO 263 Collider, SOURCE AUDIO Nemesis Delay pedals"],
+      "drawings": ["PedalSafe-TypeSR2.pdf"]
+    },
+    "TC": {
+      "compatibility": ["PedalSafe protective cover suitable for the TC ELECTRONIC 3rd Dimension Chorus, Afterglow Chorus, Blood Moon Phaser, Choka Tremolo, Cinders Overdrive, Crescendo Auto Swell, Drip Spring Reverb, Echobrain Analog Delay, El Cambo Overdrive, Eyemaster Metal Distortion, Fangs Metal Distortion, Flourescence Shimmer Reverb, Forcefield Compressor, Gauss Tape Echo, Honey Pot Fuzz, Iron Curtain Noise Gate, Nether Octaver, Rush Booster, Rusty Fuzz, Skysurfer Reverb, Tailspin Vibrato, The Prophet Digital Delay, Thunderstorm Flanger and Vibraclone Rotary pedals"],
+      "drawings": ["PedalSafe-TypeTC-RBO.pdf", "PedalSafe-TypeTC-UNI.pdf"]
+    },
+    "UA": {
+      "compatibility": ["PedalSafe protective cover suitable for the UNIVERSAL AUDIO Enigmatic '82 Overdrive Special Amp, Astra Modulation Machine, Knuckles '92 Dual Rec Amplifier, ANTI 1992 High Gain Amp, Del-Verb Ambience Companion, Galaxy \u201974 Tape Echo & Reverb, Golden Reverberator, Lion \u201968 Super Lead Amp, Max Preamp & Dual Compressor, OX Stomp Dynamic Speaker Emulator, Ruby \u201963 Top Boost Amplifier, Starlight Echo Station, Dream \u201965 Reverb Amplifier and Woodrow \u201955 Instrument Amplifier pedals"],
+      "drawings": ["PedalSafe-TypeUA-RBO.pdf", "PedalSafe-TypeUA-UNI.pdf"]
+    },
+    "WH1": {
+      "compatibility": ["PedalSafe Protective Cover for DUNLOP WAY HUGE Swollen Pickle, DUNLOP WAY HUGE Pork&Pickle pedals"],
+      "drawings": ["PedalSafe-TypeWH1.pdf"]
+    },
+    "WH2": {
+      "compatibility": ["PedalSafe Protective Cover for DUNLOP WAY HUGE GreenRhino, DUNLOP WAY HUGE RedLlama pedals"],
+      "drawings": ["PedalSafe-TypeWH2.pdf"]
+    },
+    "WH3": {
+      "compatibility": ["PedalSafe Protective Cover for DUNLOP WAY HUGE SupaPuss pedals"],
+      "drawings": ["PedalSafe-TypeWH3.pdf"]
+    }
+  },
+  "caveats": ["housing_dimensions_mm is the pedal housing the cover is made for, in W x D x H as published; it is not the cover outline.", "Only some product pages publish a housing size or a mounting hole distance, so absent fields are unknown, not zero.", "fits_quickmount_type is resolved from the QuickMount drawing each PedalSafe page links. Type B is one of these but is not sold as a QuickMount product type, so it is absent from quickmount_types.json.", "Sibling types share a universal baseplate: the -UNI sheets for A1/A2, D1/D2 and K1/K2 are byte-identical on the CDN."],
+  "provenance": {
+    "level": 3,
+    "source": "the published spec sheet on each page of https://www.rockboard.de/en/pedalsafes/ and the drawings in ref/pedalsafes",
+    "retrieved": "2026-11-05"
+  },
+  "accessories": [
+    {
+      "name": "Pick Box",
+      "drawing": "PedalSafe-Accessory-PickBox.pdf"
+    }
+  ],
+  "shared_drawings": [
+    {
+      "drawing": "PedalSafe-BaseplateTypeB1.pdf",
+      "note": "universal baseplate linked from the B2 and B3 pages; B1 has its own UNI sheet, and the sheet is byte-identical to the A1/A2 and D1/D2 and K1/K2 pairs"
+    }
+  ]
+}

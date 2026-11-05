@@ -2,15 +2,15 @@
   "schema_version": 1,
   "id": "retainer",
   "kind": "shared_component",
-  "description": "The QuickMount pressure-locking retainer: the C-loop that hangs under a mount plate and grips the board. The section is measured off the OEM plate in enclosure_125b/dwg/125B_quickmount.stl; every envelope callout is then verified against the six OEM drawings in ref/quickmount_drawings, and the verification block records each one. The reference type is A/E: Type A is the drawing that matches the Type E plate the calipers were taken on.",
+  "description": "The QuickMount pressure-locking retainer: the C-loop that hangs under a mount plate and grips the board. The section is measured off the OEM plate in enclosure_125b/dwg/125B_quickmount.stl; every envelope callout is then verified against the six OEM drawings in ref/quickmounts, and the verification block records each one. The reference type is A/E: Type A is the drawing that matches the Type E plate the calipers were taken on.",
   "sources": [
     "enclosure_125b/dwg/125B_quickmount.stl",
-    "ref/quickmount_drawings/QuickMount-TypeA.pdf",
-    "ref/quickmount_drawings/QuickMount-TypeD.pdf",
-    "ref/quickmount_drawings/QuickMount-TypeE.pdf",
-    "ref/quickmount_drawings/QuickMount-TypeG.pdf",
-    "ref/quickmount_drawings/QuickMount-TypeH.pdf",
-    "ref/quickmount_drawings/QuickMount-TypeM.pdf"
+    "ref/quickmounts/QuickMount-TypeA.pdf",
+    "ref/quickmounts/QuickMount-TypeD.pdf",
+    "ref/quickmounts/QuickMount-TypeE.pdf",
+    "ref/quickmounts/QuickMount-TypeG.pdf",
+    "ref/quickmounts/QuickMount-TypeH.pdf",
+    "ref/quickmounts/QuickMount-TypeM.pdf"
   ],
   "measurement": {
     "how": "planar sections of the OEM mesh: z = 11 cuts one loop's whole section, y = 5 and y = 7.2 bracket the ledge, y = 1.5 and y = 2.95 cut the plate, x = 0 and y = 0 give the plate outline",
@@ -223,7 +223,7 @@
       "Type H's left loop measures out at roughly a 15.0 mouth, 1.2 blade, 2.0-2.5 post and a 3.6 ledge drop on an 8 px/mm raster, which agrees with the mesh inside the reading error.",
       "Type M's 63.2 and 68.76 views show the same loop section, so the Type G plate's deep tray sits outside the retainer rather than changing it."
     ],
-    "provenance": { "level": 3, "source": "all six plates in ref/quickmount_drawings, plus the ink-metrology reads of the Type H end view", "retrieved": "2026-11-04" }
+    "provenance": { "level": 3, "source": "all six plates in ref/quickmounts, plus the ink-metrology reads of the Type H end view", "retrieved": "2026-11-04" }
   },
 
   "fabrication": {

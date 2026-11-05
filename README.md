@@ -28,7 +28,27 @@ The first step of any job is always to build a configuration from the references
 | `rockboard_cinque_54/` | RockBoard Cinque 5.4 board: the slot grid substrate, and the whole board around it |
 | `commons/` | Shared geometry and objects: the retainer, fastener presets, OEM type library |
 
-`commons/` holds shared inputs (`cfg/fasteners.json`, `cfg/quickmount_types.json`, `cfg/retainer.json`, `src/assets/fonts/`), the retainer generator (`src/retainer.py` → `dwg/retainer.stl`), and the OEM blueprint set under `ref/quickmount_drawings/`.
+`commons/` holds shared inputs (`cfg/fasteners.json`, `cfg/quickmount_types.json`, `cfg/pedalsafe_types.json`, `cfg/stepup_types.json`, `cfg/retainer.json`, `src/assets/fonts/`), the retainer generator (`src/retainer.py` → `dwg/retainer.stl`), and the OEM drawing library under `ref/`.
+
+The library is Warwick's own drawings, scraped from the "Schematic Drawing" button on each product page and served from `https://cdn.rockboard.de/nos/data/erp/Artikell_PDF/PDF_Drawing/RockBoard/`:
+
+| Folder | Source pages | Contents |
+| --- | --- | --- |
+| `ref/quickmounts/` | `/en/quickmounts/` | `QuickMount-Type<type>.pdf` for all 45 plate types in `cfg/quickmount_types.json`, a `-alt` second sheet for B1, K and L, and the QuickMount accessories |
+| `ref/pedalsafes/` | `/en/pedalsafes/` | `PedalSafe-Type<type>.pdf` for every PedalSafe, with `-RBO` / `-UNI` suffixes where a type is published as both a plate and a universal baseplate |
+| `ref/stepups/` | `/en/accessories/pedal-riser/`, `/en/accessories/second-tiers/` | `StepUp-1/2/3`, `PedalRiser`, `PedalRiser-L`, `SecondTier-Tier2S` |
+
+The QuickMount drawing that each PedalSafe page also links is already in `ref/quickmounts/`, so it is not duplicated.
+
+The three type catalogs carry geometry as well as names:
+
+| Catalog | Covers | Geometry |
+| --- | --- | --- |
+| `cfg/quickmount_types.json` | 45 plate types | `dimensions_w_x_h_mm`, plus `mounting_hole_spacing_mm` where it is an exact pair and `mounting_hole_spacing_note` where it is ranged or asymmetric |
+| `cfg/pedalsafe_types.json` | 55 cover types | `housing_dimensions_mm` of the pedal the cover is made for, `mounting_hole_spacing_published`, and `fits_quickmount_type` so plate geometry is referenced rather than copied |
+| `cfg/stepup_types.json` | 6 riser units | `dimensions_mm` as length, width and height |
+
+`geometry_source` on each entry says whether the numbers came off the product page (`product-spec`) or were read off the drawing outline (`drawing`); a drawing read carries no tolerance and wants calipers before it becomes a printed part.
 
 ## Running a generator
 
