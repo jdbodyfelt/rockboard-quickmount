@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "id": "retainer",
+  "kind": "shared_component",
+  "description": "The QuickMount pressure-locking retainer: the C-loop that hangs under a mount plate and grips the board. The section is measured off the OEM plate in enclosure_125b/dwg/125B_quickmount.stl; every envelope callout is then verified against the six OEM drawings in ref/quickmount_drawings, and the verification block records each one. The reference type is A/E: Type A is the drawing that matches the Type E plate the calipers were taken on.",
+  "sources": [
+    "enclosure_125b/dwg/125B_quickmount.stl",
+    "ref/quickmount_drawings/QuickMount-TypeA.pdf",
+    "ref/quickmount_drawings/QuickMount-TypeD.pdf",
+    "ref/quickmount_drawings/QuickMount-TypeE.pdf",
+    "ref/quickmount_drawings/QuickMount-TypeG.pdf",
+    "ref/quickmount_drawings/QuickMount-TypeH.pdf",
+    "ref/quickmount_drawings/QuickMount-TypeM.pdf"
+  ],
+  "measurement": {
+    "how": "planar sections of the OEM mesh: z = 11 cuts one loop's whole section, y = 5 and y = 7.2 bracket the ledge, y = 1.5 and y = 2.95 cut the plate, x = 0 and y = 0 give the plate outline",
+    "axis_convention": "in the mesh, x is the plate's 120 mm width, z its 65 mm depth, y runs 0..19.65 away from the pedal with the plate at y = 0..3",
+    "provenance": { "level": 4, "source": "sections of enclosure_125b/dwg/125B_quickmount.stl", "retrieved": "2026-11-04" }
+  },
+
+  "mechanism": {
+    "summary": "A closed C-loop hangs under the plate and straddles one board rib, a leg down each slot. The loop is a snap: pressed on, the ledges ride the rib's flanks and spread the legs, and once past the sheet they spring back so the ledge's upward face sits under the sheet. Pedal load then runs plate, post, arch and ledge into the sheet, so pressure tightens the grip instead of working it loose.",
+    "retention": "positive: the ledge's upward face sits under the sheet, so lift is a hard stop, not friction",
+    "preload": "the 3-4 mm board-side foam insert, compressed between plate and board, presses the blade tips up and levers the ledges outward under the sheet",
+    "release": "lever a blade inward until its ledge clears the rib flank, then lift; that is the QuickRelease Tool's job",
+    "seating": "the ledge face sets the depth; there is nothing else to bottom out on",
+    "loop_plane": "across the rib",
+    "extrusion_axis": "along the plate's slot, which is the retainer's 22 mm",
+    "provenance": { "level": 1, "source": "section shape read off detail C of Type A/D/E/H and detail B of Type M, plus the measured step in the mesh at y = 5 versus y = 7.2", "retrieved": "2026-11-04" }
+  },
+
+  "frame": {
+    "origin": "mouth centreline, on the plate underside (the board-facing face)",
+    "x": "across the mouth; the direction the ledge lock reaches out",
+    "y": "along the plate's slot; the loop is extruded along this axis",
+    "z": "toward the pedal; the loop occupies z < 0, and the legs stop at the plate's top face at z = 3",
+    "note": "The mesh's axes are rotated against these; the measurement block records the mapping."
+  },
+
+  "envelope": {
+    "width_mm": 22.0,
+    "outer_width_mm": 19.0,
+    "drop_below_plate_top_mm": 18.89,
+    "plate_thickness_mm": 3.0,
+    "ear_width_mm": 24.0,
+    "plate_slot_width_mm": 24.0,
+    "ear_above_plate_mm": 2.3,
+    "derived": {
+      "loop_drop_mm": "drop_below_plate_top - plate_thickness = 15.89 below the plate underside",
+      "height_total_mm": "18.89: the legs stop at the plate's top face, so the retainer is exactly the drawn drop and the 2.30 ear belongs to the plate",
+      "overall_with_ear_mm": "18.89 + 2.30 = 21.19",
+      "slot_clearance_mm": "the 22 retainer sits in the plate's 24 slot, 1.00 a side. The slot is the opening in the plate itself, not the board's slot grid"
+    },
+    "provenance": {
+      "width": { "level": 3, "source": "22 callout on Type A and Type E, and 22 with calipers on the owned Type E", "retrieved": "2026-11-05" },
+      "drop": { "level": 3, "source": "18.89 printed on the Type A front view and the Type A/D/H/M end views; the calipers agree to the hundredth", "retrieved": "2026-11-05" },
+      "outer_width": { "level": 4, "source": "19.0 with calipers on a Type E at its widest, where the step is. Neither Type A nor Type E prints this dimension, and Type M's 19.7 does not transfer because it is a different plate", "retrieved": "2026-11-05" },
+      "ear_and_slot": { "level": 3, "source": "24 on the clip ear of Type A and Type E; 24 for the plate's own slot with calipers on a Type E", "retrieved": "2026-11-05" },
+      "ear_above_plate": { "level": 3, "source": "21.19 overall on Type H less the 18.89 drop", "retrieved": "2026-11-05" }
+    }
+  },
+
+  "section": {
+    "mouth_width_mm": 13.0,
+    "post_wall_mm": 3.0,
+    "blade_wall_mm": 1.9,
+    "blade_tip_chamfer_mm": 0.6,
+    "ledge": {
+      "drop_below_plate_mm": 4.0,
+      "protrusion_mm": 1.1
+    },
+    "derived": {
+      "half_mouth_mm": 6.5,
+      "half_outer_mm": 9.5,
+      "arch_wall_mm": "half_outer - half_mouth = 3.00, and the arch is a true semicircle centred at z = -(15.89 - 9.50) = -6.39",
+      "blade_outer_width_mm": "2 x (half_mouth + blade_wall) = 16.80, the width the blade presents to the plate",
+      "arm_below_ledge_mm": "6.39 - 4.00 = 2.39 of straight arm between the ledge and the arch centre",
+      "blade_tip": "flush with the plate's top face, 0.60 chamfered on the outboard edge, passing through the plate's own slot",
+      "wall_budget_mm": "outer - mouth = 6.00, and the calipers divide it exactly into post 3.00 + blade 1.90 + step 1.10"
+    },
+    "measured": {
+      "the_mouth": "13.0 with inside jaws on a Type E, and Type A's own section scales to 12.99 against its 111.7 callout, so the drawing and the calipers agree. Neither sheet prints it, so the measurement sets the section",
+      "the_walls": "3.0 at mid height on the stout leg, 1.9 at the thinnest above the step, and 1.0-1.2 across the step. These sum to the 6.00 that 19.0 less 13.0 leaves, so all four readings are one consistent set",
+      "the_blade": "1.9 at its thinnest, above the step",
+      "the_flare": "3.5 at the thickest just below the step, about 0.5 more than the 3.00 arm. Read as a fillet at the ledge's root and not modelled",
+      "the_ledge_drop": "4.0 from the plate's underside to the step's flat, with calipers",
+      "the_arch": "9.50 outer and 6.50 inner about z = -6.39, bottom at -15.89"
+    },
+    "provenance": { "level": 4, "source": "calipers on the owned Type E for the envelope and every wall, with the mouth independently confirmed by Type A's section C scaled against its own 111.7 callout", "retrieved": "2026-11-05" }
+  },
+
+  "joint": {
+    "spread_mm": 1.1,
+    "wall_min_mm": 1.0,
+    "derived": {
+      "spread_per_leg_mm": "the step stands 1.10 proud of the blade, so the blade has to move 1.10 inboard to let its ledge ride past a sheet edge and snap back under it",
+      "bite_mm": "the same 1.10 is the ledge's reach under the sheet",
+      "post_side": "the post's outer face is already on the 19.00 envelope, so the post side is the rigid side of the loop",
+      "not_derived_from_the_board": "the spread comes from the retainer's own step, not from a slot width, because no reference states the board's slot"
+    },
+    "provenance": {
+      "spread": { "level": 4, "source": "1.0-1.2 measured across the step on a Type E, and 1.10 by arithmetic from the measured walls", "retrieved": "2026-11-05" },
+      "wall_min_mm": { "level": 1, "source": "smallest wall that prints reliably at a 0.4 mm nozzle", "retrieved": "2026-11-05" }
+    }
+  },
+
+  "actuator": {
+    "insert": "3-4 mm foam pad",
+    "location": "board side, between the plate's underside and the board",
+    "role": "the pad is the vibration dampener and the vertical pressure provider: compressed, it pushes the plate up, which presses the blade tips up and levers the ledges outward under the sheet",
+    "thickness_mm": [3.0, 4.0],
+    "derived": {
+      "pad_needs_a_slot": "the loop must pass through the pad to reach the board, so the pad has a cut-out over each retainer; the 4.00 ledge drop is set by the board's sheet, not by the pad",
+      "clearance_at_the_retainer_mm": "with the sheet's underside at 4.00 below the plate underside and a 3.0 sheet, the sheet's top face stands 1.00 below the plate, which is what the pad compresses to where a retainer passes through"
+    },
+    "provenance": { "level": 2, "source": "Warwick supplies a 3-4 mm foam insert as a vibration dampener and vertical pressure provider", "retrieved": "2026-11-04" }
+  },
+
+  "board_requirement": {
+    "slot_width_mm": null,
+    "sheet_underside_below_plate_mm": 4.0,
+    "rib_fit": "tight; the mouth is deliberately not a sliding fit, so the loop comes onto the rib with interference and has to be pressed home",
+    "note": "the retainer fixes one number on the board: the sheet's underside has to fall 4.00 below the plate's underside for the ledge to catch it. Slot pitch, rib and slot width are board properties that no retainer drawing states, so they stay null rather than guessed",
+    "provenance": { "level": 0, "source": "no drawing or mesh dimension; confirm on the board before printing", "retrieved": null }
+  },
+
+  "material": {
+    "id": "petg",
+    "presets": {
+      "petg": { "elastic_modulus_mpa": 2000.0, "yield_strain_percent": 3.0, "density_g_cm3": 1.27 },
+      "pa12_cf": { "elastic_modulus_mpa": 6000.0, "yield_strain_percent": 2.5, "density_g_cm3": 1.06 },
+      "pla": { "elastic_modulus_mpa": 3400.0, "yield_strain_percent": 2.0, "density_g_cm3": 1.24 },
+      "abs": { "elastic_modulus_mpa": 2200.0, "yield_strain_percent": 2.5, "density_g_cm3": 1.04 }
+    },
+    "safety_factor": 2.0,
+    "provenance": { "level": 2, "source": "typical datasheet values for the printed filament; the OEM part is a carbon reinforced composite", "retrieved": "2026-11-04" }
+  },
+
+  "bend": {
+    "model": "snap-fit cantilever: strain = 1.5 * wall * spread / flexure_length^2, with the flexure taken as the developed centreline of the compliant loop and the wall taken as the thickest material the ledge has to bend, since the ledge sits at the arch end of the blade and cannot move without bending the arch.",
+    "provenance": { "level": 1, "source": "standard snap-fit sizing; the generator reports the margin", "retrieved": "2026-11-04" }
+  },
+
+  "array": {
+    "pair_pitch_mm": 33.43,
+    "plate_span_mm": 111.7,
+    "quad_span_mm": 64.5,
+    "rule": "retainers on one plate sit a whole number of board pitches apart, each over its own rib",
+    "provenance": { "level": 3, "source": "33.43 and 64.5 from the Type M end view, 111.7 from the Type A, E, G and H sections", "retrieved": "2026-11-04" }
+  },
+
+  "verification": {
+    "method": "read every callout that touches the retainer off the six drawing plates, compare with the section measured off the OEM mesh, then check both against calipers on an owned Type E. Calipers outrank both, but only where they agree with a source; a lone low caliper reading on a curved surface is treated as an under-read, not as a new nominal.",
+    "reference_type": "A/E",
+    "type_equivalence": "Type A and Type E are one retainer moulding - the calipers on a Type E read 18.89, exactly what the Type A front view prints, and Type A's section C scales to the same 13.0 mouth the calipers read. So a Type A callout is a statement about the owned Type E plate. The other four plates are different mouldings and their callouts do not transfer: Type M prints 19.7 across the loop where the Type E measures 19.0, which is exactly the sort of difference that makes a callout type-specific.",
+    "fit_policy": "the reference documents are Type A and Type E, which are one retainer moulding. A value printed on either sheet governs; the calipers fill in what neither sheet states - the outer width, the mouth, the walls, the ledge drop and the plate's slot. Callouts unique to Type D, G, H or M are recorded but not carried into the model, because those plates are different mouldings.",
+    "caliper": [
+      { "id": "A_drop", "value_mm": 18.89, "model": "drop_below_plate_top_mm", "types": ["E"], "verdict": "agrees to the hundredth with the 18.89 printed on the Type A front view, so nothing is contested" },
+      { "id": "B_outer", "value_mm": 19.0, "model": "outer_width_mm", "types": ["E"], "verdict": "adopted. Neither Type A nor Type E prints this dimension, so the caliper is the only source; Type M's 19.7 belongs to a different plate and is not used" },
+      { "id": "C_mouth", "value_mm": 13.0, "model": "mouth_width_mm", "types": ["E"], "verdict": "adopted: nothing prints it, Type A's section scales to 12.99, and the calipers agree. This is the number that sets the section" },
+      { "id": "D_blade", "value_mm": 1.9, "model": "blade_wall_mm", "types": ["E"], "verdict": "adopted: 1.9 at its thinnest, above the step. The 3.5 just below the step is taken as the ledge's root fillet and not modelled" },
+      { "id": "E_post", "value_mm": 3.0, "model": "post_wall_mm", "types": ["E"], "verdict": "adopted: 3.0 at mid height. With the 13.0 mouth and the 19.0 envelope it closes the wall budget exactly" },
+      { "id": "F_ledge_drop", "value_mm": 4.0, "model": "ledge.drop_below_plate_mm", "types": ["E"], "verdict": "adopted: nothing prints it, and 4.00 also appears on the other plates" },
+      { "id": "G_plate", "value_mm": 3.0, "model": "plate_thickness_mm", "types": ["E"], "verdict": "agrees with the 3 printed on both Type A and Type E" },
+      { "id": "H_width_and_slot", "value_mm": "22 / 24", "model": "width_mm", "types": ["E"], "verdict": "the retainer is 22 wide, which Type A and Type E both print, and the plate's own slot is 24, so it sits in the slot with 1.00 a side" },
+      { "id": "H_step", "value_mm": "1.0 - 1.2", "model": "ledge.protrusion_mm", "types": ["E"], "verdict": "adopted at 1.10, which is also what the wall budget gives: 6.00 - 3.00 - 1.90 = 1.10" }
+    ],
+    "mesh_cross_check": {
+      "what": "enclosure_125b/dwg/125B_quickmount.stl was sliced depth by depth and the clips measured the same way as this model, to see whether it corroborates the section",
+      "mesh_clip": {
+        "outer_mm": 19.30,
+        "mouth_mm": 14.30,
+        "post_wall_mm": 2.50,
+        "blade_wall_mm": 1.20,
+        "step_mm": 1.30,
+        "ledge_drop_mm": 4.00,
+        "drop_below_plate_mm": 16.65,
+        "total_from_plate_top_mm": 19.65,
+        "width_along_slot_mm": 22.00,
+        "arch_wall_mm": 2.50,
+        "arch": "semicircular, centre 7.00 below the plate, base to apex 9.65",
+        "mirrored_pair": "both ledges face outboard, posts inboard, centres 95.50 apart"
+      },
+      "agreement": [
+        "width along the slot, 22.00 on both - the strongest single agreement, and it matches the printed 22",
+        "the ledge sits 4.00 below the plate underside on both, and on the drawings",
+        "the arch is semicircular with a constant wall on both, so the mechanism reading is confirmed independently",
+        "the plate above it is 120 x 65 x 3 with four 3.68 holes at a 111.20 x 57.20 pitch, and the blade passes through a 1.20 x 22.00 slot cut in the plate - which corroborates the blade tip needing a slot in the plate rather than sitting on it"
+      ],
+      "disagreement": [
+        "mouth 14.30 against 13.00 measured with calipers on the Type E, and 12.99 scaled off Type A's section - the mesh is 1.30 wider",
+        "post 2.50 and blade 1.20 against 3.00 and 1.90 measured - the mesh's walls are thinner and its step 0.20 deeper",
+        "drop 16.65 below the plate against 15.89 measured and 18.89-from-top printed - the mesh sits 0.76 lower"
+      ],
+      "verdict": "the mesh confirms the mechanism and three dimensions outright - 22, the 4.00 ledge drop and the semicircular arch - but its section is not the one the Type E shows. Its clip is the third-party reference part: the arch span 16.80, arch base to apex 9.65, arch wall 2.50 and blade 1.20 all reproduce the reference clip measured into catalog/clips/reference_2space_clip.yaml (16.8, 9.64, 2.5, 1.2) exactly, and that part is a different moulding from the OEM Type A/E. So the mesh is used here to corroborate the mechanism, not to set the section",
+      "also_noted": "the mesh's two clip centres are 95.50 apart, which is 2.86 of the drawn 33.43 pitch rather than a whole number, so that plate's clips do not sit on the board's rib grid as drawn. Worth remembering when the plate generator is written - a pair has to be a whole number of pitches apart",
+      "provenance": { "level": 4, "source": "planar slices of enclosure_125b/dwg/125B_quickmount.stl at 0.5 mm depth steps", "retrieved": "2026-11-05" }
+    },
+    "callouts": [
+      { "id": "width", "value_mm": 22.0, "model": "width_mm", "types": ["A", "D", "E", "G", "H", "M"], "verdict": "confirmed, 6 of 6" },
+      { "id": "ear_width", "value_mm": 24.0, "model": "ear_width_mm", "types": ["A", "D", "E", "G", "H"], "verdict": "confirmed, 5 of 6; the plate owns the ear" },
+      { "id": "drop_below_plate_top", "value_mm": 18.89, "model": "drop_below_plate_top_mm", "types": ["A", "D", "H", "M"], "verdict": "adopted over the mesh's 19.65, 4 of 6 agree" },
+      { "id": "overall_with_ear", "value_mm": 21.19, "model": "overall_with_ear_mm", "types": ["H"], "verdict": "confirmed; implies a 2.30 ear, matching 21.19 - 18.89" },
+      { "id": "outer_width", "value_mm": 19.7, "model": null, "types": ["M"], "verdict": "printed on the Type M end view, loop outer to outer, but Type M is a different plate. Neither Type A nor Type E prints this dimension, so this callout is not carried into the model; the 19.0 caliper read on the Type E is used instead" },
+      { "id": "mouth", "value_mm": 13.0, "model": "mouth_width_mm", "types": ["A"], "verdict": "undimensioned, but Type A's section scales to 12.99 against its own 111.7 callout, which matches 13.0 with calipers on a Type E - the same retainer, so the two confirm each other" },
+      { "id": "plate_length", "value_mm": 112.4, "model": null, "types": ["A"], "verdict": "front view, the plate overall; separate from the 111.7 loop span" },
+      { "id": "plate_envelope", "value_mm": "102 / 61 / 51 / diameter 4", "model": null, "types": ["A"], "verdict": "plan view: length, width, hole pitch and hole size; plate geometry" },
+      { "id": "edge_chamfer", "value_mm": "82.5 deg / 1 / 4", "model": null, "types": ["A"], "verdict": "section B-B: a chamfered slot in the plate's top face, 4 wide, 1 deep at 82.5 deg; a plate feature, not retainer geometry" },
+      { "id": "plate_thickness", "value_mm": 3.0, "model": "plate_thickness_mm", "types": ["A", "E", "G", "H", "M"], "verdict": "confirmed, 5 of 6" },
+      { "id": "ear_to_plate_edge", "value_mm": 16.6, "model": null, "types": ["M"], "verdict": "plan view, loop outer face to plate edge; a plate dimension" },
+      { "id": "pair_pitch", "value_mm": 33.43, "model": "array.pair_pitch_mm", "types": ["M"], "verdict": "confirmed" },
+      { "id": "pair_span", "value_mm": 64.5, "model": "array.quad_span_mm", "types": ["M"], "verdict": "confirmed" },
+      { "id": "plate_span", "value_mm": 111.7, "model": "array.plate_span_mm", "types": ["A", "E", "G", "H"], "verdict": "confirmed, 4 of 6" },
+      { "id": "height_from_rim", "value_mm": 23.0, "model": null, "types": ["E"], "verdict": "measured from Type E's raised rim, so not comparable with the flat-plate 18.89" },
+      { "id": "height_from_rim", "value_mm": 28.7, "model": null, "types": ["G"], "verdict": "measured from Type G's tray rim, so not comparable with the flat-plate 18.89" },
+      { "id": "plate_end_pocket", "value_mm": "6.5 / 5.3 / 3.5 / 10.25 / 3", "model": null, "types": ["H"], "verdict": "the plate's end socket that receives the ear; not retainer geometry" },
+      { "id": "plate_end_pocket", "value_mm": "5.5 / 6.7 / 3.5", "model": null, "types": ["E"], "verdict": "as above, on Type E" },
+      { "id": "plate_end_pocket", "value_mm": "1.5 / 10.5 / 7", "model": null, "types": ["D"], "verdict": "as above, on Type D" },
+      { "id": "edge_lip", "value_mm": "0.9 / 0.5 / R1 / 2 / 8.8", "model": null, "types": ["G"], "verdict": "Type G detail D dimensions the plate's own edge finger, a sibling feature; it is the source of the 2.0 family wall, but not of the retainer's 1.30 ledge" }
+    ],
+    "section_shape": [
+      "All six detail views show the same loop: one stout leg reading straight into the plate, one thin leg, a semicircular arch joining them, and a ledge stepping outward on the thin leg's outer face with its flat side toward the plate.",
+      "Type H's left loop measures out at roughly a 15.0 mouth, 1.2 blade, 2.0-2.5 post and a 3.6 ledge drop on an 8 px/mm raster, which agrees with the mesh inside the reading error.",
+      "Type M's 63.2 and 68.76 views show the same loop section, so the Type G plate's deep tray sits outside the retainer rather than changing it."
+    ],
+    "provenance": { "level": 3, "source": "all six plates in ref/quickmount_drawings, plus the ink-metrology reads of the Type H end view", "retrieved": "2026-11-04" }
+  },
+
+  "fabrication": {
+    "print_orientation": "plate face down, loop rising; the loop's plane stands vertical so every filament follows the post, the arch and the blade",
+    "supports": "none; add a brim",
+    "note": "the exported STL is in assembly orientation, so rotate 180 deg about X to print"
+  },
+
+  "open_questions": [
+    "No drawing or mesh states the board's slot width, pitch or rib. The mouth is 13.00 and the outer width 18.85 as now settled, so the loop accepts a rib up to 13.00; which board feature it straddles still has to be settled on the board.",
+    "The ledge sits 4.00 below the plate's underside. That single number is the contract between retainer and board: the sheet's underside has to be there.",
+    "The blade tip is flush with the plate's top face and sits in the plate's own slot, so a plate generator must provide that slot and the 24 mm ear around it. Type A's section B-B suggests the slot is 4 wide with an 82.5 deg, 1 deep chamfer, which is wider than the 1.6 blade and is the next thing to confirm on the plate.",
+    "Type A and Type E are one retainer moulding, so the Type A drawing governs the owned Type E plate: 22, 24, 18.89, 3.0, 111.7, 112.4, 102 x 61, 51 hole pitch, 4 mm holes and the 82.5 deg chamfered slot all apply as printed. The two retainer dimensions neither sheet prints are the outer width and the mouth, and the calipers settle both at 19.0 and 13.0."
+  ],
+
+  "notes": [
+    "The retainer is drawn at the plate's edge on a 24 mm ear, with the loop inboard of it; the ear and the blade slot belong to the plate.",
+    "18.89 runs from the plate's top face to the loop's lowest point, so the loop below the plate's underside is 15.89, not 18.89.",
+    "Type E's 23 and Type G's 28.7 both measure from a raised rim, which is why they exceed the flat-plate 18.89 and why they are not treated as disagreements.",
+    "A plate wants a pair of these mirrored about its centre, one at each end, which is how all six drawings lay their retainers out.",
+    "Type A's section C is the single most useful view in the set: it draws the loop across the mouth at drawing scale and prints 111.7 on the same view, so an undimensioned section can be read off it at 7.851 px/mm. That is how the 13.0 mouth was confirmed before the calipers arrived.",
+    "The Type A sheet also gives the plate's own numbers: 102 x 61 plan, 51 hole pitch, 4 mm holes, 112.4 overall length, and the 82.5 deg chamfered slot in section B-B.",
+    "The reference types are A and E, and only those two. Their printed numbers are used wherever they give one; the calipers supply the rest. Type M's 19.7 across the loop is deliberately not used, which is why the envelope is 19.0 and the walls are 3.00 / 1.90 / 1.10 rather than 3.35 / 1.90 / 1.45.",
+    "The plate's own slot is 24 wide against a 22 retainer, so 1.00 a side. The word slot here means the opening in the plate that the retainer sits in, not a feature of the board."
+  ]
+}

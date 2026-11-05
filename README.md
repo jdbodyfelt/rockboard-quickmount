@@ -38,7 +38,11 @@ Each project's `src/` module reads its own config and writes into its own `dwg/`
 python rockboard_cinque_54/src/cinque.py                    # board and top plate, STEP and STL
 python rockboard_cinque_54/src/cinque.py --part top-plate --format step
 python rockboard_cinque_54/src/cinque.py --check            # derived slot field, no geometry
+python commons/src/retainer.py                              # the retainer, dwg/retainer.stl
+python commons/src/retainer.py --json                       # machine-readable summary and checks
 ```
+
+The retainer exits non-zero if any of its 20 checks fail, so it can gate a build.
 
 CADQuery lives in the repo's `.venv`:
 
