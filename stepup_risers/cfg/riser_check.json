@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "id": "riser_check",
+  "kind": "layout",
+  "description": "Layout comparison for the single-125B riser: the tipped plate standing beside the PedalRiser it is set against, both on the same datum so the plate's front, slope and height can be read straight off the reference product. Not a printed part.",
+  "sources": [
+    "single_125b_riser.json",
+    "pedal_riser.json"
+  ],
+  "datum": {
+    "origin": "centre of the PedalRiser's 135 x 76 footprint, on the metal's bottom face",
+    "x_axis": "across the width; the two parts stand side by side along X",
+    "y_axis": "along the length, +Y toward the high rear edge; the front is -Y",
+    "z_axis": "up; the metal bottom is z = 0 and the deck's front is z = 20.00"
+  },
+  "parts": {
+    "pedal_riser": {
+      "generator": "pedal_riser.py",
+      "config": "pedal_riser.json",
+      "part": null,
+      "note": "the whole drawn product, feet and pads included"
+    },
+    "riser": {
+      "generator": "single_125b_riser.py",
+      "config": "single_125b_riser.json",
+      "part": "riser",
+      "note": "the tipped plate, close hole rows riding up the slope"
+    }
+  },
+  "layout": {
+    "order": ["pedal_riser", "riser"],
+    "gap_mm": 24.0,
+    "note": "the pair is centred on x = 0 and spaced by a fixed gap; both keep their own y and z, so the fronts line up and the slopes can be compared"
+  },
+  "provenance": {
+    "layout": {
+      "level": 1,
+      "source": "design intent: side by side, shared datum, so the two heights and slopes read against each other",
+      "retrieved": "2026-11-14"
+    }
+  },
+  "open_questions": [
+    "The plate rides 1.00 mm low at the rear because the 40.0 knob is one short of the drawn 41.0; the slopes read 8.43 vs 8.84 deg. Set rear_height_mm to 41.0 in single_125b_riser.json to bring them onto one plane."
+  ],
+  "notes": [
+    "This is a layout check, not a deliverable part: one mesh holding two bodies for viewing and for measuring one against the other."
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "id": "riser_two_125b",
+  "kind": "riser",
+  "description": "Printed PETG step-up for two 125B pedals on their Type B1 plates. The Step Up's architecture scaled to two cells: a front leg, a sloped deck, a rear leg, over a 3 mm base plate that carries the retainer clips. The deck is slotted so a B1 plate drops on it.",
+  "sources": ["ref/StepUp-2.pdf", "ref/PedalRiser-L.pdf", "../commons/cfg/retainer.json", "../enclosure_125b/cfg/enclosure_125b.json"],
+  "datum": {
+    "origin": "centre of the base footprint, on the board-facing face",
+    "x_axis": "along the 180 mm length, the direction the two 125B plates sit side by side",
+    "y_axis": "across the depth, +Y toward the high edge of the deck",
+    "z_axis": "away from the board, toward the pedals"
+  },
+  "envelope": {
+    "length_mm": 180.0,
+    "depth_mm": 172.0,
+    "corner_radius_mm": 6.0,
+    "deck_slope_deg": 9.0,
+    "height_note": "the Step Up's own 25.01 is a level deck; a sloped deck has to be taller to hold the same headroom at its low edge, so the height comes from the height block below"
+  },
+  "height": {
+    "mode": "clip_clearance",
+    "clearance_mm": 3.0,
+    "note": "the low edge stands base 3.0 + clearance 3.0 + the retainer's 15.89 loop drop; the 9 deg slope then lifts the high edge by 172 x tan(9)"
+  },
+  "base": {
+    "thickness_mm": 3.0,
+    "note": "behaves like a 3 mm QuickMount plate: integral clips hang below it and its top face is the floor of the body"
+  },
+  "top": {
+    "sheet_thickness_mm": 4.0,
+    "sheet_note": "4.0 rather than the board's 3.0 so the retainer's 4.0 ledge sits flush under the sheet with no foam pad; slot, rib and pitch are the board's",
+    "slot_field": {
+      "slot_width_mm": 18.0,
+      "rib_width_mm": 16.0,
+      "end_radius_mm": 4.0,
+      "slot_length_mm": 30.0,
+      "rib_centres_mm": [47.5, -47.5],
+      "slot_x_centres_mm": [-45.0, 45.0],
+      "note": "measured in the deck's own plane, so a slot is a true 18 wide square to the deck; its plan width is 18 x cos(9)"
+    },
+    "layout_note": "the landing ribs sit at the B1 plate's clip centres, 47.5 either side of centre; plate centres at x = -45 and +45 leave 18 mm between the two 72 mm plates and 9 mm to each end"
+  },
+  "body": {
+    "wall_thickness_mm": 3.0,
+    "rib_width_mm": 3.0,
+    "ribs_along_x_at_y_mm": [0.0, 17.0, -17.0, 78.0, -78.0],
+    "ribs_along_y_at_x_mm": [0.0, 75.0, -75.0],
+    "note": "ribs are clipped by the sloped body prism, so each one stops on the deck's underside at its own height; the retainer keep-outs are cut from the finished part"
+  },
+  "clips": {
+    "section": "../commons/cfg/retainer.json",
+    "centres_y_mm": [51.0, -51.0],
+    "window_width_mm": 24.6,
+    "window_length_mm": 21.9,
+    "window_radius_mm": 6.0,
+    "note": "102.0 apart, which is 3 x the board's 34.0 pitch, so both clips land on ribs. The blade points outboard, so the closed window frees it while the post stays fused to the plate"
+  },
+  "board": {
+    "pitch_mm": 34.0,
+    "source": "../rockboard_cinque_54/cfg/rockboard_cinque_54.json",
+    "note": "18 mm slot + 16 mm rib; the Cinque drawing prints it, the retainer config's 33.43 pair pitch is a different board and is not used here"
+  },
+  "target": {
+    "pedal": "125B",
+    "plate": "B1",
+    "plate_width_mm": 72.0,
+    "plate_length_mm": 125.5,
+    "plate_clip_spacing_mm": 95.0,
+    "plate_centres_x_mm": [-45.0, 45.0],
+    "clears": "one row of Boss compact pedals"
+  },
+  "material": {
+    "id": "petg",
+    "presets_from": "../commons/cfg/retainer.json"
+  },
+  "fabrication": {
+    "print_orientation": "base plate on the bed, the sloped deck rising last; the clips overhang and want supports",
+    "supports": "under the two clip loops only",
+    "note": "printing base-down keeps the clip mouths open with no bridging; the deck's slots print as short horizontal bridges"
+  },
+  "provenance": {
+    "envelope": { "level": 3, "source": "StepUp-2: 180.00 cells over 142.50 depth; depth widened to 172.0 to carry the 73.5 mm slot edge either side of centre", "retrieved": "2026-11-07" },
+    "height": { "level": 4, "source": "derived from the retainer section's 15.89 loop drop in ../commons/cfg/retainer.json plus a 3.0 base and 3.0 clearance; lands within 0.3 of PedalRiser-L's printed 49", "retrieved": "2026-11-08" },
+    "slot_field": { "level": 3, "source": "../rockboard_cinque_54/cfg/rockboard_cinque_54.json: 18 slot, 16 rib, 34 pitch, R4 ends", "retrieved": "2026-11-07" },
+    "clip_placement": { "level": 4, "source": "../commons/cfg/retainer.json section; positions chosen 3 x 34.0 apart so both clips sit on ribs", "retrieved": "2026-11-07" },
+    "target": { "level": 3, "source": "../enclosure_125b/cfg/enclosure_125b.json: B1 is 72 x 125.5 with clips 95.0 apart", "retrieved": "2026-11-07" }
+  },
+  "open_questions": [
+    "The 9 deg deck is a starting point, not a measurement: StepUp-2's own top is level, so this is the PedalRiser wedge applied to the Step Up plan. Set deck_slope_deg to 0 for a level deck.",
+    "B1's own clips are 95.0 apart, which is not a multiple of 34.0, so on the real board the pair cannot both sit on ribs; this riser sidesteps that on its own underside but inherits it from the pedal plate above.",
+    "The 4.0 mm deck makes the drop-in grip flush, but it is 1 mm thicker than the board; keep a 1 mm pad on the board side of the plate if the same pedal also has to sit on the board."
+  ]
+}

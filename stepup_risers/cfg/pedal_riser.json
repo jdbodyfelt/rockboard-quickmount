@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "id": "pedal_riser",
+  "kind": "reference_part",
+  "description": "Warwick's QuickMount Pedal Riser, reproduced from ref/PedalRiser.pdf as a solid: one 2.0 mm steel sheet bent into a sloped deck between a 20 mm front wall and a 41 mm rear wall, standing on four D18 x 5.0 rubber pads. The deck carries the board's own slot vocabulary so a QuickMount plate drops on, which is the part the printed risers copy: the whole drawn part - sheet thickness, wall gaps, feet and pads.",
+  "sources": ["ref/PedalRiser.pdf", "ref/PedalRiser-L.pdf", "ref/stepup_geometry_review.md"],
+  "datum": {
+    "origin": "centre of the 135 x 76 footprint, on the metal's own bottom face - the plane the four feet stand on",
+    "x_axis": "across the 76 mm width",
+    "y_axis": "along the 135 mm length, +Y toward the high rear edge, so the deck falls toward -Y",
+    "z_axis": "up, parallel to both end walls; the metal occupies z = 0..41 and the rubber pads hang below it at z = -5..0, so the board plane is z = -5"
+  },
+  "envelope": {
+    "length_mm": 135.0,
+    "width_mm": 76.0,
+    "height_mm": 41.0,
+    "overall_height_mm": 46.0,
+    "sheet_thickness_mm": 2.0,
+    "note": "length 135.0 is not printed: it is the printed 121.0 plus the printed 12.0 lip station plus the 2.0 sheet, and the raster agrees to 0.2 mm. height_mm 41.0 is the metal alone, top edge to the underside of the feet; the 5.0 pads make overall_height_mm 46.0 off the board"
+  },
+  "section": {
+    "front_edge_height_mm": 20.0,
+    "rear_edge_height_mm": 41.0,
+    "foot_depth_mm": 22.0,
+    "front_lip_station_mm": 12.0,
+    "reference_span_mm": 121.0,
+    "note": "both heights are printed and measured to the top corner at the end face, so the deck plane between them falls at atan(21/135) = 8.84 deg; the drawn plane reads 8.97 +/- 0.15 off the raster, the same angle inside a raster's accuracy. foot_depth_mm 22.0 is printed on the bottom view and gives 20.0 from the wall's inner face. reference_span_mm 121.0 is printed from the front lip station to the rear wall's inner face: 135.0 - 12.0 - 2.0"
+  },
+  "deck_slots": {
+    "count": 2,
+    "width_mm": 18.0,
+    "length_mm": 60.0,
+    "end_radius_mm": 4.0,
+    "clear_gap_mm": 76.0,
+    "edge_margin_mm": 8.0,
+    "note": "the two slots run across the 76 width, 60.0 long, so 8.0 of deck is left at each side edge and 76.0 clear between them - the same 18 slot, R4 end and min. 8.0 edge the board's own field is built from. They are cut square to the deck's plane, so each is truly 18.0 wide for a retainer even though it reads 17.78 in plan"
+  },
+  "legs": {
+    "gap_width_mm": 33.0,
+    "gap_top_below_edge_mm": 6.0,
+    "gap_height_mm": 35.0,
+    "note": "each end wall is interrupted by a central 33.0 wide gap whose top stands 6.0 below the wall's top edge, leaving two corner legs 21.5 wide each and a 35.0 tall opening above the foot - 35.0 as printed on the end view, and 20.0 - 6.0 = 14.0 at the front by the same rule"
+  },
+  "pads": {
+    "count": 4,
+    "diameter_mm": 18.0,
+    "thickness_mm": 5.0,
+    "inset_from_end_mm": 12.0,
+    "inset_from_side_mm": 11.5,
+    "material": "rubber",
+    "note": "one pad under each corner leg, drawn red on both sheets: 18 across and 5.0 thick, so each sits 3.0..21.0 inside its 22.0 foot. inset_from_end_mm is read off the bottom view and is not printed"
+  },
+  "provenance": {
+    "envelope": { "level": 3, "source": "ref/PedalRiser.pdf side view: 41 high, 121.0 reference, 12.0 lip station, 20.0 front edge; the length is derived from that chain and measures 135.0 on the raster", "retrieved": "2026-11-14" },
+    "sheet_thickness": { "level": 3, "source": "ref/PedalRiser.pdf side view: the sheet's edge reads 8 px on the front wall and again on the front flange against 474 px for 121.0, i.e. 2.04 mm; ref/PedalRiser-L.pdf title block prints 'material: steel, 2,0 mm powdercoated black'", "retrieved": "2026-11-14" },
+    "deck_slots": { "level": 3, "source": "ref/PedalRiser.pdf plan view: 18.0 slot, 76.0 clear between them, min. 8.0 to each side edge, so the slot length is 76.0 - 2 x 8.0 = 60.0; R4 is the end radius the board's own field prints", "retrieved": "2026-11-14" },
+    "legs": { "level": 3, "source": "ref/PedalRiser.pdf end view: 33.0 wide opening, 35.0 tall, its top 6.0 below the deck's rear edge; ref/PedalRiser.pdf bottom view: the same 33.0 between the pads of one foot", "retrieved": "2026-11-14" },
+    "pads": { "level": 3, "source": "ref/PedalRiser.pdf side view: 5.0 printed; ref/PedalRiser.pdf end and bottom views: four pads, 18 across, one at each corner", "retrieved": "2026-11-14" },
+    "deck_slope": { "level": 3, "source": "derived from the two printed heights over the length, and confirmed by fitting the drawn deck plane on the raster (8.97 +/- 0.15)", "retrieved": "2026-11-14" }
+  },
+  "open_questions": [
+    "The sheet is a raster with no text layer, so its callouts were read by eye and checked against its own dimensions. 135.0, 60.0, the 18.0 pads and the 11.5/12.0 insets carry a pixel read; caliper a real part before using this as anything but a reference.",
+    "A 24.0 wide x 2.0 thick x 3.0 deep tongue hangs below the front foot in the side view, and the bottom view dimensions it at 24 and 29 from an end. Its function is not established - a board-side anti-lift hook would have to pass an 18.0 wide slot - so it is not modelled. Check it on a real PedalRiser.",
+    "The bottom view also steps the foot back between the pads, about 11.5 from the end face. That step is not reproduced: the feet are modelled at their full 22.0 depth, which is what the 22.0 callout dimensions.",
+    "Bend radii are not printed. The profile is swept to its theoretical sharp corners, so the printed 20.0 and 41.0 read exactly; a real R1.3 bend would take about 0.4 off a calipered 41.0.",
+    "The front wall's gap height is not printed. It follows the rear's 6.0 rule and comes out 14.0; only the rear's 35.0 is on the sheet."
+  ],
+  "notes": [
+    "This is the reference product, not a print: it exists so the printed risers compare against the real PedalRiser instead of an envelope stand-in.",
+    "The deck is the board's slot field reduced to two groups: 18.0 wide, R4 ends, 8.0 minimum to the edge. A QuickMount plate needs the same 18.0 slot it gets from the board.",
+    "The sheet is 2.0 steel, the gauge PedalRiser-L prints in its title block; the Step Up kits are 1.0 and are a different family."
+  ]
+}

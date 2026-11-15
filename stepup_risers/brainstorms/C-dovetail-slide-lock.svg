@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="440" viewBox="0 0 900 440">
+  <style>text{font-family:Arial,sans-serif;fill:#1f2937}.title{font-size:25px;font-weight:bold}.label{font-size:17px}.small{font-size:14px}.line{stroke:#1f2937;stroke-width:3;fill:none}.wedge{fill:#dbeafe;stroke:#1d4ed8;stroke-width:3}.plate{fill:#e5e7eb;stroke:#374151;stroke-width:3}.rail{fill:#fecaca;stroke:#b91c1c;stroke-width:3}.arrow{stroke:#7c3aed;stroke-width:4;fill:none;marker-end:url(#arrow)}</style>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#7c3aed"/></marker></defs>
+  <text x="40" y="42" class="title">C. Side-entry dovetail / slide lock</text>
+  <text x="40" y="72" class="label">Front section — a shoe slides sideways onto rails; an end latch stops withdrawal</text>
+  <path d="M120 374 L780 374 L690 206 L210 206 Z" class="wedge"/>
+  <path d="M220 209 L690 209 L662 174 L248 174 Z" class="rail"/>
+  <text x="410" y="164" class="small">male dovetail rails on wedge</text>
+  <path d="M272 170 L638 170 L670 116 L240 116 Z" class="plate"/>
+  <path d="M248 147 L662 147" class="rail"/>
+  <text x="475" y="105" class="label">enclosure underside shoe</text>
+  <path d="M90 144 L215 144" class="arrow"/>
+  <text x="47" y="117" class="label">slide in</text>
+  <path d="M702 178 L727 178 L727 228 L702 228 Z" class="rail"/>
+  <text x="735" y="204" class="small">end latch / stop</text>
+  <text x="125" y="419" class="label">Loads spread along the rail; side entry needs clearance beside neighbouring pedals.</text>
+</svg>

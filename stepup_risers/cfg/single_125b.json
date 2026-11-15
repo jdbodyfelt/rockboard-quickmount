@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "id": "single_125b",
+  "kind": "riser",
+  "description": "Step one of the single-125B riser: the Type B1 plate with its two integral retainer clips stripped out. What remains is the board-side base - the 72 x 125.5 x 3 mm lobed plate carrying one 125B pedal's own fasteners - so the outline and the fastener field can be signed off before anything stands on the base or hangs under it.",
+  "sources": [
+    "../enclosure_125b/cfg/enclosure_125b.json",
+    "../enclosure_125b/ref/QuickMount-TypeB1.pdf",
+    "../enclosure_125b/ref/QuickMount-TypeB1-alt.pdf",
+    "ref/stepup_geometry_review.md"
+  ],
+  "datum": {
+    "origin": "centre of the plate's board-facing face",
+    "x_axis": "across the 67 mm width",
+    "y_axis": "along the 125.5 mm length",
+    "z_axis": "away from the board, toward the pedal, so the plate occupies z = 0..3 and nothing hangs below z = 0"
+  },
+  "plate": {
+    "from": "../enclosure_125b/cfg/enclosure_125b.json",
+    "node": "mount",
+    "note": "the outline, the plate thickness, the three screw patterns and the material are read from the Type B1 plate at load time, so a corrected B1 dimension moves this base with it. No plate dimension is restated here"
+  },
+  "departures": {
+    "clips": {
+      "mode": "removed",
+      "note": "the Type B1 plate's two integral C-loops are the board-side attachment, and the riser's own attachment is a later step. Everything the clips carry - the end window, the outboard ledges - goes with them"
+    },
+    "end_window": {
+      "mode": "closed",
+      "note": "the plate's 24.6 x 21.9 window is cut through and open to the end edge for one reason: to let the clip's blade stand free in it. With the clips gone the window is closed, so each end reads as solid material and the base is a plain lobed plate"
+    }
+  },
+  "fabrication": {
+    "print_orientation": "pedal face down, the board face up, so the three recessed patterns open upward and need no supports",
+    "supports": "none",
+    "note": "flat both ways, 3.0 thick, so either face can go on the bed; printing pedal face down keeps the counterbores and spot-faces facing the nozzle"
+  },
+  "provenance": {
+    "plate": { "level": 3, "source": "../enclosure_125b/cfg/enclosure_125b.json: every plate callout is printed on one of the two Type B1 sheets, or scaled off the vector alt sheet against its own dims", "retrieved": "2026-11-13" },
+    "clip_removal": { "level": 1, "source": "design intent: this base is step one of a riser for a single 125B, so the board-side clips wait for the riser's own attachment to be designed", "retrieved": "2026-11-13" },
+    "window_closure": { "level": 1, "source": "design intent: the window exists only to free the clip's blade, which is not present", "retrieved": "2026-11-13" }
+  },
+  "open_questions": [
+    "Nothing yet holds this plate to the board: the clips are the board-side attachment and they are deliberately absent. The riser's own attachment - integral loops under the plate, or the separate printed retainer of commons/src/retainer.py - is the next step and decides whether an end or mid window comes back.",
+    "The four Ø3.5 corner features are drawn with radial relief slots so the fingers can pass a screw head. The repro carries the bore and its 5.8 spot-face only, so the pedal grips by screw tension rather than by snap.",
+    "Which face carries the 1.5 recess is not printed on either B1 sheet. It is modelled on the board side so the screw heads sit clear of the board and the pedal-facing face stays flat; check it with a straight edge on a real plate.",
+    "The 125B housing is 66.3-67 mm wide against this plate's 72 mm over the lobes, so the plate is the wider of the two by design: the lobes stand proud of the pedal's own sides."
+  ],
+  "notes": [
+    "This base is the enclosure plate, not a new outline: it is the same 125.5 x 72 x 3 mm Type B1 sheet with the same four-each Ø4 clearance and Ø3.5 snap patterns per end and one Ø3.5 on each side.",
+    "The base is one solid 3 mm plate, so a later body can be unioned onto its top face or a clip hung below it without reworking the outline.",
+    "Keeping the plate's numbers in one place is the point of the indirection: the enclosure module and this base read the same file, so they cannot drift apart."
+  ]
+}

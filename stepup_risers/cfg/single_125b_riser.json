@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "id": "single_125b_riser",
+  "kind": "riser",
+  "description": "Tube-free layout of the 125B base plate tipped about its side-row end and set on the PedalRiser's inclined deck: its countersunk face coplanar with that deck, its close pair of hole rows riding up the slope, its short end at the deck's 20 mm front and its long end partway up the slope. This is the geometry reference for the next riser design, not yet the final clip-in enclosure riser.",
+  "sources": [
+    "single_125b.json",
+    "pedal_riser.json",
+    "../enclosure_125b/cfg/enclosure_125b.json",
+    "ref/stepup_geometry_review.md"
+  ],
+  "datum": {
+    "origin": "centre of the plate's board-facing face, carried through the placement",
+    "x_axis": "across the 72 mm width",
+    "y_axis": "along the 125.5 mm length, +Y toward the close pair of hole rows, the end that rides up to the deck's tall side",
+    "z_axis": "away from the board face, toward the pedal"
+  },
+  "plate": {
+    "config": "single_125b.json",
+    "note": "the base plate read straight from its own generator, so its outline, thickness and fastener field cannot drift from the signed-off part. Nothing about the plate itself changes here"
+  },
+  "deck": {
+    "front_height_mm": 20.0,
+    "rear_height_mm": 40.0,
+    "span_mm": 135.0,
+    "pivot": "front edge - the lone side-row end",
+    "note": "the PedalRiser's top surface: 20.0 at the short front end, 41.0 drawn (40.0 here, the number to adjust) at the tall end, falling over its 135.0 length. The plate is tipped about its -Y end (the lone Ø3.5 side row) to atan((rear-front)/span), so its +Y end - the Ø4 clearance + Ø3.5 snap pair - rides up the slope, and lifted so the front edge sits at front_height_mm. Because the plate is 125.5 long against the deck's 135.0, its tall edge lands partway up the slope and its countersunk face is exactly coplanar with the deck"
+  },
+  "orientation": {
+    "countersink_side": "down",
+    "hole_rows": "the Ø4 clearance + Ø3.5 snap pair, the plate's +Y end, rides up to the deck's 40 mm tall end; the lone Ø3.5 side row sits on the 20 mm short end",
+    "note": "the plate is not flipped. Its board-facing face carries the four D6.8 x 1.5 counterbores and stays under the plate, so when a body is later filled in beneath it the screw heads go in from below and seat up inside the plate"
+  },
+  "fabrication": {
+    "note": "a layout body, not a print: the tube-free plate alone, positioned on the reference deck; its own print orientation is unchanged from single_125b. The prior tube-bearing export is retained as dwg/screw_tubes.stl for comparison only"
+  },
+  "provenance": {
+    "deck": {
+      "level": 3,
+      "source": "pedal_riser.json: front_edge_height_mm 20.0, rear_edge_height_mm 41.0 (rounded to 40.0 here), length 135.0; ref/PedalRiser.pdf side view",
+      "retrieved": "2026-11-14"
+    },
+    "plate": {
+      "level": 3,
+      "source": "single_125b.json, which reads the Type B1 plate from ../enclosure_125b/cfg/enclosure_125b.json",
+      "retrieved": "2026-11-14"
+    }
+  },
+  "open_questions": [
+    "The tall edge lands at 20.0 + 125.5 x sin(8.43 deg) = 38.39, short of the deck's 40.0 because the plate (125.5) is shorter than the deck (135.0). Move the plate up the slope if the tall edge, not the short edge, must reach the deck's rear."
+  ],
+  "notes": [
+    "The side-row end is the pivot and reads front_height_mm exactly; the front and rear deck heights are the two knobs that set the slope."
+  ]
+}

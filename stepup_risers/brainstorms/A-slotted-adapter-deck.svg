@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="440" viewBox="0 0 900 440">
+  <style>text{font-family:Arial,sans-serif;fill:#1f2937}.title{font-size:25px;font-weight:bold}.label{font-size:17px}.small{font-size:14px}.line{stroke:#1f2937;stroke-width:3;fill:none}.wedge{fill:#dbeafe;stroke:#1d4ed8;stroke-width:3}.plate{fill:#e5e7eb;stroke:#374151;stroke-width:3}.clip{fill:#fed7aa;stroke:#c2410c;stroke-width:3}.board{fill:#dcfce7;stroke:#15803d;stroke-width:3}.slot{fill:#fff;stroke:#1f2937;stroke-width:2}</style>
+  <text x="40" y="42" class="title">A. Slotted adapter deck using the regular B1 clips</text>
+  <text x="40" y="72" class="label">Side section — the enclosure stays a normal clipped-in QuickMount part</text>
+  <path d="M100 362 L760 362 L760 398 L100 398 Z" class="board"/>
+  <text x="682" y="425" class="label">RockBoard</text>
+  <path d="M190 360 L640 360 L610 198 L260 284 Z" class="wedge"/>
+  <text x="401" y="325" class="label">printed wedge</text>
+  <path d="M250 281 L615 195" class="plate"/>
+  <path d="M360 255 L390 248" class="slot"/>
+  <text x="398" y="243" class="small">adapter slot</text>
+  <path d="M280 278 L303 272 L303 242 L332 235 L332 266 L352 261" class="clip"/>
+  <text x="150" y="232" class="small">regular B1 clip</text>
+  <path d="M330 229 L590 166 L603 218 L343 281 Z" class="plate"/>
+  <text x="508" y="155" class="label">regular 125B enclosure</text>
+  <path d="M294 359 L294 382 L320 382 L320 353" class="clip"/>
+  <path d="M545 359 L545 382 L571 382 L571 353" class="clip"/>
+  <text x="105" y="160" class="label">Top: normal B1 clips engage slots</text>
+  <text x="105" y="185" class="label">Bottom: riser has its own board clips</text>
+</svg>

@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "id": "riser_line6_modeler",
+  "kind": "riser",
+  "description": "Printed PETG slanted step-up sized to the Line 6 4-switch modeler chassis (254 x 152). The Step Up's architecture, scaled up: front leg, sloped deck, rear leg, over a 3 mm base plate that carries the retainer clips. The deck is slotted so a modeler plate with QuickMount retainers drops on.",
+  "sources": ["ref/StepUp-3.pdf", "ref/PedalRiser-L.pdf", "../commons/cfg/retainer.json", "../line6_modeler/cfg/line6_modeler.json"],
+  "datum": {
+    "origin": "centre of the base footprint, on the board-facing face",
+    "x_axis": "along the 264 mm length",
+    "y_axis": "across the depth, +Y toward the high edge of the deck",
+    "z_axis": "away from the board, toward the pedals"
+  },
+  "envelope": {
+    "length_mm": 264.0,
+    "depth_mm": 176.0,
+    "corner_radius_mm": 6.0,
+    "deck_slope_deg": 9.0,
+    "height_note": "scaled to the modeler: 264 x 176 leaves a 5 mm end margin and a 12 mm side margin around the 254 x 152 chassis"
+  },
+  "height": {
+    "mode": "clip_clearance",
+    "clearance_mm": 3.0,
+    "note": "the low edge stands base 3.0 + clearance 3.0 + the retainer's 15.89 loop drop; the 9 deg slope then lifts the high edge by 176 x tan(9)"
+  },
+  "base": {
+    "thickness_mm": 3.0,
+    "note": "behaves like a 3 mm QuickMount plate: integral clips hang below it and its top face is the floor of the body"
+  },
+  "top": {
+    "sheet_thickness_mm": 4.0,
+    "sheet_note": "4.0 rather than the board's 3.0 so the retainer's 4.0 ledge sits flush under the sheet with no foam pad; slot, rib and pitch are the board's",
+    "slot_field": {
+      "slot_width_mm": 18.0,
+      "rib_width_mm": 16.0,
+      "end_radius_mm": 4.0,
+      "slot_length_mm": 60.0,
+      "rib_centres_mm": [-51.0, -17.0, 17.0, 51.0],
+      "slot_x_centres_mm": [-70.0, 0.0, 70.0],
+      "note": "measured in the deck's own plane; a true 34.0 grid, so the pedal plate's retainers land on whole pitches anywhere along the deck"
+    },
+    "layout_note": "ribs at -51, -17, 17 and 51 leave slot rows at -68, -34, 0, 34 and 68; three 60 mm slot columns give the plate somewhere to sit anywhere along the length"
+  },
+  "body": {
+    "wall_thickness_mm": 3.0,
+    "rib_width_mm": 3.0,
+    "ribs_along_x_at_y_mm": [17.0, -17.0, 51.0, -51.0, 82.0, -82.0],
+    "ribs_along_y_at_x_mm": [35.0, -35.0, 116.0, -116.0],
+    "note": "every rib sits under solid sheet, never under a slot; ribs are clipped by the sloped body prism so each stops on the deck's underside at its own height"
+  },
+  "clips": {
+    "section": "../commons/cfg/retainer.json",
+    "centres_y_mm": [51.0, -51.0],
+    "window_width_mm": 24.6,
+    "window_length_mm": 21.9,
+    "window_radius_mm": 6.0,
+    "note": "102.0 apart, which is 3 x the board's 34.0 pitch, so both clips land on ribs. The blade points outboard, so the closed window frees it while the post stays fused to the plate"
+  },
+  "board": {
+    "pitch_mm": 34.0,
+    "source": "../rockboard_cinque_54/cfg/rockboard_cinque_54.json",
+    "note": "18 mm slot + 16 mm rib; the Cinque drawing prints it, the retainer config's 33.43 pair pitch is a different board and is not used here"
+  },
+  "target": {
+    "pedal": "Line 6 DL4 / FM4 / MM4 / DM4 / AM4",
+    "chassis_width_mm": 254.0,
+    "chassis_depth_mm": 152.0,
+    "chassis_corner_radius_mm": 9.5,
+    "mounting_hole_pattern_mm": { "dx_mm": 238.0, "dy_mm": 136.0, "fastener": "m3x0.5" },
+    "plate": null
+  },
+  "material": {
+    "id": "petg",
+    "presets_from": "../commons/cfg/retainer.json"
+  },
+  "fabrication": {
+    "print_orientation": "base plate on the bed, the sloped deck rising last; the clips overhang and want supports",
+    "supports": "under the two clip loops only",
+    "note": "printing base-down keeps the clip mouths open with no bridging; the deck's slots print as short horizontal bridges"
+  },
+  "provenance": {
+    "envelope": { "level": 2, "source": "../line6_modeler/cfg/line6_modeler.json: 254 x 152, r9.5; riser sized 264 x 176 to leave a margin", "retrieved": "2026-11-07" },
+    "height": { "level": 4, "source": "derived from the retainer section's 15.89 loop drop plus a 3.0 base and 3.0 clearance; lands within 0.3 of PedalRiser-L's printed 49", "retrieved": "2026-11-08" },
+    "slot_field": { "level": 3, "source": "../rockboard_cinque_54/cfg/rockboard_cinque_54.json: 18 slot, 16 rib, 34 pitch, R4 ends", "retrieved": "2026-11-07" },
+    "clip_placement": { "level": 4, "source": "../commons/cfg/retainer.json section; positions chosen 3 x 34.0 apart so both clips sit on ribs", "retrieved": "2026-11-07" },
+    "target": { "level": 2, "source": "../line6_modeler/cfg/line6_modeler.json: chassis and 238 x 136 M3 pattern", "retrieved": "2026-11-07" }
+  },
+  "open_questions": [
+    "No QuickMount type covers the modeler chassis, so no plate exists to drop on yet. The slot field is a generic 34.0 grid; the modeler plate must be generated with its retainers on rib centres first.",
+    "The 9 deg deck is a starting point, not a measurement. Set deck_slope_deg to 0 for a level deck.",
+    "The 238 x 136 M3 pattern would let the modeler bolt to a plate, not to this riser directly: the plate has to hang between the screws and the riser."
+  ]
+}

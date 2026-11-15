@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="440" viewBox="0 0 900 440">
+  <style>text{font-family:Arial,sans-serif;fill:#1f2937}.title{font-size:25px;font-weight:bold}.label{font-size:17px}.small{font-size:14px}.line{stroke:#1f2937;stroke-width:3;fill:none}.wedge{fill:#dbeafe;stroke:#1d4ed8;stroke-width:3}.plate{fill:#e5e7eb;stroke:#374151;stroke-width:3}.hardware{fill:#fde68a;stroke:#a16207;stroke-width:3}.cut{fill:#fff;stroke:#1f2937;stroke-width:2}.arrow{stroke:#7c3aed;stroke-width:4;fill:none;marker-end:url(#arrow)}</style>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#7c3aed"/></marker></defs>
+  <text x="40" y="42" class="title">B. Horizontal key slots with a captive hex lock</text>
+  <text x="40" y="72" class="label">Side section — slide in, then tighten an accessible side lock</text>
+  <path d="M145 365 L745 365 L680 187 L225 272 Z" class="wedge"/>
+  <path d="M254 267 L650 178 L666 246 L270 335 Z" class="plate"/>
+  <text x="570" y="158" class="label">enclosure shoe</text>
+  <path d="M344 275 L474 246 L490 274 L360 303 Z" class="cut"/>
+  <path d="M336 302 L482 270" class="line"/>
+  <text x="498" y="270" class="small">undercut key slot</text>
+  <path d="M683 222 l18 -15 l20 9 l2 23 l-18 15 l-20 -9 z" class="hardware"/>
+  <path d="M725 225 L782 225" class="arrow"/>
+  <text x="688" y="190" class="small">captive hex nut</text>
+  <text x="747" y="252" class="small">side screw</text>
+  <path d="M175 342 L250 326" class="arrow"/>
+  <text x="85" y="342" class="label">slide-in direction</text>
+  <text x="115" y="410" class="label">Lock is reachable from the side; no deep vertical screw access.</text>
+</svg>

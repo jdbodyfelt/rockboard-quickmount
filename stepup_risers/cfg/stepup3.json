@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "id": "stepup3",
+  "kind": "reference",
+  "description": "The StepUp-3 as a printable-check solid: one 1 mm bent steel sheet, 255.00 long, standing on the board. The cross-section is the sheet's own side profile, read off ref/StepUp-3.pdf sheet 3 of 3, so its height placement can be compared against a printed riser.",
+  "sources": [
+    "ref/StepUp-3.pdf",
+    "../commons/cfg/stepup_types.json",
+    "ref/stepup_geometry_review.md"
+  ],
+  "datum": {
+    "origin": "centre of the part's footprint, on the board's top face",
+    "x_axis": "along the 255.00 length",
+    "y_axis": "across the 142.50 depth, -Y toward the front wall",
+    "z_axis": "up. The part occupies z = 0..25.01 and nothing hangs below z = 0"
+  },
+  "profile": {
+    "depth_mm": 142.50,
+    "height_mm": 25.01,
+    "sheet_mm": 1.00,
+    "underside_deg": 9.0,
+    "front_fold_outer_mm": 2.00,
+    "front_fold_inner_mm": 1.00,
+    "rear_fold_outer_mm": 1.50,
+    "rear_fold_inner_mm": 0.50,
+    "foot_strap_mm": 20.00,
+    "hem_strap_mm": 20.50,
+    "note": "the loop is walked once, outer face out and inner face back, so the sheet thickness falls out of the two radii: inner = outer - sheet at both folds. Every fold's angular span is fixed by the underside angle - 90 at the front top, 90 + 9 at the front bottom, 180 - 9 at the rear - which is why the profile closes without a fudge anywhere"
+  },
+  "width_mm": 255.0,
+  "cells": 3,
+  "top": {
+    "holes_modelled": false,
+    "note": "the 4 x D9.50 per cell at 12.75 / 13.25 and the 2 x D31.50 at 71.25 and 89.00 apart are recorded in ../commons/cfg/stepup_types.json but are not cut here: they sit inside the top face and change neither the silhouette nor the height this part is built to compare"
+  },
+  "material": {
+    "id": "steel_1mm",
+    "density_g_cm3": 7.85,
+    "note": "1 mm bent sheet, as the sheet prints; the density is only used to report a mass"
+  },
+  "provenance": {
+    "profile": {
+      "level": 3,
+      "source": "ref/StepUp-3.pdf sheet 3 of 3, lower-right drawing. The vector path was read directly (92 segments, 1:2 scale) and each fitted against these numbers: depth 142.495, height 25.006, sheet 1.000, both flange faces collinear on one 9.000 deg line, front folds R2.001 / R1.000, rear fold R1.500 / R0.500, straps 20.000 and 20.500 at 9.000 deg. Everything agrees to 0.005",
+      "retrieved": "2026-11-14"
+    },
+    "width": {
+      "level": 3,
+      "source": "255.00 printed on ref/StepUp-3.pdf; cross-checked against ../commons/cfg/stepup_types.json",
+      "retrieved": "2026-11-14"
+    }
+  },
+  "open_questions": [
+    "The two flange straps are drawn 20.000 and 20.500 long, then broken and continued 3.000 to a R0.500 rolled edge at the 25.00 callout. The break pieces are not modelled, so the flanges here end on their square 1.000 faces at 20.000 and 20.500 and reach 22.72 and 23.79 inboard. If the real 25.00 reach matters, the straps lengthen and the drawing's 20.000 becomes just a break point",
+    "The three cells read 90.0 / 180.0 / 255.0 for 1 / 2 / 3, so the third cell adds 75.0 rather than 90.0. Nothing here depends on it - the part is one extrusion - but the pattern of holes would"
+  ],
+  "notes": [
+    "Open underneath: one 9 deg plane carries both flanges, and the deck closes the top, so the section is a hollow V rather than a filled wedge",
+    "This is a reference body, not a deliverable: it exists so a riser's deck height can be read against a real StepUp-3 in the same drawing"
+  ]
+}
