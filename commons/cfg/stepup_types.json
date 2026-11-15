@@ -2,17 +2,24 @@
   "schema_version": 1,
   "id": "stepup_types",
   "kind": "riser_catalog",
-  "description": "RockBoard riser family: the Step Up kits and the pedal risers, which lift pedals to a second tier. Dimensions are the unit's overall envelope, length x width x height.",
+  "description": "RockBoard riser family: the Step Up kits and the pedal risers, which lift pedals to a second tier. Dimensions are the unit's overall envelope, length x width x height. The family splits in two: the Step Up kits have a plain top, the PedalRiser family carries the board's slot field on its top.",
   "types": {
     "StepUp-1": {
       "drawing": "StepUp-1.pdf",
       "pedal_capacity": 1,
       "dimensions_mm": {
         "length": 90.0,
-        "width": 145.0,
+        "width": 142.5,
         "height": 25.0
       },
-      "geometry_source": "product-spec"
+      "construction": "1 mm bent steel sheet; level top, one full-depth front wall folded into a 25.0 foot at 9 deg, a 25.0 hem folded flat under the rear edge",
+      "top": {
+        "slotted": false,
+        "small_holes": "4 x D9.5 at the cell corners, 12.75 from the fold and 13.25 from the side",
+        "large_holes": 0
+      },
+      "geometry_source": "drawing",
+      "note": "the published spec says 90 x 145 x 25; the drawing prints 142.50 across the depth, so the drawing governs"
     },
     "StepUp-2": {
       "drawing": "StepUp-2.pdf",
@@ -22,8 +29,14 @@
         "width": 142.5,
         "height": 25.0
       },
-      "geometry_source": "drawing",
-      "note": "length read off the drawing; width and height are carried over from Step Up 1, which publishes 90 x 145 x 25"
+      "construction": "as StepUp-1; two 90.0 pedal cells",
+      "top": {
+        "slotted": false,
+        "small_holes": "4 x D9.5 per cell at 12.75 / 13.25",
+        "large_holes": 1,
+        "large_hole_note": "1 x D31.50 between the cells, centred 71.25 from the front edge"
+      },
+      "geometry_source": "drawing"
     },
     "StepUp-3": {
       "drawing": "StepUp-3.pdf",
@@ -33,18 +46,39 @@
         "width": 142.5,
         "height": 25.0
       },
-      "geometry_source": "drawing",
-      "note": "length read off the drawing; width and height are carried over from Step Up 1, which publishes 90 x 145 x 25"
+      "construction": "as StepUp-1; three 90.0 pedal cells",
+      "top": {
+        "slotted": false,
+        "small_holes": "4 x D9.5 per cell at 12.75 / 13.25",
+        "large_holes": 2,
+        "large_hole_note": "2 x D31.50, 89.00 apart, one between each pair of cells"
+      },
+      "geometry_source": "drawing"
     },
     "PedalRiser": {
       "drawing": "PedalRiser.pdf",
       "pedal_capacity": 1,
       "dimensions_mm": {
-        "length": 121.0,
+        "length": 135.0,
         "width": 76.0,
         "height": 41.0
       },
-      "geometry_source": "drawing"
+      "construction": "2.0 mm bent steel: a 20.0 front wall, a deck falling at 8.84 deg to a 41.0 rear wall, and a 22.0 foot turned inboard at each end, on four D18 x 5.0 rubber pads. The 41.0 is metal alone; over the pads the part stands 46.0. The 121.0 the side view prints runs from the front lip station to the rear wall's inner face (135.0 - 12.0 - 2.0), not the length",
+      "top": {
+        "slotted": true,
+        "slot_width_mm": 18.0,
+        "slot_length_mm": 60.0,
+        "clear_gap_mm": 76.0,
+        "end_radius_mm": 4.0,
+        "min_edge_margin_mm": 8.0
+      },
+      "bottom": {
+        "pads": 4,
+        "pad_diameter_mm": 18.0,
+        "pad_thickness_mm": 5.0
+      },
+      "geometry_source": "drawing",
+      "note": "this is the family that takes a QuickMount plate on top, and its deck is the board's own vocabulary: 18.0 slot, R4 ends, min. 8.0 to the edge. Its underside carries the feet and four rubber pads; nothing clips, so a riser in this form has to be held by its own weight or by the board's grip elsewhere"
     },
     "PedalRiser-L": {
       "drawing": "PedalRiser-L.pdf",
@@ -54,8 +88,19 @@
         "width": 134.5,
         "height": null
       },
+      "construction": "2 mm bent steel, powdercoated black; a taller sibling of PedalRiser on a 228.0 base",
+      "top": {
+        "slotted": true,
+        "slot_width_mm": 18.0,
+        "rib_mm": 16.0,
+        "long_slot_mm": 98.0,
+        "end_radius_mm": 4.0
+      },
+      "bottom": {
+        "pads": 4
+      },
       "geometry_source": "drawing",
-      "note": "height not legible on the sheet; the 121 callout is the top-plate run, not the envelope"
+      "note": "the side view's 121 is PedalRiser's own reference, not a height: on this 134.5 depth it is 134.5 - 12.0 - 2.0 = 120.5, the front lip station to the far wall's inner face. Its envelope height is not printed"
     },
     "SecondTier-Tier2S": {
       "drawing": "SecondTier-Tier2S.pdf",
@@ -66,13 +111,25 @@
         "height": 85.0
       },
       "fits_board_series": ["TRES", "QUAD", "CINQUE"],
+      "top": {
+        "slotted": true,
+        "note": "a full board-style slot field; the isometric shows the rounded slots across the platform"
+      },
       "geometry_source": "product-spec"
     }
   },
-  "caveats": ["Step Up kits are angled; height is the rise at the high edge.", "Absent or null values are unknown, not zero."],
+  "caveats": [
+    "The Step Up top is level: 25.01 at the front wall and 25.00 at the rear hem. The 9 deg callout belongs to the folded 25.0 foot flange, not to the top. The earlier note that the kits are angled and 25 is a high-edge rise was wrong.",
+    "Only the PedalRiser family carries the board's slot field on top. StepUp-1/2/3 have plain tops and cannot take a QuickMount plate; D9.5 / D31.5 holes are the only openings.",
+    "Absent or null values are unknown, not zero.",
+    "The PedalRiser top slot groups sit 76.0 apart, and that is the clear span between two 18.0 wide slots, not a group pitch: the slots are 11.71..29.49 from each end face and their centres land 94.0 apart, which is 1.0 inside the B1 plate's 95.0 clip pair. Whether a given plate rides them is a separate check.",
+    "The PedalRiser's 33.0 and 76.0 on the underside are not retainer pitches: 33.0 is the width of the centre gap in each end wall, and the 76.0 on the bottom view is the part's own width. The underside carries four D18 rubber pads and nothing that clips."
+  ],
   "provenance": {
     "level": 3,
     "source": "the published spec sheet on https://www.rockboard.de/en/accessories/pedal-riser/ and https://www.rockboard.de/en/accessories/second-tiers/, plus the drawings in ref/stepups",
-    "retrieved": "2026-11-05"
+    "retrieved": "2026-11-05",
+    "reviewed": "2026-11-07",
+    "review_note": "every StepUp-1/2/3 callout was read off the sheets: 90/180/255 x 142.50 x 25.01-25.00, 1 mm sheet, R1.50 / R2.00 / R3.00, 25.00 foot at 9 deg, 12.75 / 13.25 hole offsets, D9.5 and D31.50. StepUp-1's 145 mm width in the earlier revision came from the vendor page and is wrong; the drawing prints 142.50."
   }
 }

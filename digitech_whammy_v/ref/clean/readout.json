@@ -1,0 +1,64 @@
+{
+  "20261107_113055": {
+    "roll_deg": 0.0,
+    "features": [
+      {
+        "x_from_panel_edge": 52.0,
+        "y_from_input_end": 27.67,
+        "dia_mm": 10.0
+      },
+      {
+        "x_from_panel_edge": 54.83,
+        "y_from_input_end": 29.92,
+        "dia_mm": 16.58
+      },
+      {
+        "x_from_panel_edge": 36.58,
+        "y_from_input_end": 30.0,
+        "dia_mm": 6.92
+      }
+    ],
+    "face": "top"
+  },
+  "20261107_113135": {
+    "roll_deg": 0.0,
+    "features": [
+      {
+        "x_from_panel_edge": 149.25,
+        "y_from_input_end": 14.0,
+        "dia_mm": 14.25
+      },
+      {
+        "x_from_panel_edge": 14.67,
+        "y_from_input_end": 15.08,
+        "dia_mm": 14.42
+      },
+      {
+        "x_from_panel_edge": 14.08,
+        "y_from_input_end": 178.42,
+        "dia_mm": 15.17
+      },
+      {
+        "x_from_panel_edge": 149.33,
+        "y_from_input_end": 179.92,
+        "dia_mm": 14.92
+      }
+    ],
+    "face": "bottom"
+  },
+  "20261107_113201": {
+    "roll_deg": 1.0
+  },
+  "20261107_113237": {
+    "roll_deg": 2.78
+  },
+  "20261107_113321": {
+    "roll_deg": 3.7
+  },
+  "20261107_113338": {
+    "roll_deg": 0.22
+  },
+  "20261107_113408": {
+    "roll_deg": -8.69
+  }
+}

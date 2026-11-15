@@ -490,7 +490,7 @@ def report(spec: Spec, checks: list[Check], out: Path) -> str:
 
     mesh = verification.get("mesh_cross_check")
     if mesh:
-        lines += ["", "cross-checked against enclosure_125b/dwg/125B_quickmount.stl"]
+        lines += ["", "cross-checked against enclosure_125b/dwg/125B_quickmount-ORIGINAL.stl"]
         for key, value in mesh["mesh_clip"].items():
             shown = f"{value:.2f}" if isinstance(value, float) else str(value)
             lines.append(f"  {key:<24} {shown}")

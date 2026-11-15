@@ -2,9 +2,9 @@
   "schema_version": 1,
   "id": "retainer",
   "kind": "shared_component",
-  "description": "The QuickMount pressure-locking retainer: the C-loop that hangs under a mount plate and grips the board. The section is measured off the OEM plate in enclosure_125b/dwg/125B_quickmount.stl; every envelope callout is then verified against the six OEM drawings in ref/quickmounts, and the verification block records each one. The reference type is A/E: Type A is the drawing that matches the Type E plate the calipers were taken on.",
+  "description": "The QuickMount pressure-locking retainer: the C-loop that hangs under a mount plate and grips the board. The section is measured off the third-party plate kept in enclosure_125b/dwg/125B_quickmount-ORIGINAL.stl; every envelope callout is then verified against the six OEM drawings in ref/quickmounts, and the verification block records each one. The reference type is A/E: Type A is the drawing that matches the Type E plate the calipers were taken on.",
   "sources": [
-    "enclosure_125b/dwg/125B_quickmount.stl",
+    "enclosure_125b/dwg/125B_quickmount-ORIGINAL.stl",
     "ref/quickmounts/QuickMount-TypeA.pdf",
     "ref/quickmounts/QuickMount-TypeD.pdf",
     "ref/quickmounts/QuickMount-TypeE.pdf",
@@ -15,7 +15,7 @@
   "measurement": {
     "how": "planar sections of the OEM mesh: z = 11 cuts one loop's whole section, y = 5 and y = 7.2 bracket the ledge, y = 1.5 and y = 2.95 cut the plate, x = 0 and y = 0 give the plate outline",
     "axis_convention": "in the mesh, x is the plate's 120 mm width, z its 65 mm depth, y runs 0..19.65 away from the pedal with the plate at y = 0..3",
-    "provenance": { "level": 4, "source": "sections of enclosure_125b/dwg/125B_quickmount.stl", "retrieved": "2026-11-04" }
+    "provenance": { "level": 4, "source": "sections of enclosure_125b/dwg/125B_quickmount-ORIGINAL.stl", "retrieved": "2026-11-04" }
   },
 
   "mechanism": {
@@ -166,7 +166,7 @@
       { "id": "H_step", "value_mm": "1.0 - 1.2", "model": "ledge.protrusion_mm", "types": ["E"], "verdict": "adopted at 1.10, which is also what the wall budget gives: 6.00 - 3.00 - 1.90 = 1.10" }
     ],
     "mesh_cross_check": {
-      "what": "enclosure_125b/dwg/125B_quickmount.stl was sliced depth by depth and the clips measured the same way as this model, to see whether it corroborates the section",
+      "what": "enclosure_125b/dwg/125B_quickmount-ORIGINAL.stl was sliced depth by depth and the clips measured the same way as this model, to see whether it corroborates the section",
       "mesh_clip": {
         "outer_mm": 19.30,
         "mouth_mm": 14.30,
@@ -193,8 +193,8 @@
         "drop 16.65 below the plate against 15.89 measured and 18.89-from-top printed - the mesh sits 0.76 lower"
       ],
       "verdict": "the mesh confirms the mechanism and three dimensions outright - 22, the 4.00 ledge drop and the semicircular arch - but its section is not the one the Type E shows. Its clip is the third-party reference part: the arch span 16.80, arch base to apex 9.65, arch wall 2.50 and blade 1.20 all reproduce the reference clip measured into catalog/clips/reference_2space_clip.yaml (16.8, 9.64, 2.5, 1.2) exactly, and that part is a different moulding from the OEM Type A/E. So the mesh is used here to corroborate the mechanism, not to set the section",
-      "also_noted": "the mesh's two clip centres are 95.50 apart, which is 2.86 of the drawn 33.43 pitch rather than a whole number, so that plate's clips do not sit on the board's rib grid as drawn. Worth remembering when the plate generator is written - a pair has to be a whole number of pitches apart",
-      "provenance": { "level": 4, "source": "planar slices of enclosure_125b/dwg/125B_quickmount.stl at 0.5 mm depth steps", "retrieved": "2026-11-05" }
+      "also_noted": "the mesh's two clip centres are 95.50 apart, which is 2.86 of the drawn 33.43 pitch rather than a whole number. The OEM Type B1 sheet puts its own pair 95.0 apart, so the mesh is not wrong about this: a pair does not have to be a whole number of pitches apart, and the array rule below is only a rule for the A/E-style plates it was read from",
+      "provenance": { "level": 4, "source": "planar slices of enclosure_125b/dwg/125B_quickmount-ORIGINAL.stl at 0.5 mm depth steps", "retrieved": "2026-11-05" }
     },
     "callouts": [
       { "id": "width", "value_mm": 22.0, "model": "width_mm", "types": ["A", "D", "E", "G", "H", "M"], "verdict": "confirmed, 6 of 6" },
@@ -247,6 +247,7 @@
     "Type A's section C is the single most useful view in the set: it draws the loop across the mouth at drawing scale and prints 111.7 on the same view, so an undimensioned section can be read off it at 7.851 px/mm. That is how the 13.0 mouth was confirmed before the calipers arrived.",
     "The Type A sheet also gives the plate's own numbers: 102 x 61 plan, 51 hole pitch, 4 mm holes, 112.4 overall length, and the 82.5 deg chamfered slot in section B-B.",
     "The reference types are A and E, and only those two. Their printed numbers are used wherever they give one; the calipers supply the rest. Type M's 19.7 across the loop is deliberately not used, which is why the envelope is 19.0 and the walls are 3.00 / 1.90 / 1.10 rather than 3.35 / 1.90 / 1.45.",
-    "The plate's own slot is 24 wide against a 22 retainer, so 1.00 a side. The word slot here means the opening in the plate that the retainer sits in, not a feature of the board."
+    "The plate's own slot is 24 wide against a 22 retainer, so 1.00 a side. The word slot here means the opening in the plate that the retainer sits in, not a feature of the board.",
+    "Type B1 moulds this section in as one piece instead of inserting it: its end window is the same 24 mm slot carried out to the end edge, so the loop stays open while the plate fuses to the post alone, and the blade's tip still finishes flush with the plate's top face. See enclosure_125b/cfg/enclosure_125b.json, which reuses the section here and only changes how it is attached."
   ]
 }

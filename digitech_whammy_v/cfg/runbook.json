@@ -1,0 +1,552 @@
+{
+  "schema_version": 1,
+  "id": "whammy_v_runbook",
+  "units": "mm",
+  "sections": [
+    {
+      "id": "datum",
+      "title": "0 · Set the datum",
+      "intro": "Everything else is measured from two named faces, so name them once, here. From page 2 of the manual: the <b>POWER</b> barrel jack and the <b>OUTPUT</b> jack share one long side; <b>INPUT</b> and <b>MIDI</b> share the other. Those are the only fixed names I will use.",
+      "metrics": [
+        {
+          "id": "D1",
+          "label": "Which long side has POWER + OUTPUT?",
+          "how": "Run your finger along each long side. One has a 9 V barrel jack and a 1/4\" output; the other has a 1/4\" input and a 5-pin MIDI. Record which is which as seen when the footswitch is nearest you.",
+          "glyph": "text",
+          "priority": 1,
+          "hint": "e.g. 'POWER/OUTPUT on my left, INPUT/MIDI on my right'"
+        },
+        {
+          "id": "D2",
+          "label": "Which end has the footswitch and its LED?",
+          "how": "That end is <b>the toe end</b> throughout this sheet. The treadle tips down toward it, and its pivot is at the far end.",
+          "glyph": "text",
+          "priority": 1,
+          "hint": "e.g. 'footswitch nearest me'"
+        },
+        {
+          "id": "D3",
+          "label": "Call the two ends",
+          "how": "Confirm: toe end = footswitch end, hinge end = the opposite one, where the treadle's pivot bracket is visible.",
+          "glyph": "yesno",
+          "priority": 1,
+          "hint": ""
+        }
+      ]
+    },
+    {
+      "id": "body",
+      "title": "1 · The body box",
+      "intro": "The outer shell below the top plate. Measure across the <b>walls</b>, not across the top plate - the top plate overhangs and will give you a bigger number. Take each reading twice, at two different places along the side, and put the worst pair in the note if they disagree.",
+      "metrics": [
+        {
+          "id": "A1",
+          "label": "Body width across (X), just above the feet",
+          "how": "Calipers across the body at about 10 mm up from the bottom, jaws square to the walls. This is the widest point of the lower shell.",
+          "glyph": "x",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "A2",
+          "label": "Body depth along (Y), just above the feet",
+          "how": "Same height, but jaws on the two end walls.",
+          "glyph": "y",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "A3",
+          "label": "Body width (X) just under the top plate",
+          "how": "Repeat A1 as high as you can get the jaws, immediately below where the top plate starts. If this differs from A1, the walls are tapered and I need both.",
+          "glyph": "x",
+          "priority": 2,
+          "hint": ""
+        },
+        {
+          "id": "A4",
+          "label": "Body depth (Y) just under the top plate",
+          "how": "Repeat A2 as high as possible.",
+          "glyph": "y",
+          "priority": 2,
+          "hint": ""
+        },
+        {
+          "id": "A5",
+          "label": "Body height: bottom face to the top plate's flat rim",
+          "how": "Depth rod of the calipers from the <b>bottom face</b> (not the rubber feet) up to the flat rim of the top plate, at mid-length on a long side.",
+          "glyph": "z",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "A6",
+          "label": "Highest point of the top plate",
+          "how": "If the top plate is not flat - a raised area over the button panel, a lip, a boss - give the bottom face to that highest point.",
+          "glyph": "z",
+          "priority": 2,
+          "hint": "say 'flat' if A5 already is the highest"
+        },
+        {
+          "id": "A7",
+          "label": "Body corner radius",
+          "how": "Optional. Lay the calipers across a corner and read the widest gap, or just photograph one corner square-on with a ruler in frame and I will scale it.",
+          "glyph": "dia",
+          "priority": 3,
+          "hint": "estimate is fine"
+        }
+      ],
+      "image": {
+        "file": "p2_end_pow.png",
+        "width": 1500,
+        "caption": "Side P elevation, from the manual's Page 2."
+      }
+    },
+    {
+      "id": "plate",
+      "title": "2 · The top plate and its overhang",
+      "intro": "The top plate overhangs the body on all four sides. Those overhangs are what a wall would have to tuck under, so they need to be real numbers rather than 'looks like a few mm'.",
+      "metrics": [
+        {
+          "id": "B1",
+          "label": "Top plate overhang, side P",
+          "how": "Calipers across the top plate's edge and the body wall directly below it. Jaws horizontal, measuring how far the plate sticks out.",
+          "glyph": "x",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "B2",
+          "label": "Top plate overhang, side I",
+          "how": "Same on the other long side.",
+          "glyph": "x",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "B3",
+          "label": "Top plate overhang, toe end",
+          "how": "Same, but on the footswitch end.",
+          "glyph": "y",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "B4",
+          "label": "Top plate overhang, hinge end",
+          "how": "Same, on the opposite end.",
+          "glyph": "y",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "B5",
+          "label": "Top plate thickness at its free edge",
+          "how": "The plate's own edge thickness, measured on the overhanging brim.",
+          "glyph": "z",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "B6",
+          "label": "Depth of the recess under the top plate",
+          "how": "Under the overhanging brim, from the plate's <b>underside</b> down to the first thing below it - the body shoulder or the jack panel. This is the space an end wall would have to fit into.",
+          "glyph": "z",
+          "priority": 1,
+          "hint": ""
+        }
+      ],
+      "image": {
+        "file": "p2_end_in.png",
+        "width": 1500,
+        "caption": "Side I elevation: note the top plate's lip and the recess beneath it."
+      }
+    },
+    {
+      "id": "screws",
+      "title": "3 · The five top-plate screws",
+      "intro": "These are the only fasteners on the pedal, and the whole mount hangs off them, so this section matters more than its length suggests. Photograph one head square-on with calipers on it, as well as filling in the numbers.",
+      "metrics": [
+        {
+          "id": "C1",
+          "label": "Number of these screws",
+          "how": "Count them. They are black hex-socket heads flush-ish with the top plate.",
+          "glyph": "count",
+          "priority": 1,
+          "hint": "I expect 5"
+        },
+        {
+          "id": "C2",
+          "label": "Head across the flats",
+          "how": "Jaws on two opposite flats of the hexagon, not on the corners.",
+          "glyph": "dia",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "C3",
+          "label": "Head across the corners",
+          "how": "Jaws on two opposite corners - if it reads the same as C2 the head is round; if it reads bigger, it is a hex.",
+          "glyph": "dia",
+          "priority": 2,
+          "hint": ""
+        },
+        {
+          "id": "C4",
+          "label": "Head height above the plate",
+          "how": "Depth rod, or the calipers' depth blade, from the plate's top face to the head's top face.",
+          "glyph": "z",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "C5",
+          "label": "Hex key that fits the socket",
+          "how": "Try your hex keys. Tell me the size that fits snugly.",
+          "glyph": "text",
+          "priority": 2,
+          "hint": "e.g. 2.5 mm"
+        },
+        {
+          "id": "C6",
+          "label": "Is the head sunk into a counterbore?",
+          "how": "If the head sits in a recess, the plate's top face will be above the head.",
+          "glyph": "yesno",
+          "priority": 2,
+          "hint": "if yes, give the recess depth in the note"
+        },
+        {
+          "id": "C7",
+          "label": "Thread major diameter (remove one screw)",
+          "how": "Wind one out and put the calipers on the thread's outside. This tells me M3 vs M2.5, which decides every screw in the mount.",
+          "glyph": "dia",
+          "priority": 1,
+          "hint": "put the screw back afterwards"
+        },
+        {
+          "id": "C8",
+          "label": "Screw length under the head",
+          "how": "Same screw, from under the head to the tip.",
+          "glyph": "z",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "C9",
+          "label": "Screw A position (side P at the toe end)",
+          "how": "Lay the pedal flat, toe end toward you, side P on your left. With the calipers' depth rod, measure the screw centre from the <b>side P wall</b> and from the <b>toe end wall</b>, and give me both, 'x, y'.",
+          "glyph": "pos",
+          "priority": 1,
+          "hint": "x from side-P wall, y from toe end"
+        },
+        {
+          "id": "C10",
+          "label": "Screw B position (side P at the hinge end)",
+          "how": "Same two references.",
+          "glyph": "pos",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "C11",
+          "label": "Screw C position (side I at the hinge end)",
+          "how": "Same two references, but x is measured from the <b>side I wall</b>.",
+          "glyph": "pos",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "C12",
+          "label": "Screw D position (side I at the toe end)",
+          "how": "Same.",
+          "glyph": "pos",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "C13",
+          "label": "Screw E position (any fifth screw)",
+          "how": "Only if you counted 5 in C1 - the one that is not the four corners.",
+          "glyph": "pos",
+          "priority": 2,
+          "hint": "say 'n/a' if there are 4"
+        }
+      ],
+      "image": {
+        "file": "p2_plan.png",
+        "width": 1300,
+        "caption": "Plan view. The small hexagon-headed features at the corners are these screws."
+      }
+    },
+    {
+      "id": "treadle",
+      "title": "4 · The treadle — the section that decides the design",
+      "intro": "This is the part I got wrong last time, so it is worth slowing down here. I need the plate's true outline, where it sits relative to the body walls, and where it goes when you press it. Two photos taken square-on will help as much as the numbers: one at rest, one at full press, both with the calipers or a steel rule lying on the top plate.",
+      "metrics": [
+        {
+          "id": "T1",
+          "label": "Treadle plate width (X)",
+          "how": "The metal plate's own width, widest point. Do not include the rubber tread pad if it overhangs; give both if it does.",
+          "glyph": "x",
+          "priority": 1,
+          "hint": "the key number"
+        },
+        {
+          "id": "T2",
+          "label": "Treadle plate length (Y)",
+          "how": "Along the direction of travel.",
+          "glyph": "y",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "T3",
+          "label": "Treadle plate thickness",
+          "how": "Calipers on the plate's side edge where you can reach it - at the toe end, just above the rubber bumper.",
+          "glyph": "z",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "T4",
+          "label": "Gap: treadle edge to side P wall",
+          "how": "The clear gap between the treadle's edge and the inside of the body wall on side P, measured at the toe end.",
+          "glyph": "x",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "T5",
+          "label": "Gap: treadle edge to side I wall",
+          "how": "Same on side I. If T4 and T5 differ, the treadle is off-centre - I need both.",
+          "glyph": "x",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "T6",
+          "label": "Gap: treadle toe to the toe end",
+          "how": "From the plate's toe edge to the inside of the body's end wall.",
+          "glyph": "y",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "T7",
+          "label": "Gap: treadle heel to the hinge end",
+          "how": "From the plate's hinge-end edge to the body's end wall on that side. Usually hidden by the hinge bracket - get as close as you can and say so.",
+          "glyph": "y",
+          "priority": 2,
+          "hint": "approximate is fine"
+        },
+        {
+          "id": "T8",
+          "label": "Treadle top height above the top-plate rim, at rest",
+          "how": "Depth rod from the top plate's flat rim up to the treadle's top face, near the toe end.",
+          "glyph": "z",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "T9",
+          "label": "Treadle top height above the rim at full press",
+          "how": "Press the treadle all the way down and hold it, then repeat T8 at the same point. It should be lower - possibly below the rim.",
+          "glyph": "z",
+          "priority": 1,
+          "hint": "negative if it goes below the rim"
+        },
+        {
+          "id": "T10",
+          "label": "Does the treadle dip below the top-plate rim at full press?",
+          "how": "Say yes or no, and by how much if yes. This decides whether anything can sit over the top face at all on that side.",
+          "glyph": "yesno",
+          "priority": 1,
+          "hint": "amount in the note"
+        },
+        {
+          "id": "T11",
+          "label": "Hinge axis distance from the hinge end",
+          "how": "The pivot's centre, from the body's end wall. Look for the bracket or the axle boss.",
+          "glyph": "pos",
+          "priority": 2,
+          "hint": ""
+        },
+        {
+          "id": "T12",
+          "label": "Hinge axis height above the bottom face",
+          "how": "The pivot's centre height. Approximate is fine.",
+          "glyph": "z",
+          "priority": 2,
+          "hint": ""
+        },
+        {
+          "id": "T13",
+          "label": "Rubber tread pad thickness",
+          "how": "If the treadle has a glued rubber pad on top, its thickness, and whether it overhangs the metal plate.",
+          "glyph": "z",
+          "priority": 2,
+          "hint": "'none' if there is no pad"
+        }
+      ],
+      "image": {
+        "file": "p2_end_in.png",
+        "width": 1500,
+        "caption": "The treadle sits on its hinge bracket; the rubber bumper is under its free end."
+      }
+    },
+    {
+      "id": "jacks",
+      "title": "5 · The four jacks",
+      "intro": "Positions along each long side, and how far the hardware sticks out. Heights are from the bottom face. If a jack's centre is hard to judge, measure to the edge of its nut and say so - I can work from that.",
+      "metrics": [
+        {
+          "id": "J1",
+          "label": "INPUT: distance from the toe end to its centre",
+          "how": "Along side I.",
+          "glyph": "y",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "J2",
+          "label": "INPUT: centre height above the bottom face",
+          "how": "Vertical height of the jack's centreline.",
+          "glyph": "z",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "J3",
+          "label": "MIDI: distance from the toe end to its centre",
+          "how": "Along side I.",
+          "glyph": "y",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "J4",
+          "label": "MIDI: centre height above the bottom face",
+          "how": "Vertical.",
+          "glyph": "z",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "J5",
+          "label": "OUTPUT: distance from the toe end to its centre",
+          "how": "Along side P.",
+          "glyph": "y",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "J6",
+          "label": "OUTPUT: centre height above the bottom face",
+          "how": "Vertical.",
+          "glyph": "z",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "J7",
+          "label": "POWER: distance from the toe end to its centre",
+          "how": "Along side P. Measure to the barrel socket's centre, not the wall wart's box.",
+          "glyph": "y",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "J8",
+          "label": "POWER: centre height above the bottom face",
+          "how": "Vertical.",
+          "glyph": "z",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "J9",
+          "label": "How far the 1/4\" jack nuts stand proud of the wall",
+          "how": "From the side wall's face out to the nut's outer face. One number is enough if all four match.",
+          "glyph": "x",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "J10",
+          "label": "How far the POWER barrel stands out",
+          "how": "Barrel jacks often protrude more than the 1/4\" ones.",
+          "glyph": "x",
+          "priority": 1,
+          "hint": ""
+        }
+      ],
+      "image": {
+        "file": "p2_end_pow.png",
+        "width": 1500,
+        "caption": "POWER (barrel) and OUTPUT (1/4\") on side P. INPUT and MIDI are the mirror image on side I."
+      }
+    },
+    {
+      "id": "feet",
+      "title": "6 · The feet, and the bottom face",
+      "intro": "The feet stay on the pedal - nothing gets removed - so the mount has to work around them. These four numbers set how the pedal sits on a plate.",
+      "metrics": [
+        {
+          "id": "F1",
+          "label": "Foot pad diameter",
+          "how": "Across one rubber pad.",
+          "glyph": "dia",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "F2",
+          "label": "Foot pad height",
+          "how": "How far the pad stands proud of the bottom face.",
+          "glyph": "z",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "F3",
+          "label": "Foot pattern",
+          "how": "Are there four, one near each corner, or two rails, or something else? Say which, and give one pad's centre as 'x from side-P wall, y from toe end'.",
+          "glyph": "text",
+          "priority": 1,
+          "hint": ""
+        },
+        {
+          "id": "F4",
+          "label": "Is the bottom face flat and clear?",
+          "how": "Any screws, plugs, ribs, or a recess. This is the one face the pedal rests on, so I need to know if it is interrupted.",
+          "glyph": "yesno",
+          "priority": 1,
+          "hint": "describe anything you find"
+        }
+      ]
+    },
+    {
+      "id": "board",
+      "title": "7 · Where it sits on the board",
+      "intro": "Two questions about the RockBoard, so the QuickMount clips land on ribs rather than in slots. Look at the board with the pedal off it.",
+      "metrics": [
+        {
+          "id": "R1",
+          "label": "At the pedal's corner of the board, does the field start with a rib or a slot?",
+          "how": "At the board's edge nearest where the pedal goes, look at the strip that runs along the edge: is the first thing a raised rib or an open slot?",
+          "glyph": "text",
+          "priority": 1,
+          "hint": "rib / slot"
+        },
+        {
+          "id": "R2",
+          "label": "Which corner of the board does the pedal sit in?",
+          "how": "As you face the board, e.g. 'front right'.",
+          "glyph": "text",
+          "priority": 2,
+          "hint": ""
+        }
+      ]
+    }
+  ]
+}
