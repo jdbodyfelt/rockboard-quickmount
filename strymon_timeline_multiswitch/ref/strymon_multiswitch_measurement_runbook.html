@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Strymon MultiSwitch (original) — measurement runbook</title>
+<style>
+:root{--ink:#17202a;--muted:#52616f;--line:#d9e0e6;--paper:#fff;--bg:#f3f6f8;--accent:#166a4a;--warn:#835c16}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.48 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:#101820;color:#fff;padding:20px max(20px,calc((100vw - 980px)/2));display:flex;gap:18px;align-items:center;flex-wrap:wrap}h1{font-size:21px;margin:0}.sub{color:#c8d3dc;font-size:13px}.actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}button{font:inherit;padding:8px 11px;border:1px solid #c5d0d8;border-radius:6px;background:#fff;color:var(--ink);cursor:pointer}button.primary{background:#1d7b58;border-color:#1d7b58;color:#fff}button:hover{filter:brightness(.96)}
+main,footer{max-width:980px;margin:auto;padding:22px}section{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:20px;margin:0 0 18px}h2{font-size:17px;margin:0 0 8px}p{margin:7px 0}.intro{color:var(--muted)}.warning{padding:10px 12px;border-left:4px solid var(--warn);background:#fff9ec;color:#574313}.diagram{max-width:100%;margin:14px 0;border:1px solid var(--line);border-radius:7px;background:#fafcfd}.diagram text{font:13px system-ui,sans-serif;fill:#334}.diagram path,.diagram rect{fill:none;stroke:#455a64;stroke-width:2}.diagram .dim{stroke:#b5412e}.diagram .label{fill:#b5412e}
+table{width:100%;border-collapse:collapse;margin-top:12px}th{text-align:left;color:var(--muted);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:0 8px 7px;border-bottom:1px solid var(--line)}td{vertical-align:top;padding:10px 8px;border-bottom:1px solid #edf1f4}.id{font-family:ui-monospace,Consolas,monospace;font-weight:700;color:var(--accent);white-space:nowrap}.how{color:var(--muted);font-size:13px}.priority{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;border-radius:10px;padding:2px 6px;background:#e8f4ee;color:#176545}.optional{background:#f7f0df;color:#775810}input{width:100%;min-width:135px;padding:7px 8px;border:1px solid #cbd5dc;border-radius:5px;font:inherit}input:focus{outline:2px solid #a8d7c3;border-color:#268861}.note{margin-top:5px;font-size:12px}#status{min-height:1.3em;color:var(--muted);font-size:13px}footer{color:var(--muted);font-size:13px;padding-top:0}@media(max-width:700px){th:nth-child(2),td:nth-child(2){display:none}td{padding:9px 5px}.actions{margin-left:0}}@media print{header{background:#fff;color:#000;padding:12px 0}header .sub{color:#444}.actions{display:none}body{background:#fff}section{break-inside:avoid}main,footer{padding:14px 0}}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Original Strymon MultiSwitch — measurement runbook</h1><div class="sub">All dimensions in mm. Record to 0.1 mm where calipers permit.</div></div>
+  <div class="actions"><button class="primary" type="button" id="copy">Copy JSON</button><button type="button" id="clear">Clear readings</button></div>
+</header>
+<main>
+<section>
+  <h2>Before measuring</h2>
+  <p class="intro">Use digital calipers, measure each critical feature twice, and write the two readings in the note if they differ. This sheet records only the bottom face used by the mounting plate: the lower tray and its four assembly screws.</p>
+  <p class="warning"><b>Do not use the four base screws as mounting points yet.</b> They are assembly screws. Do not remove more than one at once, and do not tighten a screw beyond its original engagement depth.</p>
+</section>
+<section>
+  <h2>1 · 2D lower-tray footprint and base-screw pattern</h2>
+  <p class="intro">For the mounting plate, use only the <b>external bottom face of the lower tray</b> and the four base-screw centres. Ignore internal channel returns and the upper shell. Put the unit bottom-up; this sketch is that view.</p>
+  <svg class="diagram" viewBox="0 0 780 310" role="img" aria-label="Bottom view of the lower tray footprint and four base assembly screws">
+    <text x="245" y="22">Bottom view — lower tray is the mounting-plate datum</text>
+    <rect x="110" y="65" width="560" height="170" rx="12"/><circle cx="160" cy="105" r="10"/><circle cx="620" cy="105" r="10"/><circle cx="160" cy="195" r="10"/><circle cx="620" cy="195" r="10"/>
+    <text x="330" y="155">lower-tray bottom face</text><text x="85" y="55">front</text><text x="625" y="55">rear</text>
+    <path class="dim" d="M110 42H670M110 34v16M670 34v16"/><text class="label" x="315" y="28">P1: tray base width (X)</text>
+    <path class="dim" d="M705 65V235M697 65h16M697 235h16"/><text class="label" x="719" y="151">P2: tray base depth (Y)</text>
+    <path class="dim" d="M160 82H620M160 74v16M620 74v16"/><text class="label" x="344" y="70">S1: X screw-centre pitch</text>
+    <path class="dim" d="M648 105V195M640 105h16M640 195h16"/><text class="label" x="659" y="145">S2: Y pitch</text>
+    <path class="dim" d="M110 264H160M110 256v16M160 256v16"/><path class="dim" d="M80 235V195M72 235h16M72 195h16"/><text class="label" x="90" y="291">S3: centre offsets from tray edges</text>
+    <path class="dim" d="M150 105H170"/><text class="label" x="180" y="101">S4: head diameter / recess</text><text x="268" y="282">Measure both opposite pitches; record any difference in the note.</text>
+  </svg>
+  <table><thead><tr><th>ID</th><th>Measure</th><th>How</th><th>Reading (mm)</th></tr></thead><tbody>
+    <tr><td class="id">P1</td><td>Lower-tray base width</td><td class="how">Bottom-up, measure the maximum left-to-right span of the lower tray's <b>flat bottom face</b>. Exclude the upper shell.</td><td><input data-id="P1" inputmode="decimal" placeholder="mm"><input class="note" data-note="P1" placeholder="repeat reading"></td></tr>
+    <tr><td class="id">P2</td><td>Lower-tray base depth</td><td class="how">Bottom-up, measure the maximum front-to-rear span of the same flat bottom face. This is expected to be approximately 41 mm if it is the observed lower-tray cross-width.</td><td><input data-id="P2" inputmode="decimal" placeholder="mm"><input class="note" data-note="P2" placeholder="repeat reading"></td></tr>
+    <tr><td class="id">P3</td><td>Tray corner/end shape</td><td class="how">Record the outside corner radius or chamfer at each lower-tray corner. If radii are equal, give one radius; otherwise list all four.</td><td><input data-id="P3" placeholder="radius / chamfer"><input class="note" data-note="P3" placeholder="all four corners"></td></tr>
+    <tr><td class="id">S1</td><td>Left-to-right screw-centre pitch</td><td class="how">Measure front and rear screw-centre pitch. Record both values; a mounting plate needs the actual rectangle, not an assumed symmetry.</td><td><input data-id="S1" placeholder="front / rear"><input class="note" data-note="S1" placeholder="centre to centre"></td></tr>
+    <tr><td class="id">S2</td><td>Front-to-rear screw-centre pitch</td><td class="how">Measure left and right screw-centre pitch. Record both values.</td><td><input data-id="S2" placeholder="left / right"><input class="note" data-note="S2" placeholder="centre to centre"></td></tr>
+    <tr><td class="id">S3</td><td>Corner-screw edge offsets</td><td class="how">For each corner, measure the screw centre from the adjacent <b>lower-tray</b> edges. Record as front-left, front-right, rear-left, rear-right.</td><td><input data-id="S3" placeholder="FL / FR / RL / RR"><input class="note" data-note="S3" placeholder="X and Y offsets for each"></td></tr>
+    <tr><td class="id">S4</td><td>Screw-head envelope</td><td class="how">Measure the head diameter and whether it is proud, flush, counterbored, or countersunk. This determines the plate relief.</td><td><input data-id="S4" placeholder="dia / style"><input class="note" data-note="S4" placeholder="Phillips drive confirmed"></td></tr>
+  </tbody></table>
+</section>
+<section>
+  <h2>2 · Optional single-screw verification</h2>
+  <p class="intro">The 2D mounting-plate work uses P1–P3 and S1–S4 above. Only collect this if reusing an assembly screw is an intended retention method.</p>
+  <table><thead><tr><th>ID</th><th>Measure</th><th>How</th><th>Reading (mm)</th></tr></thead><tbody>
+    <tr><td class="id">S5</td><td>Thread and usable engagement <span class="priority optional">optional</span></td><td class="how">Remove one screw only. Measure major diameter, pitch gauge result, under-head length, and threaded engagement depth.</td><td><input data-id="S5" placeholder="thread / length / engagement"><input class="note" data-note="S5" placeholder="return original screw before continuing"></td></tr>
+  </tbody></table>
+</section>
+</main>
+<footer><div id="status">Readings are stored locally in this browser.</div></footer>
+<script>
+const key='rockboard-multiswitch-measurements-v1';
+const fields=[...document.querySelectorAll('[data-id],[data-note]')];
+const load=()=>{const data=JSON.parse(localStorage.getItem(key)||'{}');fields.forEach(f=>f.value=data[f.dataset.id||`note_${f.dataset.note}`]||'')};
+const save=()=>{const data={};fields.forEach(f=>data[f.dataset.id||`note_${f.dataset.note}`]=f.value.trim());localStorage.setItem(key,JSON.stringify(data));document.querySelector('#status').textContent='Saved locally.'};
+fields.forEach(f=>f.addEventListener('input',save));
+document.querySelector('#copy').addEventListener('click',async()=>{const data=JSON.parse(localStorage.getItem(key)||'{}');try{await navigator.clipboard.writeText(JSON.stringify(data,null,2));document.querySelector('#status').textContent='JSON copied to the clipboard.'}catch(error){document.querySelector('#status').textContent=`Clipboard copy failed: ${error.message}`}});
+document.querySelector('#clear').addEventListener('click',()=>{if(confirm('Clear every stored MultiSwitch reading?')){localStorage.removeItem(key);fields.forEach(f=>f.value='');document.querySelector('#status').textContent='Readings cleared.'}});
+load();
+</script>
+</body>
+</html>

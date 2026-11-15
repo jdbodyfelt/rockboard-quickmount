@@ -3,24 +3,214 @@
   "id": "strymon_timeline_multiswitch",
   "kind": "pedal",
   "brand": "Strymon",
-  "description": "One joined mount for a TimeLine plus a MultiSwitch. The TimeLine is large-format and sits on a small angle riser; the MultiSwitch stays flat.",
+  "description": "Two separate QuickMount units: a raised TimeLine step and a flat original three-switch MultiSwitch plate (not MultiSwitch Plus).",
   "sources": [
+    "ref/QuickMount-TypeJ1.pdf",
     "ref/strymon_timeline_cad_bracket_specifications.md",
-    "ref/strymon_miniswitch_cad_bracket_specifications.md",
+    "ref/strymon_multiswitch_cad_bracket_specifications.md",
+    "ref/strymon_multiswitch_measurement_runbook.html",
+    "src/coplanar_riser.py",
     "ref/timeline.jpg",
     "ref/timeline_spot.jpg",
-    "ref/multiswitch.jpg",
+    "ref/MultiSwitch/multiswitch.jpg",
     "ref/Strymon_v1.stl",
     "ref/Strymon_v2.stl",
     "ref/Strymon_v3.stl"
   ],
   "layout": {
-    "arrangement": "single joined baseplate; TimeLine raised on an angle riser, MultiSwitch flat",
+    "arrangement": "separate units: a raised TimeLine step and a flat two-clip MultiSwitch plate placed in front",
     "status": "proposed",
     "riser_angle_deg": null,
     "driver": "all-button access to the TimeLine front row fixes the riser angle",
     "provenance": { "level": 1, "source": "MANUAL_TODOS item 2 (owner intent)", "retrieved": "2026-11-04" }
   },
+  "material": {
+    "id": "petg",
+    "presets_from": "../commons/cfg/retainer.json",
+    "note": "the plate prints in the same filament as the retainer, so the presets are referenced from commons rather than restated"
+  },
+  "coplanar_riser": {
+    "id": "timeline_multiswitch_coplanar_riser",
+    "status": "superseded_by_separate_units",
+    "concept": "one monolithic PETG QuickMount riser: a ribbed full-width TimeLine shelf for bank-switching stability and a flat MultiSwitch tray in front",
+    "datum": "J1 board-facing face centre; +X along the 171 mm TimeLine width, +Y from the MultiSwitch front toward the TimeLine rear, +Z away from the board",
+    "timeline": {
+      "support_top_z_mm": 42.6,
+      "bottom_target": "coplanar with the MultiSwitch shell top: 3.0 mm base plate plus 39.6 mm bottom-to-shell-top",
+      "screw_pattern_mm": { "dx": 141.5, "dy": 108.5 },
+      "j1_clearance_pattern_mm": { "dx": 142.0, "dy": 108.0, "bore": 4.5, "counterbore": 7.5, "counterbore_depth": 1.5 },
+      "top_height_mm": { "front": 35.0, "rear": 49.0, "rubber_feet": false }
+    },
+    "multiswitch": {
+      "tray_mm": { "width": 169.8, "depth": 41.1, "corner_radius": 0.0 },
+      "shell_top_from_tray_mm": 39.6,
+      "front_gap_mm": 3.0,
+      "screw_pattern_mm": { "dx": 145.0, "dy": 32.0, "counterbore_dia": 6.5, "clearance_bore": 4.2 },
+      "screw_edge_offsets_mm": { "front_rear": 4.5, "left_right": 13.0 },
+      "fastener_note": "The head recess is measured; thread and replacement length remain unmeasured. The model provides locating/clearance geometry only."
+    },
+    "cable_channel": {
+      "timeline_from_left_mm": 50.5,
+      "timeline_from_rear_mm": 21.0,
+      "width_mm": 14.0,
+      "route": "open front-to-TimeLine channel beneath the TimeLine shelf; sized for a standard 1/4 in right-angle plug and cable"
+    },
+    "structure": {
+      "base_thickness_mm": 3.0,
+      "top_skin_mm": 4.0,
+      "wall_thickness_mm": 4.0,
+      "rib_thickness_mm": 4.0,
+      "ribs_y_mm": [-25.0, 20.0],
+      "reason": "A monolithic ribbed shell keeps the TimeLine supported across its full width while using substantially less PETG than a fully solid 42.6 mm block."
+    }
+  },
+  "separate_mounts": {
+    "id": "timeline_step_and_multiswitch_plate",
+    "status": "measured_design",
+    "timeline_step": {
+      "drawing": "dwg/TimeLine_step.stl",
+      "step": "dwg/TimeLine_step.step",
+      "support_top_z_mm": 42.6,
+      "edge_radius_mm": 2.0,
+      "timeline_screw_pattern_mm": { "dx": 141.5, "dy": 108.5 },
+      "j1_clearance_pattern_mm": { "dx": 142.0, "dy": 108.0, "bore": 4.5, "counterbore": 7.5, "counterbore_depth": 1.5 },
+      "cable_tunnel": {
+        "stadium_width_mm": 14.0,
+        "stadium_length_mm": 24.0,
+        "centres_x_from_left_mm": [50.5, 120.5],
+        "axis": "front-to-rear through the step, opening as stadium cutouts in both vertical faces",
+        "centre_z_mm": 22.8,
+        "bottom_x_pass_through": { "width_mm": 14.0, "length_mm": 48.0, "angles_deg": [-45.0, 45.0] },
+        "note": "All stadium subtractions are applied after the shell ribs are fused, so they clear every intersected rib."
+      }
+    },
+    "multiswitch_plate": {
+      "drawing": "dwg/MultiSwitch_plate.stl",
+      "step": "dwg/MultiSwitch_plate.step",
+      "tray_mm": { "width": 169.8, "depth": 41.1, "corner_radius": 0.0 },
+      "screw_pattern_mm": { "dx": 145.0, "dy": 32.0, "clearance_bore": 4.2, "counterbore_dia": 6.5, "counterbore_depth": 1.5 },
+      "clips": {
+        "count": 2,
+        "centres_x_mm": [-38.0, 38.0],
+        "centre_y_mm": -6.0,
+        "slot_width_mm": 24.0,
+        "slot_depth_mm": 18.0,
+        "alignment": "horizontally aligned across the front half of the plate"
+      }
+    },
+    "structure": {
+      "base_thickness_mm": 3.0,
+      "top_skin_mm": 4.0,
+      "wall_thickness_mm": 4.0,
+      "rib_thickness_mm": 6.0,
+      "ribs_y_mm": [-25.0, 20.0],
+      "ribs_x_mm": [-55.0, 55.0],
+      "screw_tube_wall_mm": 3.0,
+      "reason": "The TimeLine step remains a monolithic ribbed shell with full-width support; separating the MultiSwitch eliminates the large unused front extension."
+    }
+  },
+
+  "quickmount": {
+    "id": "j1",
+    "type": "J1",
+    "status": "drawn",
+    "description": "Warwick's Type J1 plate, reproduced from ref/QuickMount-TypeJ1.pdf. It is the TimeLine step's board interface: 171 x 129 x 3 with four C-loop clips and three screw patterns.",
+    "source_drawing": "ref/QuickMount-TypeJ1.pdf",
+    "drawing": "dwg/QuickMount-Type_J1.stl",
+    "step": "dwg/QuickMount-Type_J1.step",
+    "compatibility": ["BOSS 500-series", "Strymon large-format"],
+    "datum": "plate bottom-face centre. +X along the 171 mm length, +Y across the 129 mm width, +Z from the board-facing face toward the pedal, so the plate occupies z = 0..3 and the clips hang at z < 0",
+    "plate": {
+      "length_mm": 171.0,
+      "width_mm": 129.0,
+      "thickness_mm": 3.0,
+      "corner_radius_mm": 3.0,
+      "notch_corner_radius_mm": 1.0
+    },
+    "windows": {
+      "count": 4,
+      "width_mm": 24.0,
+      "depth_mm": 24.65,
+      "centre_x_mm": 38.0,
+      "note": "one open slot per clip, cut through the plate from each long edge. It is the standard 24 mm QuickMount slot, so the 22 mm clip sits in it with 1.00 clear a side. All four corners keep the R1 the sheet draws: the floor between the clip's arch and the mouth where the wall meets the plate edge"
+    },
+    "clips": {
+      "count": 4,
+      "section": "../commons/cfg/retainer.json",
+      "centre_x_mm": 38.0,
+      "centre_y_mm": 46.35,
+      "centre_spacing_mm": 92.7,
+      "arch_spacing_mm": 111.7,
+      "width_along_x_mm": 22.0,
+      "attachment": "the post only. The post ends inside the plate's own material at the window's inboard wall; the blade passes up the window and finishes flush with the plate's top face, so the lip reads level with the plate",
+      "mouth": "toward the plate's centre line and open through the window, which is cut away over the mouth and the blade"
+    },
+    "holes": {
+      "clearance": {
+        "count": 4,
+        "bore_mm": 4.5,
+        "x_mm": 71.0,
+        "y_mm": 54.0,
+        "counterbore_mm": 7.5,
+        "counterbore_depth_mm": 1.5,
+        "counterbore_face": "board"
+      },
+      "boss": {
+        "count": 4,
+        "bore_mm": 3.5,
+        "x_mm": 65.0,
+        "y_mm": 47.0,
+        "counterbore_mm": 6.0,
+        "counterbore_depth_mm": 1.5,
+        "counterbore_face": "board"
+      },
+      "mid": {
+        "count": 4,
+        "bore_mm": 3.5,
+        "x_mm": 49.0,
+        "y_mm": 23.0,
+        "counterbore_mm": 6.0,
+        "counterbore_depth_mm": 1.5,
+        "counterbore_face": "board"
+      }
+    },
+    "verification": {
+      "cross_checks": [
+        { "value": "171.00 x 129.00 outline at 2:1", "verdict": "5.669 pt/mm, and every printed dim lands inside 0.05 mm on that scale" },
+        { "value": "142 x 108 with Ø4.5, 1.5 deep Ø7.5", "verdict": "the clearance pattern, printed on the top view and section CC" },
+        { "value": "130 x 94 with Ø3.5, Ø6 recess", "verdict": "the boss pattern, 17.5 in from the long edge, all printed on the bottom view" },
+        { "value": "98 x 46 with Ø3.5, Ø6 recess", "verdict": "the mid pattern, 41.5 in from the long edge, all printed on the bottom view" },
+        { "value": "111.70 between the clip arches", "verdict": "puts the clip centres at ±46.35 on the 19.00 outer width" },
+        { "value": "24 wide notches, 52 between them", "verdict": "76.00 pitch, so the clips sit at ±38.00" },
+        { "value": "24.65 notch depth against 39.85 mouth wall", "verdict": "the plate's window stops exactly on the clip's mouth, so the loop cannot be closed" }
+      ]
+    },
+    "derived": {
+      "hole_patterns": "142 x 108 in Ø4.5, 130 x 94 and 98 x 46 in Ø3.5. The plate carries all three because one J1 covers every pedal in the 171 x 129 footprint and they do not share a screw pattern; the top view prints only the bores (Ø4.5, Ø3.5) while the bottom view prints the Ø7.5 and Ø6 counters over them",
+      "edge_offsets_mm": "10.5 from the long edge to the clearance row, 14.5 from the short edge; 17.5 and 41.5 from the long edge to the two Ø3.5 rows, both printed. Every one of them closes on the printed pitches: 129 - 2 x 10.5 = 108, 171 - 2 x 14.5 = 142, 129 - 2 x 17.5 = 94, 129 - 2 x 41.5 = 46",
+      "arch_spacing_mm": "2 x (46.35 + 9.50) = 111.70, the printed section BB callout, so the clip centres are at ±46.35",
+      "window_is_the_slot": "the window's inboard wall falls on the clip's mouth wall, 64.50 - 24.65 = 39.85 against 46.35 - 6.50 = 39.85, so the plate cannot close the loop",
+      "notch_pitch_mm": "2 x 38.00 = 76.00, from the printed 52 between the notch walls plus the printed 24 notch width"
+    },
+    "measured": {
+      "how": "the J1 sheet is vector and drawn at exactly 2:1, so the 171 x 129 outline fixes a scale of 5.669 pt/mm and every unprinted value is read off the geometry. The printed 142, 108, 130, 98, 111.7, 24 and 52 all reproduce inside 0.05 mm on that scale",
+      "holes": "circle fits over both views give Ø4.50 at (±71, ±54) in the top view, and Ø7.50 counters over the same centres, Ø3.50 with Ø6.00 counters at (±65, ±47) and Ø3.50 with Ø6.00 counters at (±49, ±23) in the bottom view. The counters appear in no other view, which is where the clip side is drawn",
+      "clip_envelope": "section BB gives a loop outer of about 18.5, a mouth of about 13 and a drop of 15.87 from the plate's underside, all within 0.5 of the retainer section in commons, which is what this plate uses",
+      "clip_positions": "the notch floor sits 24.5 in from the long edge and the clip is centred in its slot, 24 wide with 1.00 clear a side",
+      "window_mouth": "the drawn edge line stops 1.00 inboard of each window wall (25.06 against the wall at 25.85), which is the R1 mouth fillet, and the walls stop at 63.50, one radius short of the 64.50 edge. All four window corners are R1",
+      "clip_fingers": "the OEM clip is relieved into three fingers by two 1.5 wide slits, seen in both views as rounded slots 7.1 long inside a 21.5 wide arm: fingers of roughly 4.5 / 9.5 / 4.5. The printed plate keeps one solid section, as the B1 does, so the slits are recorded here and not modelled"
+    },
+    "provenance": {
+      "plate": { "level": 3, "source": "171 and 129 on the top and bottom views, 3 on section CC, R3 and R1 called out on the top view", "retrieved": "2026-11-05" },
+      "windows": { "level": 3, "source": "24 printed on the top view for the notch width, 52 between the notch walls, 24.5 measured for the depth", "retrieved": "2026-11-05" },
+      "clips": { "level": 4, "source": "section from ../commons/cfg/retainer.json, guarded by calipers on an owned Type E; the 111.7 arch spacing is printed on section BB", "retrieved": "2026-11-05" },
+      "clearance_holes": { "level": 3, "source": "142 x 108 and Ø4.5 printed on the top view; Ø7.5 recess and its 1.5 depth scaled off section CC", "retrieved": "2026-11-05" },
+      "boss_holes": { "level": 3, "source": "Ø3.5 and Ø6 printed on the bottom view; 130 printed across the pattern and 17.5 printed from the long edge", "retrieved": "2026-11-05" },
+      "mid_holes": { "level": 3, "source": "Ø3.5 and Ø6 printed on the bottom view; 98 printed across the pattern and 41.5 printed from the long edge", "retrieved": "2026-11-05" },
+      "recess_face": { "level": 3, "source": "section CC draws the 1.5 deep recess on the same face the clips stand on, which is where the screw heads have to sit clear of the board", "retrieved": "2026-11-05" }
+    }
+  },
+
   "units": [
     {
       "id": "timeline",
@@ -35,11 +225,11 @@
       "mounting": {
         "hole_count": 4,
         "hole_pattern": {
-          "dx_mm": 158.0,
-          "dy_mm": 117.0,
-          "edge_offset_mm": 6.5
+          "dx_mm": 141.5,
+          "dy_mm": 108.5,
+          "edge_offset_mm": null
         },
-        "fastener": "m3x0.5",
+        "fastener": null,
         "hole_choice": "fdm",
         "countersink": true,
         "max_total_screw_length_mm": 8.0,
@@ -63,43 +253,62 @@
     {
       "id": "multiswitch",
       "model": "MultiSwitch",
-      "aliases": ["MiniSwitch", "Favorite switch"],
+      "variant": "original_pre_plus",
       "physical": {
-        "width_mm": 50.8,
-        "depth_mm": 57.1,
-        "height_mm": null,
-        "corner_radius_mm": 2.5,
+        "width_mm": 169.8,
+        "depth_mm": 46.7,
+        "height_mm": 60.75,
+        "corner_radius_mm": 0.0,
         "weight_g": null
       },
       "mounting": {
         "hole_count": 4,
-        "hole_pattern": {
-          "dx_mm": 40.8,
-          "dy_mm": 47.1,
-          "edge_offset_mm": 5.0
-        },
-        "fastener": "m3x0.5",
-        "hole_choice": "fdm",
+        "hole_pattern": { "dx_mm": 145.0, "dy_mm": 32.0, "edge_offsets_mm": { "front_rear": 4.5, "left_right": 13.0 } },
+        "fastener": null,
+        "hole_choice": null,
         "countersink": true,
-        "max_total_screw_length_mm": 7.5,
+        "max_total_screw_length_mm": null,
         "quickmount_type": null
       },
-      "plate": {
-        "thickness_mm": { "aluminium": [1.5, 2.0], "fdm": [2.5, 3.5] },
-        "boss_infill_percent": 100
+      "enclosure": {
+        "construction": "two perpendicular nested bent-metal channels: an upper longitudinal channel forms the top and front/rear walls; a lower transverse tray forms the bottom and left/right end walls that locate inside the upper channel's open ends; four screws secure the assembly",
+        "observed_assembled_cross_width_mm": 46.0,
+        "observed_lower_tray_cross_width_mm": 41.0,
+        "base_fasteners": {
+          "count": 4,
+          "function": "assembly: lower transverse tray to upper longitudinal channel",
+          "drive": "Phillips",
+          "layout": "one near each corner of the bottom face",
+          "thread": null,
+          "head_style": "countersunk, 6.5 mm measured head recess",
+          "positions_mm": { "dx": 145.0, "dy": 32.0 },
+          "safe_engagement_depth_mm": null,
+          "reusable_for_external_mount": null
+        },
+        "dedicated_underside_mounting_holes": false,
+        "slide_direction": null,
+        "screw_count": null,
+        "screw_positions_mm": null,
+        "u_mount_inside_width_mm": null,
+        "u_mount_arm_height_mm": null
       },
       "provenance": {
-        "physical": { "level": 2, "source": "ref/strymon_miniswitch_cad_bracket_specifications.md section 1", "retrieved": "2026-11-04" },
-        "mounting": { "level": 2, "source": "ref/strymon_miniswitch_cad_bracket_specifications.md section 2", "retrieved": "2026-11-04" }
+        "physical": { "level": 4, "source": "owner measurements: E1 169.8, E2 46.7, E4 60.75 with topper; P1 169.8, P2 41.1, P3 0", "retrieved": "2026-11-15" },
+        "enclosure": { "level": 4, "source": "owner observation and ref/MultiSwitch/ photographs plus S1 145, S2 32, S3 4.5 front/rear and 13 left/right, S4 6.5 countersunk", "retrieved": "2026-11-15" }
       }
     }
   ],
-  "open_questions": [
-    "TimeLine and MultiSwitch heights are unknown; the riser step needs both.",
-    "No QuickMount type is published for the MultiSwitch compact housing.",
-    "Which of Strymon_v1/v2/v3.stl is the current reference mesh is not recorded."
-  ],
+    "open_questions": [
+      "No QuickMount type is published for the original MultiSwitch housing.",
+      "Which of Strymon_v1/v2/v3.stl is the current reference mesh is not recorded.",
+      "The coplanar riser is designed around the measured lower-tray footprint and screw rectangle. The MultiSwitch replacement-screw thread and safe longer length must be measured before it is fastened through the printed tray.",
+      "The measured TimeLine screw pattern is approximately 141.5 x 108.5; it fits the J1 142 x 108 Ø4.5 clearance pattern with less than 0.5 mm centre mismatch per axis.",
+      "The clip is placed from the printed 111.7, which puts its arch 55.85 from the plate's centre line on the 19.00 outer width. The plan view's clip features run out to 57.3, about 1.4 further outboard, so the OEM clip's own section is a little wider or sits a little further out than the retainer section it is standing in for. Nothing else moves: the mouth still lands on the window floor, the blade still finishes flush, and the tip still clears the window walls by 1.00 a side. Calipers on an owned J1 would settle it."
+    ],
   "notes": [
-    "Both units use M3 x 0.5 flat-head screws, but the safe total length differs (8.0 mm TimeLine, 7.5 mm MultiSwitch). Do not share one screw length across the joined plate."
+    "The MultiSwitch screw rectangle and head recess are measured, but its thread and replacement length remain unmeasured. Do not select longer fasteners until they are measured from one original screw.",
+    "The J1's four clips sit in 24 mm slots cut through its long edges, one per corner: the same slot the Type A/E plates cut for an inserted retainer, opened out to the edge. That is what lets the clip lips finish flush with the plate's top face.",
+    "The J1 carries three screw patterns because one plate covers every pedal in the 171 x 129 footprint. That is a menu, not a coincidence: the TimeLine only needs the one its base screws land on.",
+    "The J1's counterbores are on the clip side, as section CC draws them, so the screw heads sit clear of the board's sheet and the pedal-facing side stays flat against the pedal."
   ]
 }
